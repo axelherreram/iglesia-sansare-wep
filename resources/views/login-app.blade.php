@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end">
-                                        <a type="submit" class="btn btn-login" href="index">INICIAR SESIÓN</a>
+                                        <a type="submit" class="btn btn-login" href="dashboard">INICIAR SESIÓN</a>
                                     </div>
                                 </div>
                             </form>
