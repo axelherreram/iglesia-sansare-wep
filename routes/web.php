@@ -17,8 +17,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('index');
+    return view('dashboard');
 });
+
+Route::get('/dashboard-list-communion', function () {
+    return view('list-comunion');
+});
+
 Route::get('/index', function () {
     return view('index');
 });
