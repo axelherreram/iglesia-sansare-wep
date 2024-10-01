@@ -13,7 +13,7 @@
                         <i class="font-22 lni lni-arrow-left"></i>
                         Regresar
                     </a>
-                    <h2 class="mt-3">Listado de bautizos</h2>
+                    <h2 class="mt-3">Listado de comunión</h2>
                     <hr>
                     <div class="row g-3 align-items-center">
                         <div class="col-md-6 d-md-flex">
@@ -48,7 +48,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>Correlativo</th>
-                                    <th>Persona bautizada</th>
+                                    <th>Primera comunion persona</th>
                                     <th>Sacerdote</th>
                                     <th>Fecha</th>
                                     <th>Acción</th>
