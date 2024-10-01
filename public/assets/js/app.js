@@ -126,9 +126,7 @@ $(function () {
 		$(".compose-mail-popup").hide();
 	});
 	/*switcher*/
-	$(".switcher-btn").on("click", function () {
-		$(".switcher-wrapper").toggleClass("switcher-toggled");
-	});
+
 	$(".close-switcher").on("click", function () {
 		$(".switcher-wrapper").removeClass("switcher-toggled");
 	});

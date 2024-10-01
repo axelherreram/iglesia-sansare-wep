@@ -5019,52 +5019,7 @@ input::placeholder {
 }
 
 
-.switcher-btn {
 
-
-	width: 40px;
-
-
-	height: 40px;
-
-
-	line-height: 40px;
-
-
-	font-size: 24px;
-
-
-	background: #0d6efd;
-
-
-	box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, .13);
-
-
-	color: #fff;
-
-
-	text-align: center;
-
-
-	border-top-left-radius: 10px;
-
-
-	border-bottom-left-radius: 10px;
-
-
-	position: absolute;
-
-
-	top: 40%;
-
-
-	right: 100%;
-
-
-	cursor: pointer;
-
-
-}
 
 
 .switcher-wrapper.switcher-toggled {
