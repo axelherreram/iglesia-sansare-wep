@@ -91,6 +91,26 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
+                            data-bs-toggle="dropdown">
+                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/socios.png') }}"
+                                    class="logo-icon" alt="logo icon">
+                                </i>
+                            </div>
+                            <div class="menu-title d-flex align-items-center">Ingreso de personas</div>
+                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item m-0" href="/crear-persona">
+                                    <i class="fadeIn animated bx bx-news"></i>
+                                    Nuevo casamiento
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     {{-- 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"

@@ -15,8 +15,8 @@
         <div class="page-content">
             <div class="card radius-10">
                 <div class="card-header bg-transparent">
-                    <a href="dashboard" class="text-primary">
-                        <i class="font-22 lni lni-arrow-left"></i> Regresar
+                    <a href="dashboard" class="btn btn-sm btn-outline-primary">
+                        <i class="lni lni-arrow-left"></i> Regresar
                     </a>
                     <h3 class="mt-3">Crear nuevo casamiento</h3>
                 </div>
