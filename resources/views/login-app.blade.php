@@ -38,32 +38,29 @@
                         <div class="form-body">
                             <form class="row g-3">
                                 <div class="col-12">
-                                    <label for="inputEmailAddress" class="form-label">Email</label>
+                                    <label for="inputEmailAddress" class="form-label">Correo Electrónico</label>
                                     <input type="email" class="form-control" id="inputEmailAddress"
-                                        placeholder="jhon@example.com">
+                                        placeholder="Ingrese su correo electrónico">
                                 </div>
                                 <div class="col-12">
-                                    <label for="inputChoosePassword" class="form-label">Password</label>
+                                    <label for="inputChoosePassword" class="form-label">Contraseña</label>
                                     <div class="input-group" id="show_hide_password">
                                         <input type="password" class="form-control border-end-0"
-                                            id="inputChoosePassword" placeholder="Enter Password">
+                                            id="inputChoosePassword" placeholder="Ingrese su contraseña">
                                         <a href="javascript:;" class="input-group-text bg-transparent">
                                             <i class="bx bx-hide"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
-                                    </div>
+                                   
                                 </div>
                                 <div class="col-md-6 text-end">
-                                    <a href="auth-basic-forgot-password">Forgot Password ?</a>
+                                    <a href="auth-basic-forgot-password">¿Olvido la contraseña?</a>
                                 </div>
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end">
-                                        <a type="submit" class="btn btn-login" href="dashboard">INICIAR SESIÓN</a>
+                                        <a type="submit" class="btn btn-login"  href="dashboard">INICIAR SESIÓN</a>
                                     </div>
                                 </div>
                             </form>
