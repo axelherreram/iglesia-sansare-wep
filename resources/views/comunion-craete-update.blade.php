@@ -43,16 +43,6 @@
                                 aria-label="Nombre de la persona de la primera comunión">
                         </div>
                     </div>
-                    <span> <strong>Datos Sacerdote</strong></span>
-                    <hr>
-                    <div class="row mb-3">
-                        <div class="col-sm-12">
-                            <label for="nombre_comunion" class="form-label">Nombre de la persona de la primera
-                                comunión:</label>
-                            <input type="text" class="form-control" id="nombre_comunion" name="nombre_comunion"
-                                aria-label="Nombre de la persona de la primera comunión">
-                        </div>
-                    </div>
                     <span> <strong>Datos padres</strong></span>
                     <hr>
                     <!-- Datos de los Padres -->
@@ -66,33 +56,6 @@
                             <input type="text" class="form-control" id="nombre_madre" name="nombre_madre">
                         </div>
                     </div>
-
-                    <!-- Ubicación -->
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <label for="departamento" class="form-label">Departamento:</label>
-                            <select class="form-control" id="departamento" name="departamento"
-                                aria-label="Seleccione el departamento">
-                                <option value="">Seleccione el departamento</option>
-                                <option value="departamento1">Departamento 1</option>
-                                <option value="departamento2">Departamento 2</option>
-                                <option value="departamento3">Departamento 3</option>
-                                <!-- Agrega más opciones según sea necesario -->
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="municipio" class="form-label">Municipio:</label>
-                            <select class="form-control" id="municipio" name="municipio"
-                                aria-label="Seleccione el municipio">
-                                <option value="">Seleccione el municipio</option>
-                                <option value="municipio1">Municipio 1</option>
-                                <option value="municipio2">Municipio 2</option>
-                                <option value="municipio3">Municipio 3</option>
-                                <!-- Agrega más opciones según sea necesario -->
-                            </select>
-                        </div>
-                    </div>
-
 
                     <div class="row">
                         <div class="d-flex justify-content-end">
