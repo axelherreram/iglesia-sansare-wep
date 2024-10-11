@@ -26,7 +26,7 @@
     <!-- wrapper -->
     <div class="wrapper">
         <div class="authentication-forgot d-flex align-items-center justify-content-center">
-            <div class="card forgot-box">
+            <div class="card forgot-box" style="border: none !important">
                 <div class="card-body">
                     <div class="p-3">
                         <div class="text-center">
@@ -36,10 +36,10 @@
                         <p class="text-muted">Ingrese su correo electrónico registrado para restablecer la contraseña</p>
                         <div class="my-4">
                             <label class="form-label">Correo Electronico</label>
-                            <input type="text" class="form-control" placeholder="example@user.com" />
+                            <input type="text" class="form-control" placeholder="example@user.com" / style="border: 1px solid #1b1b1f !important;">
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-login" >Enviar</button>
+                            <button type="button" class="btn btn-primary-ig" >Enviar</button>
                              <a href="/" class="btn btn-light"><i class='bx bx-arrow-back me-1'></i>Regresar el inicio de sesión</a>
                         </div>
                     </div>

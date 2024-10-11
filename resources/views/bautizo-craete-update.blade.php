@@ -19,7 +19,7 @@
     <div class="page-content">
         <div class="card radius-10 ">
             <div class="card-header bg-transparent">
-                <a href="dashboard" class="btn btn-sm btn-outline-primary">
+                <a href="dashboard" class="btn btn-sm btn-primary-ig-r">
                     <i class="lni lni-arrow-left"></i> Regresar
                 </a>
                 <h3 class="mt-3">Crear nuevo bautizo</h3>
@@ -106,7 +106,7 @@
                 <!-- Botón de Guardar -->
                 <div class="row">
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary w-100 w-sm-25" style="background-color: #6f1d1b">Guardar</button>
+                        <button type="submit" class="btn btn-primary-ig  w-25 w-sm-25" >Guardar</button>
                     </div>
                 </div>
             </form>

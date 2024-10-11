@@ -15,7 +15,7 @@
         <div class="page-content">
             <div class="card radius-10">
                 <div class="card-header bg-transparent">
-                    <a href="dashboard" class="btn btn-sm btn-outline-primary">
+                    <a href="dashboard" class="btn btn-sm btn-primary-ig-r ">
                         <i class="lni lni-arrow-left"></i> Regresar
                     </a>
                     <h3 class="mt-3">Crear nueva primera comunión </h3>
@@ -59,7 +59,7 @@
 
                     <div class="row">
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary w-25 w-sm-100">Guardar</button>
+                            <button type="submit" class="btn btn-primary-ig  w-25 w-sm-100">Guardar</button>
                         </div>
                     </div>
                 </form>

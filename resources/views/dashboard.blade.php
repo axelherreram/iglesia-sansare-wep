@@ -72,7 +72,7 @@
 
             <div class="row">
                 <div class="col-12 col-lg-8 d-flex">
-                    <div class="card radius-10 w-100">
+                    <div class="card-graficas radius-10 w-100">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <div>
@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-4 d-flex">
-                    <div class="card radius-10 w-100">
+                    <div class="card-graficas radius-10 w-100">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <div>

@@ -9,7 +9,7 @@
         <div class="page-content">
             <div class="card radius-10">
                 <div class="card-header bg-transparent">
-                    <a href="dashboard" class=" text-primary">
+                    <a href="dashboard" class="btn btn-sm btn-primary-ig-r">
                         <i class="font-22 lni lni-arrow-left"></i>
                         Regresar
                     </a>
@@ -37,7 +37,7 @@
                         <!-- Botón de Buscar -->
                         <div class="col-md-3">
                             <label for="buscar" class="form-label d-block">&nbsp;</label>
-                            <button class="btn btn-primary  w-100">Buscar</button>
+                            <button class="btn btn-primary-ig  w-100">Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -60,21 +60,21 @@
                                     <td>Juan Carlos Pérez García</td>
                                     <td>Padre Gabriel Morales</td>
                                     <td>03 Feb 2020</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm">Visualizar</a></td>
+                                    <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                 </tr>
                                 <tr>
                                     <td>002</td>
                                     <td>Maria Fernanda López Rodríguez</td>
                                     <td>Padre Gabriel Morales</td>
                                     <td>05 Feb 2020</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm">Visualizar</a></td>
+                                    <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                 </tr>
                                 <tr>
                                     <td>003</td>
                                     <td>Carlos Andrés García Ramírez</td>
                                     <td>Padre Miguel Ángel Torres</td>
                                     <td>06 Feb 2020</td>
-                                    <td><a href="#" class="btn btn-primary btn-sm">Visualizar</a></td>
+                                    <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                 </tr>
                                 <!-- Más filas aquí -->
                             </tbody>

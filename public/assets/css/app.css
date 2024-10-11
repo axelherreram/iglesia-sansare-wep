@@ -1430,8 +1430,12 @@ ul.scroll-menu {
 
 .input-icon .form-control {
     padding-left: 2.5rem;
+	border-color: #008cff !important;
 }
-
+.form-control {
+    padding-left: 2.5rem;
+	border-color: #7f5539 !important;
+}
 .error {
     color: #dc3545;
 }
@@ -3349,10 +3353,10 @@ form select.error, form textarea.error, form input.error, form input.error:focus
 .nav-search input.form-control {
 
 
-	background-color: rgb(255 255 255 / 20%);
+	background-color: rgba(255, 0, 0, 0.2);
 
 
-	border: 1px solid rgb(255 255 255 / 45%);
+	border: 1px solid rgba(255, 0, 0, 0.45);
 
 
 	color: #fff;

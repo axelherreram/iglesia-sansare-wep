@@ -8,7 +8,7 @@
                             <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">
                         </div>
                         <div >
-                            <h4 class="logo-text fw-bold" style="font-size: 1rem">Iglesia sansare</h4>
+                            <h4 class="logo-text fw-bold" style="font-size: 1rem">Iglesia Sansare</h4>
                         </div>
                     </a>
                     <div class="mobile-toggle-menu d-block d-lg-none" data-bs-toggle="offcanvas"

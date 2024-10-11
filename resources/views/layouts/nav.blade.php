@@ -29,11 +29,13 @@
                             <li><a class="dropdown-item " href="/dashboard-bautizo-create">
                                     <i class="fadeIn animated bx bx-news"></i>
                                     Nuevo bautizo
-                                </a></li>
+                                </a>
+                            </li>
                             <li><a class="dropdown-item " href="/dashboard-list-bautizo">
-                                    <i class="fadeIn animated bx bx-news"></i>
+                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
                                     Buscar bautizo
-                                </a></li>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -51,6 +53,12 @@
                                 <a class="dropdown-item m-0" href="/dashboard-comunion-create">
                                     <i class="fadeIn animated bx bx-news"></i>
                                     Nueva comunión
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item " href="/dashboard-list-comunion">
+                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                    Buscar Comunión
                                 </a>
                             </li>
                         </ul>
@@ -72,6 +80,12 @@
                                     Nueva Confirmación
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item " href="/dashboard-list-confirmacion">
+                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                    Buscar Confirmación
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -79,8 +93,8 @@
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
                             <div class="parent-icon">
-                                <img src="{{ asset('/assets/icon/casamiento.svg') }} " class="logo-icon"
-                                    alt="logo icon" style="width: 50px">
+                                <img src="{{ asset('/assets/icon/casamiento.svg') }} " class="logo-icon" alt="logo icon"
+                                    style="width: 50px">
                             </div>
                             <div class="menu-title d-flex align-items-center">Casamientos</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
@@ -90,6 +104,12 @@
                                 <a class="dropdown-item m-0" href="/dashboard-casamiento-create">
                                     <i class="fadeIn animated bx bx-news"></i>
                                     Nuevo casamiento
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item " href="/dashboard-list-casamiento">
+                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                    Buscar Casamientos
                                 </a>
                             </li>
                         </ul>
