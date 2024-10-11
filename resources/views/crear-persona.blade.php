@@ -18,7 +18,7 @@
                     <a href="dashboard" class="btn btn-sm btn-outline-primary">
                         <i class="lni lni-arrow-left"></i> Regresar
                     </a>
-                    <h3 class="mt-3">Crear nuevo bautizo</h3>
+                    <h3 class="mt-3">Crear nueva persona</h3>
                 </div>
                 <form class="p-4">
                     <div class="row mb-3">
@@ -52,12 +52,7 @@
                             <input type="date" class="form-control" id="fecha" name="fecha" aria-label="Fecha de la comunión">
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="fecha" class="col-sm-3 col-form-label">Fecha de la nacimiento*:</label>
-                        <div class="col-sm-9">
-                            <input type="date" class="form-control" id="fecha" name="fecha" aria-label="Fecha de la comunión">
-                        </div>
-                    </div>
+
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="departamento" class="form-label">Departamento:</label>
@@ -77,6 +72,28 @@
                                 <option value="municipio1">Municipio 1</option>
                                 <option value="municipio2">Municipio 2</option>
                                 <option value="municipio3">Municipio 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <label for="departamento" class="form-label">Madre:</label>
+                            <select class="form-control" id="departamento" name="departamento"
+                                aria-label="Seleccione el departamento">
+                                <option value="">Seleccione madre</option>
+                                <option value="departamento1">Anastasia</option>
+                                <option value="departamento2">Lucrecia</option>
+                                <option value="departamento3">Sofia</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="municipio" class="form-label">Padre:</label>
+                            <select class="form-control" id="municipio" name="municipio"
+                                aria-label="Seleccione el municipio">
+                                <option value="">Seleccione el padre</option>
+                                <option value="municipio1">Juan</option>
+                                <option value="municipio2">francisco</option>
+                                <option value="municipio3">Lucas</option>
                             </select>
                         </div>
                     </div>

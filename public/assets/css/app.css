@@ -44,7 +44,7 @@ body {
 	letter-spacing: 0.5px;
 
 
-	background-color: #f7f7ff;
+	background-color: #ffffff;
 
 
 	font-family: 'Roboto', sans-serif;
@@ -94,7 +94,7 @@ a {
 .logo-icon {
 
 
-	width: 30px;
+	width: 50px;
 
 
 }
@@ -3695,7 +3695,9 @@ form select.error, form textarea.error, form input.error, form input.error:focus
 
 
 }
-
+.bg-icons-dash{
+	background-color: #ffe6a7!important;
+}
 
 .bg-twitter {
 

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('style')
     <link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/assets/css/dashboard.css') }}">
 @endsection
 
 @section('wrapper')
@@ -14,10 +15,9 @@
                                 <div>
                                     <p class="mb-0 text-secondary">Total de Bautizos</p>
                                     <h4 class="my-1 text-info">4805</h4>
-                                    <p class="mb-0 font-13">+2.5% from last week</p>
                                 </div>
-                                <div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
-                                    <img src="{{ asset('/assets/icon/bautismo.png') }}" class="logo-icon" alt="logo icon">
+                                <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
+                                    <img src="{{ asset('/assets/icon/bautismo.svg') }}" class="logo-icon" alt="logo icon">
                                 </div>
                             </div>
                         </a>
@@ -30,10 +30,9 @@
                                 <div>
                                     <p class="mb-0 text-secondary">Total de Comuniones</p>
                                     <h4 class="my-1 text-danger">$84,245</h4>
-                                    <p class="mb-0 font-13">+5.4% from last week</p>
                                 </div>
-                                <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i
-                                        class='bx bxs-wallet'></i>
+                                <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
+                                    <img src="{{ asset('/assets/icon/comunion.svg') }}" style="height: 50px" class="logo-icon" alt="logo icon">
                                 </div>
                             </a>
                         </div>
@@ -46,10 +45,9 @@
                                 <div>
                                     <p class="mb-0 text-secondary">Total de Confirmaciones</p>
                                     <h4 class="my-1 text-success">34.6%</h4>
-                                    <p class="mb-0 font-13">-4.5% from last week</p>
                                 </div>
-                                <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i
-                                        class='bx bxs-bar-chart-alt-2'></i>
+                                <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
+                                    <img src="{{ asset('/assets/icon/confirmacion.svg') }}" class="logo-icon" alt="logo icon">
                                 </div>
                             </a>
                         </div>
@@ -62,10 +60,9 @@
                                 <div>
                                     <p class="mb-0 text-secondary">Total de casamientos</p>
                                     <h4 class="my-1 text-warning">8.4K</h4>
-                                    <p class="mb-0 font-13">+8.4% from last week</p>
                                 </div>
-                                <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i
-                                        class='bx bxs-group'></i>
+                                <div class="widgets-icons-2 rounded-circle bg-icons-dash  text-white ms-auto">
+                                     <img src="{{ asset('/assets/icon/casamiento.svg') }}" class="logo-icon" alt="logo icon">
                                 </div>
                             </a>
                         </div>
@@ -184,7 +181,7 @@
                         </ul>
                     </div>
                 </div>
-            </div><!--end row-->
+            </div><!--end row--> 
         @endsection
 
         @section('script')

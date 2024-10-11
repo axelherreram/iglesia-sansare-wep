@@ -274,9 +274,9 @@ a {
 }
 
 .card {
-    border: 0 solid transparent;
 	margin-bottom: 1.5rem;
 	box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+	border: 1px solid #9c6644 !important;
 }
 
 .card-header {
@@ -293,20 +293,6 @@ a {
 	background-color: #008cff;
 	border-color: #008cff
 }
-
-.border-primary {
-	border-color: #008cff!important
-}
-
-.border-success {
-	border-color: #15ca20!important
-}
-
-.border-danger {
-	border-color: #fd3550!important
-}
-
-
 
 .text-primary {
 	color: #008cff!important

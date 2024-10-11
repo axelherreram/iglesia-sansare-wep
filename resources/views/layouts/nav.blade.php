@@ -18,7 +18,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/bautismo.png') }}"
+                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/bautismo.svg') }}"
                                     class="logo-icon" alt="logo icon">
                                 </i>
                             </div>
@@ -30,13 +30,17 @@
                                     <i class="fadeIn animated bx bx-news"></i>
                                     Nuevo bautizo
                                 </a></li>
+                            <li><a class="dropdown-item " href="/dashboard-list-bautizo">
+                                    <i class="fadeIn animated bx bx-news"></i>
+                                    Buscar bautizo
+                                </a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/comunion.png') }}"
-                                    class="logo-icon" alt="logo icon">
+                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/comunion.svg') }}"
+                                    class="logo-icon" alt="logo icon" style="height: 50px">
                                 </i>
                             </div>
                             <div class="menu-title d-flex align-items-center">Comunión</div>
@@ -54,7 +58,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/confirmacion.png') }}"
+                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/confirmacion.svg') }}"
                                     class="logo-icon" alt="logo icon">
                                 </i>
                             </div>
@@ -74,9 +78,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
-                            <div class="parent-icon"> <img src="{{ asset('/assets/icon/casamiento.png') }}"
-                                    class="logo-icon" alt="logo icon">
-                                </i>
+                            <div class="parent-icon">
+                                <img src="{{ asset('/assets/icon/casamiento.svg') }} " class="logo-icon"
+                                    alt="logo icon" style="width: 50px">
                             </div>
                             <div class="menu-title d-flex align-items-center">Casamientos</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
@@ -90,8 +94,8 @@
                             </li>
                         </ul>
                     </li>
-
-                    <li class="nav-item dropdown">
+                    {{--    
+              <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
                             <div class="parent-icon"> <img src="{{ asset('/assets/icon/socios.png') }}"
@@ -105,12 +109,12 @@
                             <li>
                                 <a class="dropdown-item m-0" href="/crear-persona">
                                     <i class="fadeIn animated bx bx-news"></i>
-                                    Nuevo casamiento
+                                    Nueva persona
                                 </a>
                             </li>
                         </ul>
                     </li>
-
+ --}}
                     {{-- 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"

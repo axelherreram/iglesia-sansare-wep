@@ -18,79 +18,47 @@
                     <a href="dashboard" class="btn btn-sm btn-outline-primary">
                         <i class="lni lni-arrow-left"></i> Regresar
                     </a>
-                    <h3 class="mt-3">Crear nuevo bautizo</h3>
+                    <h3 class="mt-3">Crear nueva confirmación</h3>
                 </div>
 
                 <form class="p-4">
+                    <!-- Correlativo y Fecha del confirmación -->
                     <div class="row mb-3">
-                        <label for="fecha" class="col-sm-3 col-form-label">Fecha de la confirmación:</label>
-                        <div class="col-sm-9">
-                            <input type="date" class="form-control" id="fecha" name="fecha">
+                        <div class="col-sm-6">
+                            <label for="correlativo" class="form-label">Partida No:</label>
+                            <input type="text" class="form-control" id="correlativo" name="correlativo">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="fecha_confirmacion" class="form-label">Fecha de confirmación:</label>
+                            <input type="date" class="form-control" id="fecha_confirmacion" name="fecha_confirmacion">
                         </div>
                     </div>
+
                     <span><strong>Sacerdote</strong></span>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <label for="nombre_comunion" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre_comunion" name="nombre_comunion"
-                                aria-label="Nombre de la persona de la primera comunión">
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="apellido_comunion" class="form-label">Apellidos:</label>
-                            <input type="text" class="form-control" id="apellido_comunion" name="apellido_comunion"
-                                aria-label="Apellidos de la persona de la primera comunión">
+                        <label for="nombre_sacerdote" class="col-sm-3 col-form-label">Monseñor (ó delegado):</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="nombre_sacerdote" name="nombre_sacerdote">
                         </div>
                     </div>
+                    
                     <span><strong>Persona confirmada</strong></span>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <label for="nombre_comunion" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre_comunion" name="nombre_comunion"
-                                aria-label="Nombre de la persona de la primera comunión">
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="apellido_comunion" class="form-label">Apellidos:</label>
-                            <input type="text" class="form-control" id="apellido_comunion" name="apellido_comunion"
-                                aria-label="Apellidos de la persona de la primera comunión">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="edad" class="col-sm-3 col-form-label">Edad:</label>
+                        <label for="nombre_confirmado" class="col-sm-3 col-form-label">Nombre de la persona confirmada:</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="edad" name="edad" min="0">
+                            <input type="text" class="form-control" id="nombre_confirmado" name="nombre_confirmado">
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="parroquia_bautismo" class="col-sm-3 col-form-label">Bautizado en la Parroquia:</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="parroquia_bautismo" name="parroquia_bautismo">
+                        <div class="col-sm-2">
+                            <label for="edad_confirmado" class="form-label">Edad:</label>
+                            <input type="number" class="form-control" id="edad_confirmado" name="edad_confirmado">
                         </div>
-                    </div>
-                    <!-- Ubicación -->
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <label for="departamento" class="form-label">Departamento:</label>
-                            <select class="form-control" id="departamento" name="departamento"
-                                aria-label="Seleccione el departamento">
-                                <option value="">Seleccione el departamento</option>
-                                <option value="departamento1">Departamento 1</option>
-                                <option value="departamento2">Departamento 2</option>
-                                <option value="departamento3">Departamento 3</option>
-                                <!-- Agrega más opciones según sea necesario -->
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="municipio" class="form-label">Municipio:</label>
-                            <select class="form-control" id="municipio" name="municipio"
-                                aria-label="Seleccione el municipio">
-                                <option value="">Seleccione el municipio</option>
-                                <option value="municipio1">Municipio 1</option>
-                                <option value="municipio2">Municipio 2</option>
-                                <option value="municipio3">Municipio 3</option>
-                                <!-- Agrega más opciones según sea necesario -->
-                            </select>
+                        <div class="col-sm-10">
+                            <label for="parroquia_bautizo" class="form-label">Bautizada en la Parroquía:</label>
+                            <input type="text" class="form-control" id="parroquia_bautizo" name="parroquia_bautizo">
                         </div>
                     </div>
 
@@ -99,51 +67,46 @@
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="nombre_padre" class="form-label">Nombre del padre:</label>
-                            <input type="text" class="form-control" id="nombre_padre" name="nombre_padre"
-                                aria-label="Nombre del padre">
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="apellido_padre" class="form-label">Apellidos del padre:</label>
-                            <input type="text" class="form-control" id="apellido_padre" name="apellido_padre"
-                                aria-label="Apellidos del padre">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-6">
-                            <label for="nombre_madre" class="form-label">Nombre de la madre:</label>
-                            <input type="text" class="form-control" id="nombre_madre" name="nombre_madre"
-                                aria-label="Nombre de la madre">
+                            <input type="text" class="form-control" id="nombre_padre" name="nombre_padre" aria-label="Nombre del padre">
                         </div>
                         <div class="col-sm-6">
                             <label for="apellido_madre" class="form-label">Apellidos de la madre:</label>
-                            <input type="text" class="form-control" id="apellido_madre" name="apellido_madre"
-                                aria-label="Apellidos de la madre">
+                            <input type="text" class="form-control" id="apellido_madre" name="apellido_madre" aria-label="Apellidos de la madre">
                         </div>
                     </div>
-                    <span><strong> Datos padrinos</strong></span>
+
+                    <span><strong>Datos padrinos</strong></span>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <label for="nombre_madrina" class="form-label">Nombre de la madrina:</label>
-                            <input type="text" class="form-control" id="nombre_madrina" name="nombre_madrina"
-                                aria-label="Nombre de la madrina">
+                            <label for="nombre_madre" class="form-label">Nombre de la madre:</label>
+                            <input type="text" class="form-control" id="nombre_madre" name="nombre_madre" aria-label="Nombre de la madre">
                         </div>
                         <div class="col-sm-6">
-                            <label for="apellido_madrina" class="form-label">Apellidos de la madrina:</label>
-                            <input type="text" class="form-control" id="apellido_madrina" name="apellido_madrina"
-                                aria-label="Apellidos de la madrina">
+                            <label for="apellido_madre_padrinos" class="form-label">Apellidos de la madre:</label>
+                            <input type="text" class="form-control" id="apellido_madre_padrinos" name="apellido_madre_padrinos" aria-label="Apellidos de la madre">
                         </div>
                     </div>
+
+                    <!-- Ubicación -->
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <label for="nombre_padrino" class="form-label">Nombre del padrino:</label>
-                            <input type="text" class="form-control" id="nombre_padrino" name="nombre_padrino"
-                                aria-label="Nombre del padrino">
+                            <label for="departamento" class="form-label">Departamento:</label>
+                            <select class="form-control" id="departamento" name="departamento" aria-label="Seleccione el departamento">
+                                <option value="">Seleccione el departamento</option>
+                                <option value="departamento1">Departamento 1</option>
+                                <option value="departamento2">Departamento 2</option>
+                                <option value="departamento3">Departamento 3</option>
+                            </select>
                         </div>
                         <div class="col-sm-6">
-                            <label for="apellido_padrino" class="form-label">Apellidos del padrino:</label>
-                            <input type="text" class="form-control" id="apellido_padrino" name="apellido_padrino"
-                                aria-label="Apellidos del padrino">
+                            <label for="municipio" class="form-label">Municipio:</label>
+                            <select class="form-control" id="municipio" name="municipio" aria-label="Seleccione el municipio">
+                                <option value="">Seleccione el municipio</option>
+                                <option value="municipio1">Municipio 1</option>
+                                <option value="municipio2">Municipio 2</option>
+                                <option value="municipio3">Municipio 3</option>
+                            </select>
                         </div>
                     </div>
 
