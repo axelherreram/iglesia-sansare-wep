@@ -36,6 +36,7 @@
             padding: 10px;
         }
 		footer a{
+			border: 1px solid #ffe6a7;
 			background-color: #ffe6a7 !important;
         }
     </style>
