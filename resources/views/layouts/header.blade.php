@@ -26,7 +26,6 @@
                                 class="user-img" alt="user avatar">
                             <div class="user-info">
                                 <p class="user-name mb-0">Pauline Seitz</p>
-                                <p class="designattion mb-0">Web Designer</p>
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
