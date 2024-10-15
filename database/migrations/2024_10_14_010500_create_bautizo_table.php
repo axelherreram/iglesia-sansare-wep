@@ -9,7 +9,7 @@ class CreateBautizoTable extends Migration
     {
         Schema::create('bautizo', function (Blueprint $table) {
             $table->increments('bautizo_id');
-            $table->integer('dato_parroquia_id')-> unsigned(1);
+            $table->integer('dato_parroquia_id')->unsigned();
             $table->string('NoPartida', 20);
             $table->string('folio', 50);
             $table->dateTime('fecha_bautizo');
