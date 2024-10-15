@@ -36,6 +36,11 @@ class Bautizo extends Model
     protected $attributes = [
         'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
     ];
+
+    protected $casts = [
+        'fecha_bautizo' => 'datetime',
+        'fecha_nacimiento' => 'datetime',
+    ];
     // Relación con la tabla 'DatoGeneralParroquia'
     public function parroquia()
     {
