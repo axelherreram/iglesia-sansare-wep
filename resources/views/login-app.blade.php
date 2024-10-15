@@ -36,17 +36,18 @@
                             <p class="mb-0">Por favor inicia sesión en tu cuenta</p>
                         </div>
                         <div class="form-body">
-                            <form class="row g-3">
+                            <form method="POST" class="row g-3" action="{{ route('login.post') }}">
+                                @csrf
                                 <div class="col-12">
                                     <label for="inputEmailAddress" class="form-label">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="inputEmailAddress"
-                                        placeholder="Ingrese su correo electrónico" style="border: 1px solid #1b1b1f !important;">
+                                    <input type="email" name="email" class="form-control" id="inputEmailAddress"
+                                           placeholder="Ingrese su correo electrónico" required style="border: 1px solid #1b1b1f !important;">
                                 </div>
                                 <div class="col-12">
                                     <label for="inputChoosePassword" class="form-label">Contraseña</label>
-                                    <div class="input-group" id="show_hide_password">
-                                        <input type="password" class="form-control border-end-0" style="border: 1px solid #1b1b1f !important;"
-                                            id="inputChoosePassword" placeholder="Ingrese su contraseña">
+                                    <div class="input-group" id="show_hide_password" style="border: 1px solid; border-radius: 7px">
+                                        <input type="password" name="password" class="form-control"
+                                               id="inputChoosePassword" placeholder="Ingrese su contraseña" required style="border: 1px solid #1b1b1f !important;">
                                         <a href="javascript:;" class="input-group-text bg-transparent">
                                             <i class="bx bx-hide"></i>
                                         </a>
@@ -56,14 +57,15 @@
                                    
                                 </div>
                                 <div class="col-md-6 text-end">
-                                    <a href="auth-basic-forgot-password">¿Olvido la contraseña?</a>
+                                    <a href="#">¿Olvidó la contraseña?</a>
                                 </div>
                                 <div class="col-12">
                                     <div class="d-flex justify-content-end">
-                                        <a type="submit" class="btn btn-primary-ig"  href="dashboard">INICIAR SESIÓN</a>
+                                        <button type="submit" class="btn btn-primary-ig">INICIAR SESIÓN</button>
                                     </div>
                                 </div>
                             </form>
+                            
                         </div>
                     </div>
 
