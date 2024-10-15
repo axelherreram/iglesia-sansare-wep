@@ -30,19 +30,16 @@
                         <!-- Input de fecha en su propia columna -->
                         <div class="col-md-3">
                             <label for="anio" class="form-label">Año</label>
-                            <input type="number" class="form-control" id="anio" placeholder="2024" min="1900"
-                                max="2100">
+                            <input type="number" class="form-control" id="anio" placeholder="2024" min="1900" max="2100">
                         </div>
 
                         <!-- Botón de Buscar -->
                         <div class="col-md-3">
                             <label for="buscar" class="form-label d-block">&nbsp;</label>
-                            <button class="btn btn-primary-ig  w-100">Buscar</button>
+                            <button class="btn btn-primary-ig w-100">Buscar</button>
                         </div>
                     </div>
-                </div>
-
-                <div class="card-body text-center">
+                    <!-- Tabla de bautizos -->
                     <div class="table-responsive">
                         <table class="table align-middle mb-0 mx-auto">
                             <thead class="table-light">
@@ -55,44 +52,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>001</td>
-                                    <td>Juan Carlos Pérez García</td>
-                                    <td>Padre Gabriel Morales</td>
-                                    <td>03 Feb 2020</td>
-                                    <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
-                                </tr>
-                                <tr>
-                                    <td>002</td>
-                                    <td>Maria Fernanda López Rodríguez</td>
-                                    <td>Padre Gabriel Morales</td>
-                                    <td>05 Feb 2020</td>
-                                    <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
-                                </tr>
-                                <tr>
-                                    <td>003</td>
-                                    <td>Carlos Andrés García Ramírez</td>
-                                    <td>Padre Miguel Ángel Torres</td>
-                                    <td>06 Feb 2020</td>
-                                    <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
-                                </tr>
-                                <!-- Más filas aquí -->
+                                @foreach ($bautizos as $bautizo)
+                                    <tr>
+                                        <td>{{ $bautizo->NoPartida }} - {{ $bautizo->folio }}</td>
+                                        <td>{{ $bautizo->nombre_persona_bautizada }}</td>
+                                        <td>{{ $bautizo->nombre_sacerdote }}</td>
+                                        <td>{{ $bautizo->fecha_bautizo->format('d M Y') }}</td>
+                                        <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @section('script')
-        <!--plugins-->
-        <script src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
-        <script src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
-        <script src="assets/plugins/chartjs/js/chart.js"></script>
-        <script src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
-        <!--Morris JavaScript -->
-        <script src="assets/plugins/raphael/raphael-min.js"></script>
-        <script src="assets/plugins/morris/js/morris.js"></script>
-        <script src="assets/js/index2.js"></script>
-    @endsection
+@section('script')
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        @endif
+    </script>
+
+    <!--plugins-->
+    <script src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="assets/plugins/chartjs/js/chart.js"></script>
+    <script src="assets/plugins/sparkline-charts/jquery.sparkline.min.js"></script>
+    <!--Morris JavaScript -->
+    <script src="assets/plugins/raphael/raphael-min.js"></script>
+    <script src="assets/plugins/morris/js/morris.js"></script>
+    <script src="assets/js/index2.js"></script>
+@endsection

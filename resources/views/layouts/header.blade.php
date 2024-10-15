@@ -7,7 +7,7 @@
                         <div class="">
                             <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">
                         </div>
-                        <div >
+                        <div>
                             <h4 class="logo-text fw-bold" style="font-size: 1rem">Iglesia Sansare</h4>
                         </div>
                     </a>
@@ -16,20 +16,25 @@
 
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center gap-1">
-                           
+
                         </ul>
                     </div>
                     <div class="user-box dropdown px-3">
                         <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret"
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://i.pinimg.com/564x/08/f5/61/08f5618462466886b09a02713c996112.jpg"
-                                class="user-img" alt="user avatar">
+                            <img src="{{ asset('/assets/img/iglesia-1.png') }}" class="user-img" alt="user avatar">
                             <div class="user-info">
-                                <p class="user-name mb-0">Pauline Seitz</p>
+                                <!-- Mostrar el nombre del usuario autenticado -->
+                                @if (Auth::check())
+                                    <p class="user-name mb-0">{{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}
+                                    </p>
+                                @else
+                                    <p class="user-name mb-0">Usuario</p>
+                                @endif
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
+                            <li><a class="dropdown-item d-flex align-items-center" href="user-profile"><i
                                         class="bx bx-user fs-5"></i><span>Profile</span></a>
                             </li>
                             <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
@@ -38,8 +43,13 @@
                             <li>
                                 <div class="dropdown-divider mb-0"></div>
                             </li>
-                            <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i
-                                        class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item d-flex align-items-center">
+                                        <i class="bx bx-log-out-circle"></i><span>Cerrar Sesión</span>
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>
