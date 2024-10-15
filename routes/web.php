@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MunicipioController;
+use App\Http\Controllers\BautizoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,49 +16,80 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+*/
+
+// Ruta para mostrar el formulario de login
 Route::get('/', function () {
+    if (Auth::check()) {
+        // Redirige al dashboard si el usuario ya está autenticado
+        return redirect()->route('dashboard');
+    }
     return view('login-app');
-});
+})->name('login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Ruta para procesar el login (POST)
+Route::post('login', [LoginController::class, 'login'])->name('login.post');
 
-Route::get('/dashboard-list-bautizo', function () {
-    return view('list-bautizo');
-});
+// Ruta para cerrar sesión (POST)
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard-bautizo-create', function () {
-    return view('bautizo-craete-update');
-});
-
-Route::get('/dashboard-list-comunion', function () {
-    return view('list-comunion');
-});
-
-Route::get('/dashboard-comunion-create', function () {
-    return view('comunion-craete-update');
-});
-
-Route::get('/dashboard-list-confirmacion', function () {
-    return view('list-confirmacion');
-});
-
-Route::get('/dashboard-confirmacion-create', function () {
-    return view('confirmacion-craete-update');
-});
+// Ruta protegida para el dashboard
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');  // Define el nombre de la ruta como 'dashboard'
 
 
-Route::get('/dashboard-list-casamiento', function () {
-    return view('list-casamiento');
-});
 
-Route::get('//dashboard-casamiento-create', function () {
-    return view('casamiento-craete-update');
-});
+    Route::get('/dashboard-bautizo-create', [BautizoController::class, 'create'])->name('bautizos.create');
+    Route::post('/bautizos', [BautizoController::class, 'store'])->name('bautizos.store');
+    Route::get('/municipios/{departamento_id}', [BautizoController::class, 'getMunicipios']);
+    
 
-Route::get('//crear-persona', function () {
-    return view('crear-persona');
+
+    Route::get('/dashboard-list-bautizo', [BautizoController::class, 'index'])->name('bautizos.index');
+
+
+
+
+    Route::get('/dashboard-bautizo-create', [BautizoController::class, 'create']);
+ 
+
+    Route::get('/dashboard-list-comunion', function () {
+        return view('list-comunion');
+    });
+
+    Route::get('/dashboard-comunion-create', function () {
+        return view('comunion-craete-update');
+    });
+
+    Route::get('/dashboard-list-confirmacion', function () {
+        return view('list-confirmacion');
+    });
+
+    Route::get('/dashboard-confirmacion-create', function () {
+        return view('confirmacion-craete-update');
+    });
+
+    Route::get('/dashboard-list-casamiento', function () {
+        return view('list-casamiento');
+    });
+
+    Route::get('/dashboard-casamiento-create', function () {
+        return view('casamiento-craete-update');
+    });
+
+    Route::get('/user-profile', function () {
+        return view('user-profile');
+    });
+
+    // Route::get('/municipios/{departamento_id}', [MunicipioController::class, 'getMunicipios']);
 });
 
 
@@ -63,9 +98,7 @@ Route::get('/auth-basic-forgot-password', function () {
     return view('auth-basic-forgot-password');
 });
 
-Route::get('/user-profile', function () {
-    return view('user-profile');
-});
+
 Route::get('/errors-404-error', function () {
     return view('errors-404-error');
 });
