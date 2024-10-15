@@ -32,8 +32,10 @@ class Bautizo extends Model
         'margen',
     ];
 
-    // Definir las relaciones con otras tablas
-
+    // Definir el valor predeterminado de 'dato_parroquia_id'
+    protected $attributes = [
+        'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
+    ];
     // Relación con la tabla 'DatoGeneralParroquia'
     public function parroquia()
     {

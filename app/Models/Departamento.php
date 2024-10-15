@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class departamento extends Model
+class Departamento extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class departamento extends Model
     protected $primaryKey = 'departamento_id';
 
     // Desactivar timestamps si no los necesitas
-    public $timestamps = false;
+    public $timestamps = true;
 
     // Campos que se pueden asignar masivamente
     protected $fillable = [
