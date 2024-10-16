@@ -35,7 +35,9 @@ class Confirmacion extends Model
         'departamento_id',
         'municipio_id'
     ];
-
+    protected $attributes = [
+        'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
+    ];
     // Relaciones con otras tablas
     public function parroquia()
     {

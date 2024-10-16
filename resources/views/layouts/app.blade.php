@@ -58,12 +58,11 @@
         <!-- End Search Model -->
         <!--start overlay-->
     </div>
-    <footer class="sticky-bottom ">
+{{--     <footer class="sticky-bottom ">
         <a href="dashboard" class="btn border">
             <img src="{{ asset('/assets/icon/Vector.svg') }}"  alt="" >
         </a>
-		
-    </footer>
+    </footer> --}}
     <!--end wrapper-->
     <!--start switcher-->
     <!--end switcher-->
