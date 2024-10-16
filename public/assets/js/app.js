@@ -1,17 +1,7 @@
 $(function () {
 	"use strict";
 	/* perfect scrol bar */
-	new PerfectScrollbar(".scroll-menu");
-	new PerfectScrollbar(".app-container");
-	new PerfectScrollbar('.header-message-list');
-	new PerfectScrollbar('.header-notifications-list');
-	// search bar
-	$(".mobile-search-icon").on("click", function () {
-		$(".search-bar").addClass("full-search-bar");
-	});
-	$(".search-close").on("click", function () {
-		$(".search-bar").removeClass("full-search-bar");
-	});
+
 
 
 	// $(".mobile-toggle-menu").on("click", function () {
