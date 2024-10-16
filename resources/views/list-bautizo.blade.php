@@ -2,30 +2,6 @@
 
 @section('style')
     <link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-{{--     <style>
-        .pagination-container .justify-content-center svg {
-            width: 50% !important;
-        }
-
-        .pagination-container .flex.justify-between.flex-1 {
-            display: none;
-        }
-
-        p.text-sm.text-gray-700.leading-5 {
-            display: none;
-        }
-
-        div div span {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        div div span a {
-            max-width: 80px;
-        }
-
-    </style> --}}
     <style>
         p.small.text-muted{
             display: none
@@ -33,7 +9,8 @@
     </style>
     @endsection
 
-@section('wrapper')
+
+    @section('wrapper')
     <div class="page-wrapper">
         <div class="page-content">
             <div class="card radius-10">
@@ -44,31 +21,33 @@
                     </a>
                     <h2 class="mt-3">Listado de bautizos</h2>
                     <hr>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-md-6 d-md-flex">
-                            <div class="me-2 flex-fill">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                    <form action="{{ route('bautizos.index') }}" method="GET">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-6 d-md-flex">
+                                <div class="me-2 flex-fill">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ request('nombre') }}">
+                                </div>
+                                <div class="flex-fill">
+                                    <label for="apellido" class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" value="{{ request('apellido') }}">
+                                </div>
                             </div>
-                            <div class="flex-fill">
-                                <label for="apellido" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="apellido" placeholder="Apellido">
+                    
+                            <!-- Input de fecha en su propia columna -->
+                            <div class="col-md-3">
+                                <label for="anio" class="form-label">Año</label>
+                                <input type="number" class="form-control" id="anio" name="anio" placeholder="2024" min="1900" max="{{ date('Y') }}" value="{{ request('anio') }}">
+                            </div>
+                    
+                            <!-- Botón de Buscar -->
+                            <div class="col-md-3">
+                                <label for="buscar" class="form-label d-block">&nbsp;</label>
+                                <button class="btn btn-primary-ig w-100">Buscar</button>
                             </div>
                         </div>
-
-                        <!-- Input de fecha en su propia columna -->
-                        <div class="col-md-3">
-                            <label for="anio" class="form-label">Año</label>
-                            <input type="number" class="form-control" id="anio" placeholder="2024" min="1900"
-                                max="2100">
-                        </div>
-
-                        <!-- Botón de Buscar -->
-                        <div class="col-md-3">
-                            <label for="buscar" class="form-label d-block">&nbsp;</label>
-                            <button class="btn btn-primary-ig w-100">Buscar</button>
-                        </div>
-                    </div>
+                    </form>
+                    
                     <!-- Tabla de bautizos -->
                     <div class="table-responsive">
                         <table class="table align-middle mb-0 mx-auto">

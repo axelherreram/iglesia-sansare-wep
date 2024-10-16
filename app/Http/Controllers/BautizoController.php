@@ -10,10 +10,31 @@ use App\Models\Departamento;
 class BautizoController extends Controller
 {
     // Método para mostrar la lista de bautizos
-    public function index()
+    public function index(Request $request)
     {
-        // Obtener todos los bautizos de la base de datos
-        $bautizos = Bautizo::paginate(10);
+        // Obtener los valores de búsqueda
+        $nombre = $request->input('nombre');
+        $apellido = $request->input('apellido');
+        $anio = $request->input('anio');
+
+        // Consulta inicial para los bautizos
+        $query = Bautizo::query();
+
+        // Filtros de búsqueda
+        if ($nombre) {
+            $query->where('nombre_persona_bautizada', 'like', '%' . $nombre . '%');
+        }
+
+        if ($apellido) {
+            $query->where('apellido_persona_bautizada', 'like', '%' . $apellido . '%');
+        }
+
+        if ($anio) {
+            $query->whereYear('fecha_bautizo', $anio);
+        }
+
+        // Paginación de los resultados
+        $bautizos = $query->paginate(10);
 
         // Retornar la vista 'dashboard-list-bautizo' con los bautizos
         return view('list-bautizo', compact('bautizos'));
@@ -35,6 +56,7 @@ class BautizoController extends Controller
     public function store(Request $request)
     {
         // Validar los datos del formulario
+        // Validar los datos del formulario
         $validatedData = $request->validate([
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
@@ -51,7 +73,56 @@ class BautizoController extends Controller
             'nombre_padrino' => 'nullable|string|max:255',
             'nombre_madrina' => 'nullable|string|max:255',
             'margen' => 'nullable|string|max:200',
+        ], [
+            // Mensajes de error personalizados
+            'NoPartida.required' => 'El número de partida es obligatorio.',
+            'NoPartida.string' => 'El número de partida debe ser una cadena de texto.',
+            'NoPartida.max' => 'El número de partida no puede tener más de 20 caracteres.',
+
+            'folio.required' => 'El folio es obligatorio.',
+            'folio.string' => 'El folio debe ser una cadena de texto.',
+            'folio.max' => 'El folio no puede tener más de 50 caracteres.',
+
+            'fecha_bautizo.required' => 'La fecha de bautizo es obligatoria.',
+            'fecha_bautizo.date' => 'La fecha de bautizo debe ser una fecha válida.',
+
+            'nombre_persona_bautizada.required' => 'El nombre de la persona bautizada es obligatorio.',
+            'nombre_persona_bautizada.string' => 'El nombre de la persona bautizada debe ser una cadena de texto.',
+            'nombre_persona_bautizada.max' => 'El nombre de la persona bautizada no puede tener más de 255 caracteres.',
+
+            'edad.string' => 'La edad debe ser una cadena de texto.',
+            'edad.max' => 'La edad no puede tener más de 4 caracteres.',
+
+            'fecha_nacimiento.date' => 'La fecha de nacimiento debe ser una fecha válida.',
+
+            'aldea.string' => 'La aldea debe ser una cadena de texto.',
+            'aldea.max' => 'La aldea no puede tener más de 255 caracteres.',
+
+            'municipio_id.required' => 'El municipio es obligatorio.',
+            'municipio_id.exists' => 'El municipio seleccionado no es válido.',
+
+            'departamento_id.required' => 'El departamento es obligatorio.',
+            'departamento_id.exists' => 'El departamento seleccionado no es válido.',
+
+            'nombre_padre.string' => 'El nombre del padre debe ser una cadena de texto.',
+            'nombre_padre.max' => 'El nombre del padre no puede tener más de 255 caracteres.',
+
+            'nombre_madre.string' => 'El nombre de la madre debe ser una cadena de texto.',
+            'nombre_madre.max' => 'El nombre de la madre no puede tener más de 255 caracteres.',
+
+            'nombre_sacerdote.string' => 'El nombre del sacerdote debe ser una cadena de texto.',
+            'nombre_sacerdote.max' => 'El nombre del sacerdote no puede tener más de 255 caracteres.',
+
+            'nombre_padrino.string' => 'El nombre del padrino debe ser una cadena de texto.',
+            'nombre_padrino.max' => 'El nombre del padrino no puede tener más de 255 caracteres.',
+
+            'nombre_madrina.string' => 'El nombre de la madrina debe ser una cadena de texto.',
+            'nombre_madrina.max' => 'El nombre de la madrina no puede tener más de 255 caracteres.',
+
+            'margen.string' => 'El margen debe ser una cadena de texto.',
+            'margen.max' => 'El margen no puede tener más de 200 caracteres.',
         ]);
+
 
         // Crear un nuevo registro en la tabla 'bautizo'
         Bautizo::create([
