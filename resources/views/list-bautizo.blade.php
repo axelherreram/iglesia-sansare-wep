@@ -28,10 +28,7 @@
                                     <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ request('nombre') }}">
                                 </div>
-                                <div class="flex-fill">
-                                    <label for="apellido" class="form-label">Apellido</label>
-                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" value="{{ request('apellido') }}">
-                                </div>
+                               
                             </div>
                     
                             <!-- Input de fecha en su propia columna -->
