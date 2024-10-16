@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(municipioSeed::class);
         $this->call(InfoIglesia::class);
         $this->call(BautizoSeeder::class);
+        $this->call(ComunionSeeder::class);
     }
 }

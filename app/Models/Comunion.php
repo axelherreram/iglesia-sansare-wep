@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Comunion extends Model
 {
     use HasFactory;
-
     // Nombre de la tabla en la base de datos
     protected $table = 'comunion';
 
@@ -26,7 +25,9 @@ class Comunion extends Model
         'departamento_id',
         'municipio_id',
     ];
-
+    protected $attributes = [
+        'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
+    ];
     // Relación con la tabla `dato_general_parroquia`
     public function parroquia()
     {
