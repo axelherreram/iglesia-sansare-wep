@@ -13,7 +13,7 @@ class BautizoController extends Controller
     public function index()
     {
         // Obtener todos los bautizos de la base de datos
-        $bautizos = Bautizo::all();
+        $bautizos = Bautizo::paginate(10);
 
         // Retornar la vista 'dashboard-list-bautizo' con los bautizos
         return view('list-bautizo', compact('bautizos'));
