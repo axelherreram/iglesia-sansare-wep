@@ -2,7 +2,36 @@
 
 @section('style')
     <link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
-@endsection
+{{--     <style>
+        .pagination-container .justify-content-center svg {
+            width: 50% !important;
+        }
+
+        .pagination-container .flex.justify-between.flex-1 {
+            display: none;
+        }
+
+        p.text-sm.text-gray-700.leading-5 {
+            display: none;
+        }
+
+        div div span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div div span a {
+            max-width: 80px;
+        }
+
+    </style> --}}
+    <style>
+        p.small.text-muted{
+            display: none
+        }
+    </style>
+    @endsection
 
 @section('wrapper')
     <div class="page-wrapper">
@@ -30,7 +59,8 @@
                         <!-- Input de fecha en su propia columna -->
                         <div class="col-md-3">
                             <label for="anio" class="form-label">Año</label>
-                            <input type="number" class="form-control" id="anio" placeholder="2024" min="1900" max="2100">
+                            <input type="number" class="form-control" id="anio" placeholder="2024" min="1900"
+                                max="2100">
                         </div>
 
                         <!-- Botón de Buscar -->
@@ -57,13 +87,19 @@
                                         <td>{{ $bautizo->NoPartida }} - {{ $bautizo->folio }}</td>
                                         <td>{{ $bautizo->nombre_persona_bautizada }}</td>
                                         <td>{{ $bautizo->nombre_sacerdote }}</td>
-                                        <td>{{ $bautizo->fecha_bautizo->format('d M Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('d M Y') }}</td>
                                         <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+                    <div class="pagination-container">
+                        <div class="d-flex justify-content-center mt-4">
+                            {{ $bautizos->onEachSide(1)->links() }}  
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -75,7 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        @if(session('success'))
+        @if (session('success'))
             Swal.fire({
                 icon: 'success',
                 title: 'Éxito',

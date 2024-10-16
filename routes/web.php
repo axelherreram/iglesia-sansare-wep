@@ -3,8 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\BautizoController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,9 +41,9 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Ruta protegida para el dashboard
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');  // Define el nombre de la ruta como 'dashboard'
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
 
 

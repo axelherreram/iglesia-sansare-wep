@@ -14,7 +14,7 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0 text-secondary">Total de Bautizos</p>
-                                    <h4 class="my-1 text-info">4805</h4>
+                                    <h4 class="my-1 text-info">{{ $totalBautizos }}</h4>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
                                     <img src="{{ asset('/assets/icon/bautismo.svg') }}" class="logo-icon" alt="logo icon">
@@ -25,51 +25,50 @@
                 </div>
                 <div class="col">
                     <div class="card radius-10 border-start border-0 border-4 border-danger">
-                        <div class="card-body">
-                            <a class="d-flex align-items-center" href="dashboard-list-comunion">
+                        <a class="card-body" href="dashboard-list-comunion">
+                            <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0 text-secondary">Total de Comuniones</p>
-                                    <h4 class="my-1 text-danger">$84,245</h4>
+                                    <h4 class="my-1 text-danger">{{ $totalComuniones }}</h4>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
                                     <img src="{{ asset('/assets/icon/comunion.svg') }}" style="height: 50px" class="logo-icon" alt="logo icon">
                                 </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card radius-10 border-start border-0 border-4 border-success">
-                        <div class="card-body">
-                            <a class="d-flex align-items-center" href="/dashboard-list-confirmacion">
+                        <a class="card-body" href="/dashboard-list-confirmacion">
+                            <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0 text-secondary">Total de Confirmaciones</p>
-                                    <h4 class="my-1 text-success">34.6%</h4>
+                                    <h4 class="my-1 text-success">{{ $totalConfirmaciones }}</h4>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
                                     <img src="{{ asset('/assets/icon/confirmacion.svg') }}" class="logo-icon" alt="logo icon">
                                 </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card radius-10 border-start border-0 border-4 border-warning">
-                        <div class="card-body">
-                            <a class="d-flex align-items-center" href="dashboard-list-casamiento">
+                        <a class="card-body" href="dashboard-list-casamiento">
+                            <div class="d-flex align-items-center">
                                 <div>
-                                    <p class="mb-0 text-secondary">Total de casamientos</p>
-                                    <h4 class="my-1 text-warning">8.4K</h4>
+                                    <p class="mb-0 text-secondary">Total de Casamientos</p>
+                                    <h4 class="my-1 text-warning">{{ $totalCasamientos }}</h4>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-icons-dash  text-white ms-auto">
                                      <img src="{{ asset('/assets/icon/casamiento.svg') }}" class="logo-icon" alt="logo icon">
                                 </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div><!--end row-->
-
             <div class="row">
                 <div class="col-12 col-lg-8 d-flex">
                     <div class="card-graficas radius-10 w-100">
