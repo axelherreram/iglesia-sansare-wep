@@ -3348,7 +3348,10 @@ form select.error, form textarea.error, form input.error, form input.error:focus
 
 
 }
-
+.active>.page-link, .page-link.active{
+	background-color: #6f1d1b !important;
+	border-color: #6f1d1b !important;
+}
 
 .nav-search input.form-control {
 

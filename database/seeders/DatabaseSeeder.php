@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BautizoSeeder::class);
         $this->call(ComunionSeeder::class);
         $this->call(ConfirmacionSeeder::class);
+        $this->call(CasamientoSeeder::class);
     }
 }

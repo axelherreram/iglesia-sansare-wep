@@ -39,7 +39,9 @@ class Casamiento extends Model
         'nombre_parroco',
         'dato_parroquia_id'
     ];
-
+    protected $attributes = [
+        'dato_parroquia_id' => 1, // Valor fijo de 'dato_parroquia_id'
+    ];
     // Definir relaciones, si es necesario
     public function parroquia()
     {
