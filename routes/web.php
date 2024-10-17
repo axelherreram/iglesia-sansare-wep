@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BautizoController;
 use App\Http\Controllers\ComunionController;
 use App\Http\Controllers\ConfirmacionController;
+use App\Http\Controllers\CasamientoController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\UserProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,18 +53,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-list-confirmacion', [ConfirmacionController::class, 'index'])->name('confirmaciones.index');
     Route::get('/municipios/{departamento_id}', [ConfirmacionController::class, 'getMunicipios']);
 
-    // Otras rutas
-    Route::get('/dashboard-list-casamiento', function () {
-        return view('list-casamiento');
-    });
+    // Rutas para casamientos
+    Route::get('/dashboard-casamiento-create', [CasamientoController::class, 'create'])->name('casamientos.create');
+    Route::post('/casamientos', [CasamientoController::class, 'store'])->name('casamientos.store');
+    Route::get('/dashboard-list-casamiento', [CasamientoController::class, 'index'])->name('casamientos.index');
 
-    Route::get('/dashboard-casamiento-create', function () {
-        return view('casamiento-craete-update');
-    });
-
-    Route::get('/user-profile', function () {
-        return view('user-profile');
-    });
+    // Rutas para el perfil de usuario
+    Route::get('/user-profile', [UserProfileController::class, 'show'])->name('user.profile');
+    Route::put('/user-profile', [UserProfileController::class, 'update'])->name('user.update');
 });
 
 // Rutas para errores y autenticación adicional
