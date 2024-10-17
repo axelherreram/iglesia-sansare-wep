@@ -40,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bautizos', [BautizoController::class, 'store'])->name('bautizos.store');
     Route::get('/municipios/{departamento_id}', [BautizoController::class, 'getMunicipios']);
     Route::get('/dashboard-list-bautizo', [BautizoController::class, 'index'])->name('bautizos.index');
+    // Ruta para mostrar el detalle de un bautizo
+    Route::get('/bautizos/{bautizo_id}', [BautizoController::class, 'show'])->name('bautizos.show');
+
 
     // Rutas para comuniones
     Route::get('/dashboard-comunion-create', [ComunionController::class, 'create'])->name('comuniones.create');

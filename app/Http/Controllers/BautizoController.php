@@ -158,4 +158,11 @@ class BautizoController extends Controller
         // Devolver los municipios como respuesta JSON
         return response()->json($municipios);
     }
+
+    public function show($bautizo_id)
+{
+    $bautizo = Bautizo::findOrFail($bautizo_id); // Buscar el bautizo por su ID
+    return view('bautizos.show', compact('bautizo')); // Retornar la vista con los detalles del bautizo
+}
+
 }
