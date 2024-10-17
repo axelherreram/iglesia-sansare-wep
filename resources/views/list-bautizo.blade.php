@@ -64,7 +64,7 @@
                                         <td>{{ $bautizo->nombre_persona_bautizada }}</td>
                                         <td>{{ $bautizo->nombre_sacerdote }}</td>
                                         <td>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('Y-m-d') }}</td>
-                                        <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
+                                        <td><a href="{{ route('bautizos.show', $bautizo->bautizo_id) }}" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
