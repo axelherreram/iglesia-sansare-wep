@@ -61,7 +61,7 @@
                                     <tr>
                                         <td>{{ $comunion->NoPartida }} - {{ $comunion->folio }}</td>
                                         <td>{{ $comunion->nombre_persona_participe }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($comunion->fecha_comunion)->format('d M Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($comunion->fecha_comunion)->format('Y-m-d') }}</td>
                                         <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
                                 @endforeach

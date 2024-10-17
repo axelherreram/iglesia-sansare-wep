@@ -63,7 +63,7 @@
                                         <td>{{ $bautizo->NoPartida }} - {{ $bautizo->folio }}</td>
                                         <td>{{ $bautizo->nombre_persona_bautizada }}</td>
                                         <td>{{ $bautizo->nombre_sacerdote }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('d M Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('Y-m-d') }}</td>
                                         <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
                                 @endforeach
