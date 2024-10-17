@@ -11,6 +11,7 @@ class Bautizo extends Model
 
     // Definir la tabla asociada
     protected $table = 'bautizo';
+    protected $primaryKey = 'bautizo_id'; // Establece la clave primaria
 
     // Campos que pueden ser asignados de manera masiva
     protected $fillable = [
