@@ -3,12 +3,12 @@
         <header>
             <div class="topbar d-flex align-items-center">
                 <nav class="navbar navbar-expand gap-3">
-                    <a href="dashboard" class="topbar-logo-header d-none d-lg-flex">
+                    <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
                         <div class="">
                             <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">
                         </div>
-                        <div>
-                            <h4 class="logo-text fw-bold" style="font-size: 1rem">Iglesia Sansare</h4>
+                        <div class="">
+                            <h4 class="logo-text fw-bold">Iglesia Sansare</h4>
                         </div>
                     </a>
                     <div class="mobile-toggle-menu d-block d-lg-none" data-bs-toggle="offcanvas"
@@ -34,7 +34,7 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item d-flex align-items-center" href="user-profile"><i
+                            <li><a class="dropdown-item d-flex align-items-center" href="/user-profile"><i
                                         class="bx bx-user fs-5"></i><span>Perfil</span></a>
                             </li>
                             <li>

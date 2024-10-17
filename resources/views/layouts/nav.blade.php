@@ -2,10 +2,9 @@
     <nav class="navbar navbar-expand-lg align-items-center">
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header border-bottom">
-                <a href="dashboard" class="d-flex align-items-center">
+                <a href="{{ route('dashboard') }}" class="d-flex align-items-center">
                     <div class="">
                         <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">
-
                     </div>
                     <div class="">
                         <h4 class="logo-text fw-bold">Iglesia Sansare</h4>
