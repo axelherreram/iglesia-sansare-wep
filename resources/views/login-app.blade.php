@@ -21,51 +21,56 @@
     <link href="assets/css/app.css" rel="stylesheet">
     <link href="assets/css/icons.css" rel="stylesheet">
     <title>Login - iglesia Sansare</title>
-	<link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
-	<link rel="shortcut icon" href="{{ asset('assets/icon/icon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/icon/icon.ico') }}" type="image/x-icon">
 </head>
 
 <body class="">
     <div class="wrapper">
         <div class="section-authentication-cover position-relative d-flex justify-content-center align-items-center">
             <div class="col-12 col-xl-7 col-xxl-5 d-flex align-items-center  justify-content-center ">
-                <div class="card forgot-box rounded-2 m-3 shadow-none  mb-0" style="border: none !important" >
+                <div class="card forgot-box rounded-2 m-3 shadow-none  mb-0" style="border: none !important">
                     <div class="card-body p-sm-5">
                         <div class="text-center mb-4">
                             <h5 class="">Iniciar Sesión</h5>
                             <p class="mb-0">Por favor inicia sesión en tu cuenta</p>
                         </div>
+                        <!-- Mensaje de error de credenciales incorrectas -->
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <div class="form-body">
                             <form method="POST" class="row g-3" action="{{ route('login.post') }}">
                                 @csrf
                                 <div class="col-12">
                                     <label for="inputEmailAddress" class="form-label">Correo Electrónico</label>
                                     <input type="email" name="email" class="form-control" id="inputEmailAddress"
-                                           placeholder="Ingrese su correo electrónico" required style="border: 1px solid #1b1b1f !important;">
+                                        placeholder="Ingrese su correo electrónico" required>
                                 </div>
                                 <div class="col-12">
                                     <label for="inputChoosePassword" class="form-label">Contraseña</label>
-                                    <div class="input-group" id="show_hide_password" style="border: 1px solid; border-radius: 7px">
+                                    <div class="input-group " id="show_hide_password">
                                         <input type="password" name="password" class="form-control"
-                                               id="inputChoosePassword" placeholder="Ingrese su contraseña" required style="border: 1px solid #1b1b1f !important;">
-                                        <a href="javascript:;" class="input-group-text bg-transparent">
+                                            id="inputChoosePassword" placeholder="Ingrese su contraseña" required>
+                                        <a href="javascript:;" class="input-group-text bg-transparent ">
                                             <i class="bx bx-hide"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                   
+
                                 </div>
                                 <div class="col-md-6 text-end">
                                     <a href="#">¿Olvidó la contraseña?</a>
                                 </div>
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary-ig">INICIAR SESIÓN</button>
-                                    </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary-ig col-12 col-md-6">INICIAR
+                                        SESIÓN</button>
                                 </div>
                             </form>
-                            
+
                         </div>
                     </div>
 

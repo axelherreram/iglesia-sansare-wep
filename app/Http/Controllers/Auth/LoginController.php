@@ -27,10 +27,8 @@ class LoginController extends Controller
             return redirect()->intended('dashboard');
         }
 
-        // Si la autenticación falla, redirigir al formulario de login con un mensaje de error
-        return back()->withErrors([
-            'email' => 'Las credenciales no coinciden con nuestros registros.',
-        ])->withInput();
+         // Si las credenciales son incorrectas, redirige de vuelta al login con un mensaje de error
+         return redirect()->back()->with('error', 'Credenciales incorrectas. Inténtelo de nuevo.');
     }
 
     public function logout(Request $request)
