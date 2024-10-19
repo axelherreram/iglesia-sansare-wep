@@ -160,9 +160,38 @@ class BautizoController extends Controller
     }
 
     public function show($bautizo_id)
-{
-    $bautizo = Bautizo::findOrFail($bautizo_id); // Buscar el bautizo por su ID
-    return view('bautizos.show', compact('bautizo')); // Retornar la vista con los detalles del bautizo
-}
+    {
+        $bautizo = Bautizo::findOrFail($bautizo_id);
+        $departamentos = Departamento::all(); // Para los selectores
+        return view('bautizos.show', compact('bautizo', 'departamentos'));
+    }
+    public function update(Request $request, $bautizo_id)
+    {
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'NoPartida' => 'required|string|max:20',
+            'folio' => 'required|string|max:50',
+            'fecha_bautizo' => 'required|date',
+            'nombre_persona_bautizada' => 'required|string|max:255',
+            'edad' => 'nullable|string|max:4',
+            'fecha_nacimiento' => 'nullable|date',
+            'aldea' => 'nullable|string|max:255',
+            'municipio_id' => 'required|exists:municipio,municipio_id',
+            'departamento_id' => 'required|exists:departamento,departamento_id',
+            'nombre_padre' => 'nullable|string|max:255',
+            'nombre_madre' => 'nullable|string|max:255',
+            'nombre_sacerdote' => 'nullable|string|max:255',
+            'nombre_padrino' => 'nullable|string|max:255',
+            'nombre_madrina' => 'nullable|string|max:255',
+            'margen' => 'nullable|string|max:200',
+        ]);
+
+        // Buscar el bautizo y actualizarlo
+        $bautizo = Bautizo::findOrFail($bautizo_id);
+        $bautizo->update($validatedData);
+
+        // Redirigir al listado de bautizos con un mensaje de éxito
+        return redirect()->route('bautizos.index')->with('success', 'Bautizo actualizado exitosamente.');
+    }
 
 }
