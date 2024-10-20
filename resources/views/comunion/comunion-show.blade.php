@@ -146,7 +146,7 @@
                                 id="btnGuardar">Guardar cambios</button>
                         </div>
                         <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start">
-                            <button type="button" class="btn btn-secondary w-100 w-md-50">Imprimir a PDF</button>
+                            <button type="button" class="btn btn-secondary w-100 w-md-50" onclick="window.open('{{ route('comunion.pdf', $comunion->comunion_id) }}', '_blank')">Imprimir a PDF</button>
                         </div>
                     </div>
                 </form>

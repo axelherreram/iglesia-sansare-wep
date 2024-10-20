@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Constancia de Bautizo</title>
+    <title>Constancia de Primera Comunión</title>
     <link rel="stylesheet" href="{{ public_path('assets/css/font.css') }}">
+
+
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -61,7 +63,7 @@
 
         .title {
             color: #3d69a8;
-            font-size: 28px;
+            font-size: 27px;
             max-width: 300px;
             font-weight: bold;
             padding: 5px 15px;
@@ -83,10 +85,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            /* Alineación vertical de los elementos del formulario */
         }
 
         .form-group.date-group {
             justify-content: space-evenly;
+            margin-top: 50px;
+        }
+
+        .signature-line-l {
+            position: absolute;
+            right: 40px;
+            width: 350px;
+            margin-top: 90px !important;
+            color: #3d69a8;
+            text-align: right;
+        }
+
+        .signature-line-l hr {
+            width: 100%;
+            border-top: 1px solid #3d69a8;
+        }
+
+        .signature-line-l p {
+            margin-top: 0px;
+            margin-right: 150px;
         }
 
         .text-center {
@@ -109,12 +132,14 @@
         img.logo.right {
             right: 10px;
             height: 220px;
+
         }
 
         img.logo.cruzz {
             right: 10px;
             left: 10px;
             height: 220px;
+
         }
 
         span {
@@ -134,26 +159,6 @@
             font-size: 2.1rem;
             text-decoration: none !important;
         }
-
-
-        .signature-line-l {
-            position: absolute;
-            right: 40px;
-            width: 350px;
-            margin-top: 60px !important;
-            color: #3d69a8;
-            text-align: right;
-        }
-
-        .signature-line-l hr {
-            width: 100%;
-            border-top: 1px solid #3d69a8;
-        }
-
-        .signature-line-l p {
-            margin-top: 0px;
-            margin-right: 150px;            
-        }
     </style>
 </head>
 
@@ -161,78 +166,68 @@
     <div class="certificate">
         <img src="{{ public_path('assets/img/logo_parroquia.png') }}" alt="Logo Parroquia" class="logo left">
         <img src="{{ public_path('assets/img/Mercedes.png') }}" alt="Mercedes" class="logo right">
-        <img src="{{ public_path('assets/img/Cruz.png') }}" alt="Mercedes" class="logo  cruzz">
+        <img src="{{ public_path('assets/img/Cruz.png') }}" alt="Mercedes" class="logo cruzz">
 
         <div class="header">
             <span class="h2">Parroquia Nuestra Señora de Las Mercedes</span>
             <p class="subtitle">Diócesis de Jalapa</p>
             <p class="subtitle">Calle al Calvario, Barrio el Centro, Sanarate, El Progreso</p>
-            <div class="title">CONSTANCIA DE BAUTIZO</div>
+            <div class="title">CONSTANCIA DE PRIMERA COMUNIÓN</div>
         </div>
 
         <div class="form-content">
             <div class="form-group" style="width: 20cm;">
-                <label for="parroco">El infrascrito, Párroco:</label>
-                <span>{{ $bautizo->nombre_sacerdote }}</span>
+                <label for="parroco">El infrascrito, Párroco de:</label>
+                <span> Parroquia Nuestra Señora de Las Mercedes</span>
             </div>
 
-            <p class="text-center"
-                style=" font-weight: 500;
-            color: #3d6aa8de;
-            font-size: 1.1rem;">Certifica que en
-                el libro de Bautizos:</p>
+            <p class="text-center" style="font-weight: 500; color: #3d6aa8de; font-size: 1.1rem;">
+                Certifica que en el libro de PRIMERAS COMUNIONES:
+            </p>
+
             <div class="form-group">
                 <label for="libro">No.:</label>
-                <span>{{ $bautizo->NoPartida }}</span>
+                <span>{{ $comunion->NoPartida }}</span>
                 <label for="folio" style="margin-left: 10px;">Folio:</label>
-                <span>{{ $bautizo->folio }}</span>
+                <span>{{ $comunion->folio }}</span>
                 <label style="margin-left: 10px;">de esta Parroquia consta que:</label>
             </div>
+
             <div class="form-group">
-                <span>{{ $bautizo->nombre_persona_bautizada }}</span>
+                <span>{{ $comunion->nombre_persona_participe }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="padre">Hijo de</label>
+                <span>{{ $comunion->nombre_padre }}</span>
+                <label for="">y</label>
+                <span>{{ $comunion->nombre_madre }}</span>
+            </div>
+
             <div class="form-group">
                 <label for="nacimiento">Nacido el</label>
-                <span>{{ Date::parse($bautizo->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
+                <span>{{ Date::parse($comunion->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ Date::parse($bautizo->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
+                <span>{{ Date::parse($comunion->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
                 <label for="ano" style="margin-left: 5px;">del año</label>
-                <span>{{ Date::parse($bautizo->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
+                <span>{{ Date::parse($comunion->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
             </div>
 
             <div class="form-group">
-                <label for="dia">Fue bautizad@ el</label>
-                <span>{{ Date::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('D') }}</span>
+                <label for="comunion">Realizó su Primera Comunión en esta Parroquia el</label>
+                <span>{{ \Carbon\Carbon::parse($comunion->fecha_comunion)->format('d') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ Date::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('MMMM') }}</span>
-                <label for="ano" style="margin-left: 5px;">de</label>
-                <span>{{ Date::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('Y') }}</span>
-            </div>
-         
-
-            <div class="form-group">
-                <label>hijo de</label>
-                <span>{{ $bautizo->nombre_padre }}</span>
-            </div>
-            <div class="form-group">
-                <label>y de</label>
-                <span>{{ $bautizo->nombre_madre }}</span>
+                <span>{{ \Carbon\Carbon::parse($comunion->fecha_comunion)->format('m') }}</span>
+                <label for="ano" style="margin-left: 5px;">del año</label>
+                <span>{{ \Carbon\Carbon::parse($comunion->fecha_comunion)->format('Y') }}</span>
             </div>
 
-            <div class="form-group">
-                <label>habiendo sido madrina y padrino</label>
-                <span>{{ $bautizo->nombre_padrino }} y {{ $bautizo->nombre_madrina }}</span>
-            </div>
-            <div class="form-group">
-                <label>Margen:</label>
-                <span>{{ $bautizo->margen }}</span>
-            </div>
-
-            <div class="form-group date-group" style="width: 16.59cm !important; margin-top:45px;">
+            <div class="form-group date-group" style=" margin-top:60 px !important">
+                <label for="">Sansare,</label>
                 <span class="day">{{ now()->format('d') }}</span>
-                <label>. de </label>
+                <label> de </label>
                 <span class="month">{{ now()->locale('es')->isoFormat('MMMM') }}</span>
-                <label>. de </label>
+                <label> de </label>
                 <span class="year">{{ now()->format('Y') }}</span>
             </div>
         </div>

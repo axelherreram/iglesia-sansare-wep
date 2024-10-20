@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/comuniones/{comunion_id}', [ComunionController::class, 'show'])->name('comuniones.show');
     Route::put('/comuniones/{comunion_id}', [ComunionController::class, 'update'])->name('comuniones.update'); 
     Route::get('/municipios/{departamento_id}', [ComunionController::class, 'getMunicipios']);
+    Route::get('/comunion/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comunion.pdf');
 
 
     // Rutas para confirmaciones

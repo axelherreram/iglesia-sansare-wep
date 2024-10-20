@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Comunion;
 use App\Models\Municipio;
 use App\Models\Departamento;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class ComunionController extends Controller
 {
@@ -130,5 +131,15 @@ class ComunionController extends Controller
 
         // Devolver los municipios como respuesta JSON
         return response()->json($municipios);
+    }
+
+    public function generatePDF($comunion_id)
+    {
+        $comunion = Comunion::findOrFail($comunion_id);
+
+        // Cargar la vista del PDF y pasar los datos
+        $pdf = PDF::loadView('pdf.comunion', compact('comunion'));
+
+        return $pdf->stream('constancia-comunion.pdf');
     }
 }

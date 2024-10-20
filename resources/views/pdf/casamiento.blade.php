@@ -221,14 +221,17 @@
                 <label for="padre">Presenció y bendijo el Matrimonio el Padre:</label>
                 <span>{{ $casamiento->nombre_parroco }}</span>
             </div>
+
             <div class="form-group">
-                <label for="dia">el día</label>
-                <span>{{ \Carbon\Carbon::parse($casamiento->fecha_casamiento)->format('d') }}</span>
+                <label for="nacimiento">el día</label>
+                <span>{{ Date::parse($casamiento->fecha_casamiento)->locale('es')->isoFormat('D') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($casamiento->fecha_casamiento)->format('F') }}</span>
+                <span>{{ Date::parse($casamiento->fecha_casamiento)->locale('es')->isoFormat('MMMM') }}</span>
                 <label for="ano" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($casamiento->fecha_casamiento)->format('Y') }}</span>
+                <span>{{ Date::parse($casamiento->fecha_casamiento)->locale('es')->isoFormat('Y') }}</span>
             </div>
+
+          
             <div class="form-group">
                 <label for="testigos">Habiendo sido testigos:</label>
                 <span>{{ $casamiento->nombres_testigos }}</span>
