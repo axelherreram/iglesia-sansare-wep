@@ -18,7 +18,6 @@ use App\Http\Controllers\UserProfileController;
 // Ruta para mostrar el formulario de login
 Route::get('/', function () {
     if (Auth::check()) {
-        // Redirige al dashboard si el usuario ya está autenticado
         return redirect()->route('dashboard');
     }
     return view('login-app');
@@ -26,7 +25,6 @@ Route::get('/', function () {
 
 // Ruta para procesar el login (POST)
 Route::post('login', [LoginController::class, 'login'])->name('login.post');
-
 // Ruta para cerrar sesión (POST)
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -40,26 +38,32 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bautizos', [BautizoController::class, 'store'])->name('bautizos.store');
     Route::get('/municipios/{departamento_id}', [BautizoController::class, 'getMunicipios']);
     Route::get('/dashboard-list-bautizo', [BautizoController::class, 'index'])->name('bautizos.index');
-    // Ruta para mostrar el detalle de un bautizo
     Route::get('/bautizos/{bautizo_id}', [BautizoController::class, 'show'])->name('bautizos.show');
-
+    Route::put('/bautizos/{bautizo_id}', [BautizoController::class, 'update'])->name('bautizos.update');
 
     // Rutas para comuniones
     Route::get('/dashboard-comunion-create', [ComunionController::class, 'create'])->name('comuniones.create');
     Route::post('/comuniones', [ComunionController::class, 'store'])->name('comuniones.store');
     Route::get('/dashboard-list-comunion', [ComunionController::class, 'index'])->name('comuniones.index');
+    Route::get('/comuniones/{comunion_id}', [ComunionController::class, 'show'])->name('comuniones.show');
+    Route::put('/comuniones/{comunion_id}', [ComunionController::class, 'update'])->name('comuniones.update'); 
     Route::get('/municipios/{departamento_id}', [ComunionController::class, 'getMunicipios']);
 
+
     // Rutas para confirmaciones
-    Route::get('/dashboard-confirmacion-create', [ConfirmacionController::class, 'create'])->name('confirmaciones.create');
-    Route::post('/confirmaciones', [ConfirmacionController::class, 'store'])->name('confirmaciones.store');
     Route::get('/dashboard-list-confirmacion', [ConfirmacionController::class, 'index'])->name('confirmaciones.index');
-    Route::get('/municipios/{departamento_id}', [ConfirmacionController::class, 'getMunicipios']);
+    Route::get('/confirmaciones/create', [ConfirmacionController::class, 'create'])->name('confirmaciones.create');
+    Route::post('/confirmaciones', [ConfirmacionController::class, 'store'])->name('confirmaciones.store');
+    Route::get('/confirmaciones/{confirmacion_id}', [ConfirmacionController::class, 'show'])->name('confirmaciones.show');
+    Route::put('/confirmaciones/{confirmacion_id}', [ConfirmacionController::class, 'update'])->name('confirmaciones.update');
 
     // Rutas para casamientos
     Route::get('/dashboard-casamiento-create', [CasamientoController::class, 'create'])->name('casamientos.create');
     Route::post('/casamientos', [CasamientoController::class, 'store'])->name('casamientos.store');
     Route::get('/dashboard-list-casamiento', [CasamientoController::class, 'index'])->name('casamientos.index');
+    Route::get('/casamientos/{casamiento_id}', [CasamientoController::class, 'show'])->name('casamientos.show');
+    Route::put('/casamientos/{casamiento_id}', [CasamientoController::class, 'update'])->name('casamientos.update');
+    Route::get('/casamiento/{casamiento}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamiento.pdf');
 
     // Rutas para el perfil de usuario
     Route::get('/user-profile', [UserProfileController::class, 'show'])->name('user.profile');
