@@ -6,6 +6,7 @@ use App\Models\Confirmacion;
 use App\Models\Departamento;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class ConfirmacionController extends Controller
 {
@@ -139,5 +140,15 @@ class ConfirmacionController extends Controller
 
         // Redirigir al listado de confirmaciones con un mensaje de éxito
         return redirect()->route('confirmaciones.index')->with('success', 'Confirmación actualizada exitosamente.');
+    }
+
+    public function generatePDF($confirmacion_id)
+    {
+        $confirmacion = Confirmacion::findOrFail($confirmacion_id);
+
+        // Cargar la vista del PDF y pasar los datos
+        $pdf = PDF::loadView('pdf.confirmacion', compact('confirmacion'));
+
+        return $pdf->stream('constancia-confirmacion.pdf');
     }
 }
