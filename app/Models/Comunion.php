@@ -10,6 +10,8 @@ class Comunion extends Model
     use HasFactory;
     // Nombre de la tabla en la base de datos
     protected $table = 'comunion';
+    protected $primaryKey = 'comunion_id'; 
+
 
     // Campos que pueden ser rellenados mediante un array
     protected $fillable = [
