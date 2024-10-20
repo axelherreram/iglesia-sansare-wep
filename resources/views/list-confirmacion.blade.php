@@ -65,9 +65,8 @@
                                         <td>{{ $confirmacion->NoPartida }} - {{ $confirmacion->folio }}</td>
                                         <td>{{ $confirmacion->nombre_persona_confirmada }}</td>
                                         <td>{{ $confirmacion->nombre_persona_confirmo }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($confirmacion->fecha_confirmacion)->format('Y-m-d') }}
-                                        </td>
-                                        <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
+                                        <td>{{ \Carbon\Carbon::parse($confirmacion->fecha_confirmacion)->format('Y-m-d') }}</td>
+                                        <td><a href="{{ route('confirmaciones.show', $confirmacion->confirmacion_id) }}" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

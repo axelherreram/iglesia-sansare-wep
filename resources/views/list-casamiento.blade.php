@@ -69,7 +69,7 @@
                                         <td>{{ $casamiento->nombre_esposa }}</td>
                                         <td>{{ $casamiento->nombre_parroco }}</td>
                                         <td>{{ Date::parse($casamiento->fecha_casamiento)->format('Y-m-d') }}</td>
-                                        <td><a href="#" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
+                                        <td><a href="{{ route('casamientos.show',$casamiento->casamiento_id) }}" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
                                 @empty
                                     <tr>
