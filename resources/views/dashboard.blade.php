@@ -2,6 +2,17 @@
 @section('style')
     <link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/assets/css/dashboard.css') }}">
+    <style>
+        .widgets-icons-2 {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+    </style>
 @endsection
 
 @section('wrapper')
@@ -32,7 +43,8 @@
                                     <h4 class="my-1 text-danger">{{ $totalComuniones }}</h4>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
-                                    <img src="{{ asset('/assets/icon/comunion.svg') }}" style="height: 50px" class="logo-icon" alt="logo icon">
+                                    <img src="{{ asset('/assets/icon/comunion.svg') }}" style="height: 50px"
+                                        class="logo-icon" alt="logo icon">
                                 </div>
                             </div>
                         </a>
@@ -47,7 +59,8 @@
                                     <h4 class="my-1 text-success">{{ $totalConfirmaciones }}</h4>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-icons-dash text-white ms-auto">
-                                    <img src="{{ asset('/assets/icon/confirmacion.svg') }}" class="logo-icon" alt="logo icon">
+                                    <img src="{{ asset('/assets/icon/confirmacion.svg') }}" class="logo-icon"
+                                        alt="logo icon">
                                 </div>
                             </div>
                         </a>
@@ -62,14 +75,16 @@
                                     <h4 class="my-1 text-warning">{{ $totalCasamientos }}</h4>
                                 </div>
                                 <div class="widgets-icons-2 rounded-circle bg-icons-dash  text-white ms-auto">
-                                     <img src="{{ asset('/assets/icon/casamiento.svg') }}" class="logo-icon" alt="logo icon">
+                                    <img src="{{ asset('/assets/icon/casamiento.svg') }}" class="logo-icon" alt="logo icon">
                                 </div>
                             </div>
                         </a>
                     </div>
                 </div>
             </div><!--end row-->
-            <div class="row">
+
+
+           {{--  <div class="row">
                 <div class="col-12 col-lg-8 d-flex">
                     <div class="card-graficas radius-10 w-100">
                         <div class="card-header">
@@ -180,7 +195,7 @@
                         </ul>
                     </div>
                 </div>
-            </div><!--end row--> 
+            </div><!--end row--> --}}
         @endsection
 
         @section('script')
