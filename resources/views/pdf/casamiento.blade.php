@@ -23,7 +23,7 @@
 
         .certificate {
             width: 16.59cm;
-            height: auto;
+            height: 25cm;
             padding: 40px;
             margin: auto;
             border: 5px double #3d69a8;
@@ -216,7 +216,7 @@
             </div>
             <div class="form-group">
                 <label for="padres2">feligrés de esta Parroquia, hija legítima de:</label>
-                <span>{{ $casamiento->nombre_padre_esposa }} y {{ $casamiento->nombre_madre_esposa }}</span>
+                <span>{{ $casamiento->nombre_padre_esposa }} <label for="" >  y   </label>  {{ $casamiento->nombre_madre_esposa }}</span>
             </div>
             <div class="form-group">
                 <label for="padre">Presenció y bendijo el Matrimonio el Padre:</label>
@@ -234,7 +234,7 @@
                 <label for="testigos">Habiendo sido testigos:</label>
                 <span>{{ $casamiento->nombres_testigos }}</span>
             </div>
-            <div class="form-group date-group" style="width: 16.59cm !important;">
+            <div class="form-group date-group" style="width: 16.59cm !important; margin-top:45px;">
                 <span class="day">{{ now()->format('d') }}</span>
                 <label>. de </label>
                 <span class="month">{{ now()->locale('es')->isoFormat('MMMM') }}</span>
