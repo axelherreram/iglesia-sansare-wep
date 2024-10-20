@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Bautizo;
 use App\Models\Municipio;
 use App\Models\Departamento;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class BautizoController extends Controller
 {
@@ -192,5 +193,13 @@ class BautizoController extends Controller
 
         return redirect()->route('bautizos.index')->with('success', 'Bautizo actualizado exitosamente.');
     }
+    public function generatePDF($bautizo_id)
+    {
+        $bautizo = Bautizo::findOrFail($bautizo_id);
 
+        // Cargar la vista del PDF y pasar los datos
+        $pdf = PDF::loadView('pdf.bautizo', compact('bautizo'));
+
+        return $pdf->stream('constancia-bautizo.pdf');
+    }
 }

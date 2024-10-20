@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Constancia de Matrimonio</title>
+    <title>Constancia de Bautizo</title>
     <link rel="stylesheet" href="{{ public_path('assets/css/font.css') }}">
     <style>
         body {
@@ -83,28 +83,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* Alineación vertical de los elementos del formulario */
         }
 
         .form-group.date-group {
             justify-content: space-evenly;
         }
-
-        .signature {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-
-        .signature-line {
-            width: 200px;
-            text-align: center;
-        }
-
-        .signature-line hr {
-            margin: 0;
-        }
-
 
         .text-center {
             text-align: center;
@@ -126,14 +109,12 @@
         img.logo.right {
             right: 10px;
             height: 220px;
-
         }
 
         img.logo.cruzz {
             right: 10px;
             left: 10px;
             height: 220px;
-
         }
 
         span {
@@ -153,6 +134,26 @@
             font-size: 2.1rem;
             text-decoration: none !important;
         }
+
+
+        .signature-line-l {
+            position: absolute;
+            right: 40px;
+            width: 350px;
+            margin-top: 60px !important;
+            color: #3d69a8;
+            text-align: right;
+        }
+
+        .signature-line-l hr {
+            width: 100%;
+            border-top: 1px solid #3d69a8;
+        }
+
+        .signature-line-l p {
+            margin-top: 0px;
+            margin-right: 150px;            
+        }
     </style>
 </head>
 
@@ -166,73 +167,65 @@
             <span class="h2">Parroquia Nuestra Señora de Las Mercedes</span>
             <p class="subtitle">Diócesis de Jalapa</p>
             <p class="subtitle">Calle al Calvario, Barrio el Centro, Sanarate, El Progreso</p>
-            <div class="title">CONSTANCIA DE MATRIMONIO</div>
+            <div class="title">CONSTANCIA DE BAUTIZO</div>
         </div>
 
         <div class="form-content">
-            <div class="form-group"  style="width: 20cm;">
+            <div class="form-group" style="width: 20cm;">
                 <label for="parroco">El infrascrito, Párroco:</label>
-                <span>{{ $casamiento->nombre_parroco }}</span>
+                <span>{{ $bautizo->nombre_sacerdote }}</span>
             </div>
-            <div class="form-group">
-                <label for="parroquia">de la Parroquia:</label>
-                <span>Parroquia Nuestra Señora de Las Mercedes</span>
-            </div>
+
             <p class="text-center"
                 style=" font-weight: 500;
             color: #3d6aa8de;
             font-size: 1.1rem;">Certifica que en
-                el libro de Matrimonios:</p>
+                el libro de Bautizos:</p>
             <div class="form-group">
                 <label for="libro">No.:</label>
-                <span>{{ $casamiento->NoPartida }}</span>
+                <span>{{ $bautizo->NoPartida }}</span>
                 <label for="folio" style="margin-left: 10px;">Folio:</label>
-                <span>{{ $casamiento->folio }}</span>
+                <span>{{ $bautizo->folio }}</span>
                 <label style="margin-left: 10px;">de esta Parroquia consta que:</label>
             </div>
             <div class="form-group">
-                <span>{{ $casamiento->nombre_esposo }}</span>
+                <span>{{ $bautizo->nombre_persona_bautizada }}</span>
             </div>
             <div class="form-group">
-                <label for="edad1">de</label>
-                <span>{{ $casamiento->edad_esposo }}</span>
-                <label for="originario1" style="margin-left: 10px;">años, originario:</label>
-                <span>{{ $casamiento->origen_esposo }}</span>
-            </div>
-            <div class="form-group">
-                <label for="padres1">feligrés de esta Parroquia, hijo legítimo de:</label>
-                <span>{{ $casamiento->nombre_padre_esposo }} <label for="">  y   </label> {{ $casamiento->nombre_madre_esposo }}</span>
-            </div>
-            <div class="form-group">
-                <label for="nombre2">contrajo matrimonio con:</label>
-                <span>{{ $casamiento->nombre_esposa }}</span>
-            </div>
-            <div class="form-group">
-                <label for="edad2">de</label>
-                <span>{{ $casamiento->edad_esposa }}</span>
-                <label for="originaria2" style="margin-left: 10px;">años, originaria de:</label>
-                <span>{{ $casamiento->origen_esposa }}</span>
-            </div>
-            <div class="form-group">
-                <label for="padres2">feligrés de esta Parroquia, hija legítima de:</label>
-                <span>{{ $casamiento->nombre_padre_esposa }} <label for="" >  y   </label>  {{ $casamiento->nombre_madre_esposa }}</span>
-            </div>
-            <div class="form-group">
-                <label for="padre">Presenció y bendijo el Matrimonio el Padre:</label>
-                <span>{{ $casamiento->nombre_parroco }}</span>
-            </div>
-            <div class="form-group">
-                <label for="dia">el día</label>
-                <span>{{ \Carbon\Carbon::parse($casamiento->fecha_casamiento)->format('d') }}</span>
+                <label for="dia">Nacid@ el</label>
+                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_nacimiento)->format('d') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($casamiento->fecha_casamiento)->format('F') }}</span>
+                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_nacimiento)->format('F') }}</span>
                 <label for="ano" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($casamiento->fecha_casamiento)->format('Y') }}</span>
+                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_nacimiento)->format('Y') }}</span>
             </div>
             <div class="form-group">
-                <label for="testigos">Habiendo sido testigos:</label>
-                <span>{{ $casamiento->nombres_testigos }}</span>
+                <label for="dia">Fue bautizad@ el</label>
+                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('d') }}</span>
+                <label for="mes" style="margin-left: 5px;">de</label>
+                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('F') }}</span>
+                <label for="ano" style="margin-left: 5px;">de</label>
+                <span>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('Y') }}</span>
             </div>
+
+            <div class="form-group">
+                <label>hijo de</label>
+                <span>{{ $bautizo->nombre_padre }}</span>
+            </div>
+            <div class="form-group">
+                <label>y de</label>
+                <span>{{ $bautizo->nombre_madre }}</span>
+            </div>
+
+            <div class="form-group">
+                <label>habiendo sido madrina y padrino</label>
+                <span>{{ $bautizo->nombre_padrino }} y {{ $bautizo->nombre_madrina }}</span>
+            </div>
+            <div class="form-group">
+                <label>Margen:</label>
+                <span>{{ $bautizo->margen }}</span>
+            </div>
+
             <div class="form-group date-group" style="width: 16.59cm !important; margin-top:45px;">
                 <span class="day">{{ now()->format('d') }}</span>
                 <label>. de </label>
@@ -240,6 +233,10 @@
                 <label>. de </label>
                 <span class="year">{{ now()->format('Y') }}</span>
             </div>
+        </div>
+        <div class="signature-line-l">
+            <hr>
+            <p><strong>Parroco</strong></p>
         </div>
     </div>
 </body>
