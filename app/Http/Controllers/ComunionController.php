@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -38,6 +39,43 @@ class ComunionController extends Controller
         $departamentos = Departamento::all();
 
         return view('comunion-craete-update', compact('departamentos'));
+    }
+
+    // Mostrar los detalles de una comunión
+    public function show($comunion_id)
+    {
+        $comunion = Comunion::findOrFail($comunion_id);
+        $departamentos = Departamento::all();
+        return view('comunion.comunion-show', compact('comunion', 'departamentos'));
+    }
+    public function update(Request $request, $comunion_id)
+    {
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'NoPartida' => 'required|string|max:20',
+            'folio' => 'required|string|max:50',
+            'fecha_comunion' => 'required|date',
+            'nombre_persona_participe' => 'required|string|max:255',
+            'fecha_nacimiento' => 'nullable|date',
+            'municipio_id' => 'required|exists:municipio,municipio_id',
+            'departamento_id' => 'required|exists:departamento,departamento_id',
+            'nombre_padre' => 'nullable|string|max:255',
+            'nombre_madre' => 'nullable|string|max:255',
+        ], [
+            'NoPartida.required' => 'El número de partida es obligatorio.',
+            'folio.required' => 'El folio es obligatorio.',
+            'fecha_comunion.required' => 'La fecha de la comunión es obligatoria.',
+            'nombre_persona_participe.required' => 'El nombre de la persona es obligatorio.',
+            'municipio_id.required' => 'El municipio es obligatorio.',
+            'departamento_id.required' => 'El departamento es obligatorio.',
+        ]);
+
+        // Buscar la comunión y actualizarla
+        $comunion = Comunion::findOrFail($comunion_id);
+        $comunion->update($validatedData);
+
+        // Redirigir al listado de comuniones con un mensaje de éxito
+        return redirect()->route('comuniones.index')->with('success', 'Primera Comunión actualizada exitosamente.');
     }
 
     /**

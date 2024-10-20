@@ -89,4 +89,55 @@ class ConfirmacionController extends Controller
         // Devolver los municipios como respuesta JSON
         return response()->json($municipios);
     }
+
+    // Método para mostrar el detalle de una confirmación
+    public function show($confirmacion_id)
+    {
+        // Buscar la confirmación por su ID
+        $confirmacion = Confirmacion::findOrFail($confirmacion_id);
+        // Obtener todos los departamentos para el selector
+        $departamentos = Departamento::all();
+        // Retornar la vista con los detalles de la confirmación
+        return view('confirmacion.confirmacion-show', compact('confirmacion', 'departamentos'));
+    }
+
+    /**
+     * Actualiza un registro existente de confirmación en la base de datos.
+     */
+    public function update(Request $request, $confirmacion_id)
+    {
+        // Validar los datos del formulario con las mismas reglas que el store
+        $validatedData = $request->validate([
+            'NoPartida' => 'required|string|max:20',
+            'folio' => 'required|string|max:50',
+            'fecha_confirmacion' => 'required|date',
+            'nombre_persona_confirmo' => 'required|string|max:255',
+            'nombre_persona_confirmada' => 'required|string|max:255',
+            'edad' => 'required|string|max:4',
+            'nombre_parroquia_bautizo' => 'required|string|max:255',
+            'municipio_id' => 'required|exists:municipio,municipio_id',
+            'departamento_id' => 'required|exists:departamento,departamento_id',
+            'nombre_padre' => 'nullable|string|max:255',
+            'nombre_madre' => 'nullable|string|max:255',
+            'nombre_persona_padrino' => 'nullable|string|max:255',
+            'nombre_persona_madrina' => 'nullable|string|max:255',
+        ], [
+            'NoPartida.required' => 'El número de partida es obligatorio.',
+            'folio.required' => 'El folio es obligatorio.',
+            'fecha_confirmacion.required' => 'La fecha de la confirmación es obligatoria.',
+            'nombre_persona_confirmada.required' => 'El nombre de la persona confirmada es obligatorio.',
+            'edad.required' => 'La edad es obligatoria.',
+            'municipio_id.required' => 'El municipio es obligatorio.',
+            'departamento_id.required' => 'El departamento es obligatorio.',
+        ]);
+
+        // Buscar la confirmación por ID
+        $confirmacion = Confirmacion::findOrFail($confirmacion_id);
+
+        // Actualizar los datos de la confirmación con los valores validados
+        $confirmacion->update($validatedData);
+
+        // Redirigir al listado de confirmaciones con un mensaje de éxito
+        return redirect()->route('confirmaciones.index')->with('success', 'Confirmación actualizada exitosamente.');
+    }
 }
