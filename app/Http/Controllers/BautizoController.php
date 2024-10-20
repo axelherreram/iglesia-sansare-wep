@@ -56,6 +56,7 @@ class BautizoController extends Controller
     public function store(Request $request)
     {
         // Validar los datos del formulario
+        // Validar los datos del formulario
         $validatedData = $request->validate([
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
@@ -184,6 +185,7 @@ class BautizoController extends Controller
             'nombre_madrina' => 'nullable|string|max:255',
             'margen' => 'nullable|string|max:200',
         ]);
+
         // Buscar el bautizo y actualizarlo
         $bautizo = Bautizo::findOrFail($bautizo_id);
         $bautizo->update($validatedData);
