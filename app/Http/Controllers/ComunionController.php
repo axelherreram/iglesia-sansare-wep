@@ -26,8 +26,14 @@ class ComunionController extends Controller
                 return $query->whereYear('fecha_comunion', $year);
             })
             ->paginate(10);
-
-        // Retornar la vista 'list-comunion' con las comuniones y los términos de búsqueda
+        
+        // Verificar si no se encontraron resultados
+        if ($comuniones->isEmpty()) {
+            session()->flash('no_results', 'No se encontraron registros de comuniones con los datos especificados.');
+        } else {
+            session()->forget('no_results');
+        } 
+        
         return view('list-comunion', compact('comuniones', 'search', 'year'));
     }
 

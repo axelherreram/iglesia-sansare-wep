@@ -34,7 +34,7 @@
                             <div class="col-md-3">
                                 <label for="year" class="form-label">Año</label>
                                 <input type="number" class="form-control" id="year" name="year" placeholder="2024"
-                                    min="1900" max="2100" value="{{ request('year') }}">
+                                    min="1900" max="2200" value="{{ request('year') }}">
                             </div>
                             <!-- Botón de Buscar -->
                             <div class="col-md-3">
@@ -57,7 +57,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($comuniones as $comunion)
+                                @forelse ($comuniones as $comunion)
                                     <tr>
                                         <td>{{ $comunion->NoPartida }} - {{ $comunion->folio }}</td>
                                         <td>{{ $comunion->nombre_persona_participe }}</td>
@@ -65,7 +65,14 @@
                                         <td><a href="{{ route('comuniones.show', $comunion->comunion_id) }}"
                                                 class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5" style="font-weight: bold"
+                                            class="text-center font-weight-bold fs-6 p-2 mt-3 d-block d-md-table-cell">
+                                            No se encontraron registros de comuniones con los datos especificados.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -93,6 +100,16 @@
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
                 timer: 3000
+            });
+        @endif
+
+        @if (session('no_results'))
+            Swal.fire({
+                icon: 'info',
+                title: 'Sin resultados',
+                text: '{{ session('no_results') }}',
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar'
             });
         @endif
     </script>
