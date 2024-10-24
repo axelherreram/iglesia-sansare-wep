@@ -36,7 +36,7 @@
                             <div class="col-md-3">
                                 <label for="anio" class="form-label">Año</label>
                                 <input type="number" class="form-control" id="anio" name="anio" placeholder="2024"
-                                    min="1900" max="{{ date('Y') }}" value="{{ request('anio') }}">
+                                    min="1900" max="2200" value="{{ request('anio') }}">
                             </div>
 
                             <!-- Botón de Buscar -->
