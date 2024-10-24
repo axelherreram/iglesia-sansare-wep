@@ -28,6 +28,12 @@ class ConfirmacionController extends Controller
             })
             ->paginate(10);
 
+        // Verifica si no se encontraron resultados y añade mensaje a la sesión
+        if ($confirmaciones->isEmpty()) {
+            session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos especificados.');
+        } else {
+            session()->forget('no_results');
+        }
         return view('list-confirmacion', compact('confirmaciones'));
     }
 

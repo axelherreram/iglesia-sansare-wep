@@ -34,8 +34,8 @@
                             <!-- Input de fecha en su propia columna -->
                             <div class="col-md-3">
                                 <label for="fecha_confirmacion" class="form-label">Año</label>
-                                <input type="number" class="form-control" id="fecha_confirmacion" name="fecha_confirmacion" placeholder="2024"
-                                    min="1900" value="{{ request('fecha_confirmacion') }}">
+                                <input type="number" class="form-control" id="fecha_confirmacion" name="fecha_confirmacion"
+                                    placeholder="2024" min="1900" max="2200" value="{{ request('fecha_confirmacion') }}">
                             </div>
 
                             <!-- Botón de Buscar -->
@@ -60,15 +60,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($confirmaciones as $confirmacion)
+                                @forelse ($confirmaciones as $confirmacion)
                                     <tr>
                                         <td>{{ $confirmacion->NoPartida }} - {{ $confirmacion->folio }}</td>
                                         <td>{{ $confirmacion->nombre_persona_confirmada }}</td>
                                         <td>{{ $confirmacion->nombre_persona_confirmo }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($confirmacion->fecha_confirmacion)->format('Y-m-d') }}</td>
-                                        <td><a href="{{ route('confirmaciones.show', $confirmacion->confirmacion_id) }}" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
+                                        <td>{{ \Carbon\Carbon::parse($confirmacion->fecha_confirmacion)->format('Y-m-d') }}
+                                        </td>
+                                        <td><a href="{{ route('confirmaciones.show', $confirmacion->confirmacion_id) }}"
+                                                class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5" style="font-weight: bold"
+                                            class="text-center font-weight-bold fs-6 p-2 mt-3 d-block d-md-table-cell">
+                                            No se encontraron registros de confirmaciones con los datos especificados.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -95,6 +104,15 @@
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
                 timer: 3000
+            });
+        @endif
+        @if (session('no_results'))
+            Swal.fire({
+                icon: 'info',
+                title: 'Sin resultados',
+                text: '{{ session('no_results') }}',
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar'
             });
         @endif
     </script>
