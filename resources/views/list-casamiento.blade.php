@@ -69,11 +69,15 @@
                                         <td>{{ $casamiento->nombre_esposa }}</td>
                                         <td>{{ $casamiento->nombre_parroco }}</td>
                                         <td>{{ Date::parse($casamiento->fecha_casamiento)->format('Y-m-d') }}</td>
-                                        <td><a href="{{ route('casamientos.show',$casamiento->casamiento_id) }}" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
+                                        <td><a href="{{ route('casamientos.show', $casamiento->casamiento_id) }}"
+                                                class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6">No se encontraron resultados.</td>
+                                        <td colspan="5" style="font-weight: bold"
+                                            class="text-center font-weight-bold fs-6 p-2 mt-3 d-block d-md-table-cell">
+                                            No se encontraron registros de casamientos con los datos especificados.
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -91,7 +95,31 @@
     @endsection
 
     @section('script')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            @endif
+
+            @if (session('no_results'))
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Sin resultados',
+                    text: '{{ session('no_results') }}',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Aceptar'
+                });
+            @endif
+        </script>
         <!--plugins-->
+
         <script src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
         <script src="assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
         <script src="assets/plugins/chartjs/js/chart.js"></script>

@@ -32,7 +32,12 @@ class CasamientoController extends Controller
                 return $query->whereYear('fecha_casamiento', $anio);
             })
             ->paginate(10);
-
+        // Verifica si no se encontraron resultados y añade mensaje a la sesión
+        if ($casamientos->isEmpty()) {
+            session()->flash('no_results', 'No se encontraron registros de casamientos con los datos especificados.');
+        } else {
+            session()->forget('no_results');
+        }
         return view('list-casamiento', compact('casamientos'));
     }
     /**
