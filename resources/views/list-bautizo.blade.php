@@ -3,14 +3,14 @@
 @section('style')
     <link href="assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
     <style>
-        p.small.text-muted{
+        p.small.text-muted {
             display: none
         }
     </style>
-    @endsection
+@endsection
 
 
-    @section('wrapper')
+@section('wrapper')
     <div class="page-wrapper">
         <div class="page-content">
             <div class="card radius-10">
@@ -26,17 +26,19 @@
                             <div class="col-md-6 d-md-flex">
                                 <div class="me-2 flex-fill">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ request('nombre') }}">
+                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                        placeholder="Nombre" value="{{ request('nombre') }}">
                                 </div>
-                               
+
                             </div>
-                    
+
                             <!-- Input de fecha en su propia columna -->
                             <div class="col-md-3">
                                 <label for="anio" class="form-label">Año</label>
-                                <input type="number" class="form-control" id="anio" name="anio" placeholder="2024" min="1900" max="{{ date('Y') }}" value="{{ request('anio') }}">
+                                <input type="number" class="form-control" id="anio" name="anio" placeholder="2024"
+                                    min="1900" max="{{ date('Y') }}" value="{{ request('anio') }}">
                             </div>
-                    
+
                             <!-- Botón de Buscar -->
                             <div class="col-md-3">
                                 <label for="buscar" class="form-label d-block">&nbsp;</label>
@@ -44,7 +46,7 @@
                             </div>
                         </div>
                     </form>
-                    
+
                     <!-- Tabla de bautizos -->
                     <div class="table-responsive">
                         <table class="table align-middle mb-0 mx-auto">
@@ -58,21 +60,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bautizos as $bautizo)
+                                @forelse ($bautizos as $bautizo)
                                     <tr>
                                         <td>{{ $bautizo->NoPartida }} - {{ $bautizo->folio }}</td>
                                         <td>{{ $bautizo->nombre_persona_bautizada }}</td>
                                         <td>{{ $bautizo->nombre_sacerdote }}</td>
                                         <td>{{ \Carbon\Carbon::parse($bautizo->fecha_bautizo)->format('Y-m-d') }}</td>
-                                        <td><a href="{{ route('bautizos.show', $bautizo->bautizo_id) }}" class="btn btn-primary-ig btn-sm">Visualizar</a></td>
+                                        <td><a href="{{ route('bautizos.show', $bautizo->bautizo_id) }}"
+                                                class="btn btn-primary-ig btn-sm">Visualizar</a></td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5" style="font-weight: bold"
+                                            class="text-center font-weight-bold fs-6 p-2 mt-3 d-block d-md-table-cell">
+                                            No se encontraron registros de bautizos con los datos especificados.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                     <div class="pagination-container">
                         <div class="d-flex justify-content-center mt-4">
-                            {{ $bautizos->onEachSide(1)->links() }}  
+                            {{ $bautizos->onEachSide(1)->links() }}
                         </div>
                     </div>
 
@@ -94,6 +104,16 @@
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
                 timer: 3000
+            });
+        @endif
+
+        @if (session('no_results'))
+            Swal.fire({
+                icon: 'info',
+                title: 'Sin resultados',
+                text: '{{ session('no_results') }}',
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar'
             });
         @endif
     </script>

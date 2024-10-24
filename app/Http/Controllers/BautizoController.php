@@ -34,12 +34,18 @@ class BautizoController extends Controller
             $query->whereYear('fecha_bautizo', $anio);
         }
 
-        // Paginación de los resultados
         $bautizos = $query->paginate(10);
 
+        // Verifica si no se encontraron resultados y añade mensaje a la sesión
+        if ($bautizos->isEmpty()) {
+            session()->flash('no_results', 'No se encontraron registros de bautizos con los datos especificados.');
+        } else {
+            session()->forget('no_results');
+        }
         // Retornar la vista 'dashboard-list-bautizo' con los bautizos
         return view('list-bautizo', compact('bautizos'));
     }
+
     /**
      * Muestra el formulario para crear un bautizo.
      */
