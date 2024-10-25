@@ -16,14 +16,14 @@ class CreateBautizoTable extends Migration
             $table->string('nombre_persona_bautizada', 255);
             $table->string('edad', 4);
             $table->dateTime('fecha_nacimiento');
-            $table->string('aldea', 255);
+            $table->string('aldea', 255)->nullable();
             $table->integer('municipio_id')->unsigned();
             $table->integer('departamento_id')->unsigned();
-            $table->string('nombre_padre', 255);
-            $table->string('nombre_madre', 255);
+            $table->string('nombre_padre', 255)->nullable();
+            $table->string('nombre_madre', 255)->nullable();
             $table->string('nombre_sacerdote', 255);
-            $table->string('nombre_padrino', 255);
-            $table->string('nombre_madrina', 255);
+            $table->string('nombre_padrino', 255)->nullable();
+            $table->string('nombre_madrina', 255)->nullable();
             $table->string('margen', 200)->nullable();
             $table->timestamps();
 

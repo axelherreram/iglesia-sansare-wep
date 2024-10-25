@@ -17,14 +17,14 @@ class CreateCasamientoTable extends Migration
             $table->string('edad_esposo', 4);
             $table->string('origen_esposo', 255);
             $table->string('feligresesposo', 255)->nullable();
-            $table->string('nombre_padre_esposo', 255);
-            $table->string('nombre_madre_esposo', 255);
+            $table->string('nombre_padre_esposo', 255)->nullable();
+            $table->string('nombre_madre_esposo', 255)->nullable();
             $table->string('nombre_esposa', 255);
             $table->string('edad_esposa', 4);
             $table->string('origen_esposa', 255);
             $table->string('feligresesposa', 255)->nullable();
-            $table->string('nombre_padre_esposa', 255);
-            $table->string('nombre_madre_esposa', 255);
+            $table->string('nombre_padre_esposa', 255)->nullable();
+            $table->string('nombre_madre_esposa', 255)->nullable();
             $table->string('nombre_parroco', 255);
             $table->integer('dato_parroquia_id')->unsigned();
             $table->timestamps();

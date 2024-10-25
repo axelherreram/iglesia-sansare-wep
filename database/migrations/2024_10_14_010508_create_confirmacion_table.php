@@ -16,10 +16,10 @@ class CreateConfirmacionTable extends Migration
             $table->string('nombre_persona_confirmada', 255);
             $table->string('edad', 4);
             $table->string('nombre_parroquia_bautizo', 255);
-            $table->string('nombre_padre', 255);
-            $table->string('nombre_madre', 255);
-            $table->string('nombre_persona_padrino', 255);
-            $table->string('nombre_persona_madrina', 255);
+            $table->string('nombre_padre', 255)->nullable();
+            $table->string('nombre_madre', 255)->nullable();
+            $table->string('nombre_persona_padrino', 255)->nullable();
+            $table->string('nombre_persona_madrina', 255)->nullable();
             $table->integer('dato_parroquia_id')->unsigned();
             $table->integer('departamento_id')->unsigned();
             $table->integer('municipio_id')->unsigned();

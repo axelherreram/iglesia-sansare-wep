@@ -13,8 +13,8 @@ class CreateComunionTable extends Migration
             $table->string('folio', 50);
             $table->dateTime('fecha_comunion');
             $table->string('nombre_persona_participe', 255);
-            $table->string('nombre_padre', 255);
-            $table->string('nombre_madre', 255);
+            $table->string('nombre_padre', 255)->nullable();
+            $table->string('nombre_madre', 255)->nullable();
             $table->dateTime('fecha_nacimiento');
             $table->integer('dato_parroquia_id')->unsigned();
             $table->integer('departamento_id')->unsigned();

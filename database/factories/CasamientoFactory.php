@@ -26,13 +26,13 @@ class CasamientoFactory extends Factory
             'nombre_esposo' => $this->faker->name, // Nombre completo
             'edad_esposo' => $this->faker->numberBetween(18, 99), // Genera una edad entre 18 y 99
             'origen_esposo' => $this->faker->city, // Origen como ciudad
-            'feligresesposo' => $this->faker->optional()->word, // Valor opcional
+            'feligresesposo' => $this->faker->text(), // Valor opcional
             'nombre_padre_esposo' => $this->faker->name,
             'nombre_madre_esposo' => $this->faker->name,
             'nombre_esposa' => $this->faker->name, 
             'edad_esposa' => $this->faker->numberBetween(18, 99), // Genera una edad entre 18 y 99
             'origen_esposa' => $this->faker->city, // Origen como ciudad
-            'feligresesposa' => $this->faker->optional()->word,
+            'feligresesposa' => $this->faker->text(),
             'nombre_padre_esposa' => $this->faker->name,
             'nombre_madre_esposa' => $this->faker->name,
             'nombre_parroco' => $this->faker->name,
