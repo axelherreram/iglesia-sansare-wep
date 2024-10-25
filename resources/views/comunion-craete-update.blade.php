@@ -28,7 +28,6 @@
 
                 <form action="{{ route('comuniones.store') }}" method="POST" class="p-4">
                     @csrf
-                    <!-- Correlativo y Fecha de Comunión -->
                     <div class="row mb-3">
                         <div class="col-sm-3">
                             <label for="NoPartida" class="form-label">Partida No:</label>
@@ -116,7 +115,13 @@
                             <label for="municipio_id" class="form-label">Municipio:</label>
                             <select class="form-control" id="municipio_id" name="municipio_id">
                                 <option value="">Seleccione municipio</option>
+                                @foreach ($municipios as $municipio)
+                                    <option value="{{ $municipio->municipio_id }}" {{ old('municipio_id') == $municipio->municipio_id ? 'selected' : '' }}>
+                                        {{ $municipio->municipio }}
+                                    </option>
+                                @endforeach
                             </select>
+                            
                             @error('municipio_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -136,20 +141,36 @@
 @endsection
 
 @section('script')
-    <script>
-        document.getElementById('departamento_id').addEventListener('change', function() {
-            const departamentoId = this.value;
-            const municipioSelect = document.getElementById('municipio_id');
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const departamentoSelect = document.getElementById('departamento_id');
+        const municipioSelect = document.getElementById('municipio_id');
 
-            // Limpiar el selector de municipios
+        // Cargar municipios si hay un departamento seleccionado
+        if (departamentoSelect.value) {
+            fetch(`/municipios/${departamentoSelect.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(municipio => {
+                        const option = document.createElement('option');
+                        option.value = municipio.municipio_id;
+                        option.textContent = municipio.municipio;
+                        option.selected = municipio.municipio_id == "{{ old('municipio_id') }}";
+                        municipioSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener los municipios:', error);
+                });
+        }
+
+        // Cargar municipios en el cambio de departamento
+        departamentoSelect.addEventListener('change', function() {
             municipioSelect.innerHTML = '<option value="">Seleccione municipio</option>';
-
-            if (departamentoId) {
-                // Realizar la petición AJAX para obtener los municipios
-                fetch(`/municipios/${departamentoId}`)
+            if (departamentoSelect.value) {
+                fetch(`/municipios/${departamentoSelect.value}`)
                     .then(response => response.json())
                     .then(data => {
-                        // Agregar los municipios al select de municipios
                         data.forEach(municipio => {
                             const option = document.createElement('option');
                             option.value = municipio.municipio_id;
@@ -162,7 +183,9 @@
                     });
             }
         });
-    </script>
+    });
+</script>
+
 
     <!--plugins-->
     <script src="assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>

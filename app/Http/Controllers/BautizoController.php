@@ -36,7 +36,6 @@ class BautizoController extends Controller
 
         $bautizos = $query->paginate(10);
 
-        // Verifica si no se encontraron resultados y añade mensaje a la sesión
         if ($bautizos->isEmpty()) {
             session()->flash('no_results', 'No se encontraron registros de bautizos con los datos especificados.');
         } else {
@@ -49,13 +48,20 @@ class BautizoController extends Controller
     /**
      * Muestra el formulario para crear un bautizo.
      */
-    public function create()
+    public function create(Request $request)
     {
-        // Obtener todos los departamentos para el selector
         $departamentos = Departamento::all();
+        $departamento_id = old('departamento_id');
+        $municipios = collect();
 
-        return view('bautizo-craete-update', compact('departamentos'));
+        // Cargar municipios si ya se seleccionó un departamento
+        if ($departamento_id) {
+            $municipios = Municipio::where('departamento_id', $departamento_id)->get();
+        }
+
+        return view('bautizo-craete-update', compact('departamentos', 'municipios'));
     }
+
 
     /**
      * Almacena un nuevo registro de bautizo en la base de datos.
@@ -70,7 +76,7 @@ class BautizoController extends Controller
             'fecha_bautizo' => 'required|date',
             'nombre_persona_bautizada' => 'required|string|max:255',
             'edad' => 'nullable|string|max:4',
-            'fecha_nacimiento' => 'nullable|date',
+            'fecha_nacimiento' => 'required|date|before_or_equal:today',
             'aldea' => 'nullable|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
@@ -99,8 +105,10 @@ class BautizoController extends Controller
 
             'edad.string' => 'La edad debe ser una cadena de texto.',
             'edad.max' => 'La edad no puede tener más de 4 caracteres.',
-
+            
+            'fecha_nacimiento.required' => 'La fecha de nacimiento es obligatoria.',
             'fecha_nacimiento.date' => 'La fecha de nacimiento debe ser una fecha válida.',
+            'fecha_nacimiento.before_or_equal' => 'La fecha de nacimiento no puede ser mayor que la fecha actual.',
 
             'aldea.string' => 'La aldea debe ser una cadena de texto.',
             'aldea.max' => 'La aldea no puede tener más de 255 caracteres.',
@@ -181,7 +189,7 @@ class BautizoController extends Controller
             'fecha_bautizo' => 'required|date',
             'nombre_persona_bautizada' => 'required|string|max:255',
             'edad' => 'nullable|string|max:4',
-            'fecha_nacimiento' => 'nullable|date',
+            'fecha_nacimiento' => 'nullable|date|before_or_equal:today',
             'aldea' => 'nullable|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
@@ -191,6 +199,8 @@ class BautizoController extends Controller
             'nombre_padrino' => 'nullable|string|max:255',
             'nombre_madrina' => 'nullable|string|max:255',
             'margen' => 'nullable|string|max:200',
+        ], [
+            'fecha_nacimiento.before_or_equal' => 'La fecha de nacimiento no puede ser mayor que la fecha actual.',
         ]);
 
         // Buscar el bautizo y actualizarlo

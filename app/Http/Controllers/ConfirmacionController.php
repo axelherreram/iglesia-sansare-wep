@@ -39,14 +39,20 @@ class ConfirmacionController extends Controller
 
     /**
      * Muestra el formulario para crear una nueva confirmación.
-     */
-    public function create()
+     */ 
+    public function create(Request $request)
     {
-        // Obtener todos los departamentos para el selector
         $departamentos = Departamento::all();
+        $departamento_id = old('departamento_id');
+        $municipios = collect();
 
-        return view('confirmacion-craete-update', compact('departamentos'));
+        if ($departamento_id) {
+            $municipios = Municipio::where('departamento_id', $departamento_id)->get();
+        }
+
+        return view('confirmacion-craete-update', compact('departamentos', 'municipios'));
     }
+
 
     /**
      * Almacena una nueva confirmación en la base de datos.

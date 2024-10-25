@@ -150,7 +150,13 @@
                             <label for="municipio_id" class="form-label">Municipio:</label>
                             <select class="form-control" id="municipio_id" name="municipio_id">
                                 <option value="">Seleccione el municipio</option>
+                                @foreach ($municipios as $municipio)
+                                    <option value="{{ $municipio->municipio_id }}" {{ old('municipio_id') == $municipio->municipio_id ? 'selected' : '' }}>
+                                        {{ $municipio->municipio }}
+                                    </option>
+                                @endforeach
                             </select>
+                            
                             @error('municipio_id')
                                 <p class="error-message">{{ $message }}</p>
                             @enderror

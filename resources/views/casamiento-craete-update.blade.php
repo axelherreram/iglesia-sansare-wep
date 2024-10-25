@@ -22,34 +22,28 @@
                 </div>
                 <form action="{{ route('casamientos.store') }}" method="POST" class="p-4">
                     @csrf
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                     <!-- Correlativo y Fecha del casamiento -->
                     <div class="row mb-3">
                         <div class="col-sm-3">
                             <label for="NoPartida" class="form-label">Partida No:</label>
-                            <input type="text" class="form-control" id="NoPartida" name="NoPartida" value="{{ old('NoPartida') }}">
+                            <input type="text" class="form-control" id="NoPartida" name="NoPartida"
+                                value="{{ old('NoPartida') }}">
                             @error('NoPartida')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-3">
                             <label for="folio" class="form-label">Folio:</label>
-                            <input type="text" class="form-control" id="folio" name="folio" value="{{ old('folio') }}">
+                            <input type="text" class="form-control" id="folio" name="folio"
+                                value="{{ old('folio') }}">
                             @error('folio')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
                             <label for="fecha_casamiento" class="form-label">Fecha de casamiento:</label>
-                            <input type="date" class="form-control" id="fecha_casamiento" name="fecha_casamiento" value="{{ old('fecha_casamiento') }}">
+                            <input type="date" class="form-control" id="fecha_casamiento" name="fecha_casamiento"
+                                value="{{ old('fecha_casamiento') }}">
                             @error('fecha_casamiento')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -73,14 +67,16 @@
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="nombre_esposo" class="form-label">Nombre del esposo:</label>
-                            <input type="text" class="form-control" id="nombre_esposo" name="nombre_esposo" value="{{ old('nombre_esposo') }}">
+                            <input type="text" class="form-control" id="nombre_esposo" name="nombre_esposo"
+                                value="{{ old('nombre_esposo') }}">
                             @error('nombre_esposo')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
                             <label for="edad_esposo" class="form-label">Edad del esposo:</label>
-                            <input type="number" class="form-control" id="edad_esposo" name="edad_esposo" min="0" value="{{ old('edad_esposo') }}">
+                            <input type="number" class="form-control" id="edad_esposo" name="edad_esposo" min="0"
+                                value="{{ old('edad_esposo') }}">
                             @error('edad_esposo')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -89,14 +85,16 @@
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="origen_esposo" class="form-label">Origen del esposo:</label>
-                            <input type="text" class="form-control" id="origen_esposo" name="origen_esposo" value="{{ old('origen_esposo') }}">
+                            <input type="text" class="form-control" id="origen_esposo" name="origen_esposo"
+                                value="{{ old('origen_esposo') }}">
                             @error('origen_esposo')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
                             <label for="feligresia_esposo" class="form-label">Feligres de:</label>
-                            <input type="text" class="form-control" id="feligresia_esposo" name="feligresia_esposo" value="{{ old('feligresia_esposo') }}">
+                            <input type="text" class="form-control" id="feligresia_esposo" name="feligresia_esposo"
+                                value="{{ old('feligresia_esposo') }}">
                             @error('feligresia_esposo')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -107,34 +105,38 @@
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="nombre_padre_esposo" class="form-label">Nombre del padre:</label>
-                            <input type="text" class="form-control" id="nombre_padre_esposo" name="nombre_padre_esposo" value="{{ old('nombre_padre_esposo') }}">
+                            <input type="text" class="form-control" id="nombre_padre_esposo" name="nombre_padre_esposo"
+                                value="{{ old('nombre_padre_esposo') }}">
                             @error('nombre_padre_esposo')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
                             <label for="nombre_madre_esposo" class="form-label">Nombre de la madre:</label>
-                            <input type="text" class="form-control" id="nombre_madre_esposo" name="nombre_madre_esposo" value="{{ old('nombre_madre_esposo') }}">
+                            <input type="text" class="form-control" id="nombre_madre_esposo"
+                                name="nombre_madre_esposo" value="{{ old('nombre_madre_esposo') }}">
                             @error('nombre_madre_esposo')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    
+
                     <!-- Datos de la esposa -->
                     <span><strong>Datos de la esposa</strong></span>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="nombre_esposa" class="form-label">Nombre de la esposa:</label>
-                            <input type="text" class="form-control" id="nombre_esposa" name="nombre_esposa" value="{{ old('nombre_esposa') }}">
+                            <input type="text" class="form-control" id="nombre_esposa" name="nombre_esposa"
+                                value="{{ old('nombre_esposa') }}">
                             @error('nombre_esposa')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
                             <label for="edad_esposa" class="form-label">Edad de la esposa:</label>
-                            <input type="number" class="form-control" id="edad_esposa" name="edad_esposa" min="0" value="{{ old('edad_esposa') }}">
+                            <input type="number" class="form-control" id="edad_esposa" name="edad_esposa"
+                                min="0" value="{{ old('edad_esposa') }}">
                             @error('edad_esposa')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -143,14 +145,16 @@
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="origen_esposa" class="form-label">Origen de la esposa:</label>
-                            <input type="text" class="form-control" id="origen_esposa" name="origen_esposa" value="{{ old('origen_esposa') }}">
+                            <input type="text" class="form-control" id="origen_esposa" name="origen_esposa"
+                                value="{{ old('origen_esposa') }}">
                             @error('origen_esposa')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
                             <label for="feligresia_esposa" class="form-label">Feligres de:</label>
-                            <input type="text" class="form-control" id="feligresia_esposa" name="feligresia_esposa" value="{{ old('feligresia_esposa') }}">
+                            <input type="text" class="form-control" id="feligresia_esposa" name="feligresia_esposa"
+                                value="{{ old('feligresia_esposa') }}">
                             @error('feligresia_esposa')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -161,14 +165,16 @@
                     <div class="row mb-3">
                         <div class="col-sm-6">
                             <label for="nombre_padre_esposa" class="form-label">Nombre del padre:</label>
-                            <input type="text" class="form-control" id="nombre_padre_esposa" name="nombre_padre_esposa" value="{{ old('nombre_padre_esposa') }}">
+                            <input type="text" class="form-control" id="nombre_padre_esposa"
+                                name="nombre_padre_esposa" value="{{ old('nombre_padre_esposa') }}">
                             @error('nombre_padre_esposa')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-sm-6">
                             <label for="nombre_madre_esposa" class="form-label">Nombre de la madre:</label>
-                            <input type="text" class="form-control" id="nombre_madre_esposa" name="nombre_madre_esposa" value="{{ old('nombre_madre_esposa') }}">
+                            <input type="text" class="form-control" id="nombre_madre_esposa"
+                                name="nombre_madre_esposa" value="{{ old('nombre_madre_esposa') }}">
                             @error('nombre_madre_esposa')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -179,7 +185,8 @@
                     <span><strong>Párroco</strong></span>
                     <div class="row mb-3">
                         <div class="col-sm-12">
-                            <input class="form-control" id="nombre_parroco" name="nombre_parroco" value="{{ old('nombre_parroco') }}">
+                            <input class="form-control" id="nombre_parroco" name="nombre_parroco"
+                                value="{{ old('nombre_parroco') }}">
                             @error('nombre_parroco')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

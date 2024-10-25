@@ -40,14 +40,20 @@ class ComunionController extends Controller
     /**
      * Muestra el formulario para crear una nueva comunión.
      */
-    public function create()
+    public function create(Request $request) 
     {
-        // Obtener todos los departamentos para el selector
         $departamentos = Departamento::all();
-
-        return view('comunion-craete-update', compact('departamentos'));
+        $departamento_id = old('departamento_id'); 
+        $municipios = collect(); 
+    
+        // Si hay un departamento seleccionado, cargar sus municipios
+        if ($departamento_id) {
+            $municipios = Municipio::where('departamento_id', $departamento_id)->get();
+        }
+    
+        return view('comunion-craete-update', compact('departamentos', 'municipios'));
     }
-
+    
     // Mostrar los detalles de una comunión
     public function show($comunion_id)
     {
@@ -63,7 +69,7 @@ class ComunionController extends Controller
             'folio' => 'required|string|max:50',
             'fecha_comunion' => 'required|date',
             'nombre_persona_participe' => 'required|string|max:255',
-            'fecha_nacimiento' => 'nullable|date',
+            'fecha_nacimiento' => 'required|date|before_or_equal:today',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
             'nombre_padre' => 'nullable|string|max:255',
@@ -75,6 +81,8 @@ class ComunionController extends Controller
             'nombre_persona_participe.required' => 'El nombre de la persona es obligatorio.',
             'municipio_id.required' => 'El municipio es obligatorio.',
             'departamento_id.required' => 'El departamento es obligatorio.',
+            'fecha_nacimiento.required' => 'La fecha de nacimiento es obligatoria.',
+            'fecha_nacimiento.before_or_equal' => 'La fecha de nacimiento no puede ser mayor que la fecha actual.',
         ]);
 
         // Buscar la comunión y actualizarla
@@ -96,7 +104,7 @@ class ComunionController extends Controller
             'folio' => 'required|string|max:50',
             'fecha_comunion' => 'required|date',
             'nombre_persona_participe' => 'required|string|max:255',
-            'fecha_nacimiento' => 'nullable|date',
+            'fecha_nacimiento' => 'required|date|before_or_equal:today',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
             'nombre_padre' => 'nullable|string|max:255',
@@ -108,6 +116,8 @@ class ComunionController extends Controller
             'nombre_persona_participe.required' => 'El nombre de la persona es obligatorio.',
             'municipio_id.required' => 'El municipio es obligatorio.',
             'departamento_id.required' => 'El departamento es obligatorio.',
+            'fecha_nacimiento.required' => 'La fecha de nacimiento es obligatoria.',
+            'fecha_nacimiento.before_or_equal' => 'La fecha de nacimiento no puede ser mayor que la fecha actual.',
         ]);
 
         // Crear un nuevo registro en la tabla 'comunion'
