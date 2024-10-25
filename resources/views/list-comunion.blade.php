@@ -27,7 +27,7 @@
                             <div class="col-md-6 d-md-flex">
                                 <div class="me-2 flex-fill">
                                     <input type="text" class="form-control" id="search" name="search"
-                                        placeholder="Nombre" value="{{ request('search') }}">
+                                        placeholder="Nombre de persona" value="{{ request('search') }}">
                                 </div>
 
                             </div>

@@ -29,7 +29,7 @@
                 <form action="{{ route('confirmaciones.update', $confirmacion->confirmacion_id) }}" method="POST"
                     class="p-4" id="formGuardar">
                     @csrf
-                    @method('PUT') < <!-- Correlativo y Fecha de la confirmación -->
+                    @method('PUT')  
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <label for="NoPartida" class="form-label">Partida No:</label>

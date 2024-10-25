@@ -22,14 +22,14 @@
                     <hr>
                     <form action="{{ route('casamientos.index') }}" method="GET" class="row g-3 align-items-center">
                         <p class="fs-6 fs-md-5 fs-lg-4" style="margin-bottom: 0px;">Búsqueda de casamientos por nombre y año de casamiento</p>
-                        <div class="col-md-6 d-md-flex mb-2">
+                        <div class="col-md-6 d-md-flex ">
                             <div class="me-2 flex-fill">
                                 <input type="text" class="form-control" id="nombre_esposo" name="nombre_esposo"
-                                    value="{{ request('nombre_esposo') }}" placeholder="Nombre">
+                                    value="{{ request('nombre_esposo') }}" placeholder="Nombre de esposo">
                             </div>
                             <div class="flex-fill">
                                 <input type="text" class="form-control" id="nombre_esposa" name="nombre_esposa"
-                                    value="{{ request('nombre_esposa') }}" placeholder="Nombre">
+                                    value="{{ request('nombre_esposa') }}" placeholder="Nombre de esposa">
                             </div>
                         </div>
 
