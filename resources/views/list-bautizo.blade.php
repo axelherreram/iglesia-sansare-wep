@@ -22,10 +22,10 @@
                     <h2 class="mt-3">Listado de bautizos</h2>
                     <hr>
                     <form action="{{ route('bautizos.index') }}" method="GET">
-                        <div class="row g-3 align-items-center">
+                        <p class="fs-6 fs-md-5 fs-lg-4">Búsqueda por nombre de persona bautizada y año de bautizo</p>
+                        <div class="row g-3 align-items-center mb-2">
                             <div class="col-md-6 d-md-flex">
                                 <div class="me-2 flex-fill">
-                                    <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
                                         placeholder="Nombre" value="{{ request('nombre') }}">
                                 </div>
@@ -34,14 +34,12 @@
 
                             <!-- Input de fecha en su propia columna -->
                             <div class="col-md-3">
-                                <label for="anio" class="form-label">Año</label>
                                 <input type="number" class="form-control" id="anio" name="anio" placeholder="2024"
                                     min="1900" max="2200" value="{{ request('anio') }}">
                             </div>
 
                             <!-- Botón de Buscar -->
                             <div class="col-md-3">
-                                <label for="buscar" class="form-label d-block">&nbsp;</label>
                                 <button class="btn btn-primary-ig w-100">Buscar</button>
                             </div>
                         </div>

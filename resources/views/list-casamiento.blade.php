@@ -21,27 +21,24 @@
                     <h2 class="mt-3">Listado de casamientos</h2>
                     <hr>
                     <form action="{{ route('casamientos.index') }}" method="GET" class="row g-3 align-items-center">
-                        <div class="col-md-6 d-md-flex">
+                        <p class="fs-6 fs-md-5 fs-lg-4" style="margin-bottom: 0px;">Búsqueda de casamientos por nombre y año de casamiento</p>
+                        <div class="col-md-6 d-md-flex mb-2">
                             <div class="me-2 flex-fill">
-                                <label for="nombre_esposo" class="form-label">Esposo:</label>
                                 <input type="text" class="form-control" id="nombre_esposo" name="nombre_esposo"
                                     value="{{ request('nombre_esposo') }}" placeholder="Nombre">
                             </div>
                             <div class="flex-fill">
-                                <label for="nombre_esposa" class="form-label">Esposa:</label>
                                 <input type="text" class="form-control" id="nombre_esposa" name="nombre_esposa"
                                     value="{{ request('nombre_esposa') }}" placeholder="Nombre">
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <label for="anio" class="form-label">Año</label>
                             <input type="number" class="form-control" id="anio" name="anio"
                                 value="{{ request('anio') }}" placeholder="2024" min="1900" max="2100">
                         </div>
 
                         <div class="col-md-3">
-                            <label for="buscar" class="form-label d-block">&nbsp;</label>
                             <button class="btn btn-primary-ig w-100" type="submit">Buscar</button>
                         </div>
                     </form>

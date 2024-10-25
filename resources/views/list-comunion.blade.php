@@ -23,22 +23,20 @@
                     <div class="row g-3 align-items-center">
                         <form action="{{ route('comuniones.index') }}" method="GET"
                             class="row g-3 align-items-center  justify-content-center">
+                            <p class="fs-6 fs-md-5 fs-lg-4" style="margin-bottom: 0px;">Búsqueda de comunión por nombre y año de comunión</p>
                             <div class="col-md-6 d-md-flex">
                                 <div class="me-2 flex-fill">
-                                    <label for="search" class="form-label">Nombre</label>
                                     <input type="text" class="form-control" id="search" name="search"
                                         placeholder="Nombre" value="{{ request('search') }}">
                                 </div>
 
                             </div>
                             <div class="col-md-3">
-                                <label for="year" class="form-label">Año</label>
                                 <input type="number" class="form-control" id="year" name="year" placeholder="2024"
                                     min="1900" max="2200" value="{{ request('year') }}">
                             </div>
                             <!-- Botón de Buscar -->
                             <div class="col-md-3">
-                                <label for="buscar" class="form-label d-block">&nbsp;</label>
                                 <button class="btn btn-primary-ig w-100">Buscar</button>
                             </div>
                         </form>
