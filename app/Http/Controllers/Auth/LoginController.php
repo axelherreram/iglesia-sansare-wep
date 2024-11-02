@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('login-app'); // Aquí se cargará tu vista de login
+        return view('login-app');
     }
 
     public function login(Request $request)
@@ -23,11 +23,9 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Si la autenticación es exitosa, redirigir al dashboard
             return redirect()->intended('dashboard');
         }
 
-         // Si las credenciales son incorrectas, redirige de vuelta al login con un mensaje de error
          return redirect()->back()->with('error', 'Credenciales incorrectas. Inténtelo de nuevo.');
     }
 
