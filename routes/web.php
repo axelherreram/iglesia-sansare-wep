@@ -64,7 +64,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-casamiento-create', [CasamientoController::class, 'create'])->name('casamientos.create');
     Route::post('/casamientos', [CasamientoController::class, 'store'])->name('casamientos.store');
     Route::get('/dashboard-list-casamiento', [CasamientoController::class, 'index'])->name('casamientos.index');
-    Route::get('/casamientos/{casamiento_id}', [CasamientoController::class, 'show'])->name('casamientos.show');
     Route::put('/casamientos/{casamiento_id}', [CasamientoController::class, 'update'])->name('casamientos.update');
     Route::get('/casamiento/{casamiento}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamiento.pdf');
 
@@ -85,3 +84,4 @@ Route::get('/errors-404-error', function () {
 Route::get('/errors-500-error', function () {
     return view('errors-500-error');
 });
+Route::get('/casamientos/{casamiento_id}', [CasamientoController::class, 'show'])->name('casamientos.show');
