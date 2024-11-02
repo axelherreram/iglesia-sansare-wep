@@ -22,7 +22,7 @@ class CasamientoFactory extends Factory
             'NoPartida' => $this->faker->word,
             'folio' => $this->faker->word,
             'fecha_casamiento' => $this->faker->date(),
-            'nombres_testigos' => $this->faker->words(3, true), // Palabras combinadas
+            'nombres_testigos' => $this->faker->words(3, true), 
             'nombre_esposo' => $this->faker->name, // Nombre completo
             'edad_esposo' => $this->faker->numberBetween(18, 99), // Genera una edad entre 18 y 99
             'origen_esposo' => $this->faker->city, // Origen como ciudad
