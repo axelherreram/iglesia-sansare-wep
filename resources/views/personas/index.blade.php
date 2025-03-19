@@ -51,14 +51,18 @@
             padding: 0;
         }
 
-        /* Search and filter section */
-        .search-section {
+  /* Formulario */
+  .search-section {
             padding: 20px 25px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
 
-        .search-input {
+        .search-input,
+        .filter-select {
             width: 100%;
             padding: 10px 15px;
             border: 1px solid #ddd;
@@ -67,10 +71,37 @@
             transition: all 0.2s ease;
         }
 
-        .search-input:focus {
+        .search-input:focus,
+        .filter-select:focus {
             border-color: #4a6cf7;
             box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
             outline: none;
+        }
+
+        .search-input {
+            max-width: 300px;
+        }
+
+        .filter-select {
+            max-width: 200px;
+        }
+
+        /* Botón de búsqueda */
+        .btn-primary {
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #2b3cf7;
+            transform: translateY(-2px);
         }
 
         /* Table styles */
@@ -200,7 +231,20 @@
             justify-content: center;
             border-top: 1px solid #eee;
         }
+        .filter-select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
 
+        .filter-select:focus {
+            border-color: #4a6cf7;
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+            outline: none;
+        }
         /* Responsive styles */
         @media (max-width: 992px) {
             .card-header {
@@ -238,17 +282,28 @@
     <div class="page-wrapper">
         <div class="page-content">
             <div class="personas-card">
-                <div class="card-header">
+                <div class="card-header p-4">
                     <a href="/" class="back-button">
                         <i class="lni lni-arrow-left"></i> Regresar
                     </a>
-                    <h2 class="page-title">Lista de Personas</h2>
+                    <h2 class="page-title" style="color: white">Lista de Personas</h2>
                     <div></div> <!-- Empty div for flex spacing -->
                 </div>
 
-                <div class="search-section">
-                    <input type="text" class="search-input" placeholder="Buscar persona por nombre, apellido o DPI...">
-                </div>
+                <form action="{{ route('personas.index') }}" method="GET" class="p-3">
+                        <h5>Buscar personas por CUI, nombre, apellido y filtrado por tipo de persona</h5>
+                    <div class="search-section">
+                        <input type="text" name="search" class="search-input" placeholder="Buscar persona por nombre, apellido o DPI..." value="{{ request('search') }}">
+                        <select class="filter-select" name="tipo_persona" id="tipo_persona">
+                            <option value="">Seleccionar Tipo de Persona</option>
+                            <option value="F" {{ request('tipo_persona') == 'F' ? 'selected' : '' }}>Feligrés</option>
+                            <option value="S" {{ request('tipo_persona') == 'S' ? 'selected' : '' }}>Sacerdote</option>
+                            <option value="O" {{ request('tipo_persona') == 'O' ? 'selected' : '' }}>Obispo</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </form>
+                
 
                 <div class="table-container">
                     @if(count($personas) > 0)
@@ -295,7 +350,7 @@
                     @endif
                 </div>
 
-                @if(isset($personas) && method_exists($personas, 'links'))
+                 @if(isset($personas) && method_exists($personas, 'links'))
                     <div class="pagination-container">
                         {{ $personas->links() }}
                     </div>

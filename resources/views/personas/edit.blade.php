@@ -189,7 +189,7 @@
         <div class="page-content">
             <div class="form-container">
                 <div class="persona-card">
-                    <div class="card-header">
+                    <div class="card-header p-4">
                         <a href="{{ route('personas.index') }}" class="back-button">
                             <i class="lni lni-arrow-left"></i> Regresar
                         </a>
