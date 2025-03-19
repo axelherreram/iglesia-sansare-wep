@@ -4,31 +4,29 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfirmacionTable extends Migration
+class personas extends Migration
 {
     public function up()
     {
-        Schema::create('confirmacion', function (Blueprint $table) {
-            $table->increments('confirmacion_id')->unsigned();
-            $table->string('NoPartida', 20);
-            $table->string('folio', 50);
-            $table->dateTime('fecha_confirmacion');
-            $table->integer('persona_confirmada_id')->unsigned();
-            $table->string('nombre_parroquia_bautizo', 255);
-            $table->integer('departamento_id')->unsigned();
+        Schema::create('personas', function (Blueprint $table) {
+            $table->increments('persona_id')->unsigned();
+            $table->string('nombres', 255);
+            $table->string('apellidos', 255);
+            $table->string('dpi_cui', 20)->unique();
             $table->integer('municipio_id')->unsigned();
-            $table->integer('sacerdote_id')->unsigned()->comment('Referencia al sacerdote en la tabla personas');
+            $table->string('direccion', 255)->nullable();
+            $table->date('fecha_nacimiento');
+            $table->enum('sexo', ['M', 'F', 'O']);
+            $table->string('num_telefono', 20)->nullable();
+            $table->enum('tipo_persona', ['F', 'S', 'O'])->comment('F: Feligrés, S: Sacerdote, O: Otro');
             $table->integer('padre_id')->unsigned()->nullable();
             $table->integer('madre_id')->unsigned()->nullable();
             $table->integer('padrino_id')->unsigned()->nullable();
             $table->integer('madrina_id')->unsigned()->nullable();
             $table->timestamps(0);
 
-            // Definición de claves foráneas
-            $table->foreign('persona_confirmada_id')->references('persona_id')->on('personas');
+            // Claves foráneas
             $table->foreign('municipio_id')->references('municipio_id')->on('municipio');
-            $table->foreign('departamento_id')->references('departamento_id')->on('departamento');
-            $table->foreign('sacerdote_id')->references('persona_id')->on('personas');
             $table->foreign('padre_id')->references('persona_id')->on('personas');
             $table->foreign('madre_id')->references('persona_id')->on('personas');
             $table->foreign('padrino_id')->references('persona_id')->on('personas');
@@ -38,6 +36,6 @@ class CreateConfirmacionTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('confirmacion');
+        Schema::dropIfExists('personas');
     }
 }
