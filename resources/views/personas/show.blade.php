@@ -2,89 +2,151 @@
 
 @section('style')
     <style>
-        /* General styling */
+        .persona-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .persona-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-custom {
+            margin-left: 3px;
+            background-color: white  !important
+        }
+
         .card-header {
+            background: linear-gradient(135deg, #4a6cf7 0%, #2b3cf7 100%);
+            color: white;
+            padding: 20px 25px;
+            position: relative;
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
         }
 
-        .card-header h2 {
+        .back-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .persona-title {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
+            font-weight: 700;
+            margin: 0;
+            padding: 0;
         }
 
-        .btn-primary-ig-r {
-            padding: 8px 15px;
-            font-size: 14px;
+        .persona-subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 5px;
         }
 
-        .btn-primary-ig {
-            margin-top: 15px;
-            font-size: 14px;
-            width: 100%;
+        .info-section {
+            padding: 25px;
         }
 
-        .card-body .row {
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-item {
             margin-bottom: 15px;
         }
 
-        .card-body .row .col-md-6 {
-            padding-right: 20px;
-        }
-
-        .strong-label {
+        .info-label {
             font-weight: 600;
-            color: #333;
-            display: block;
+            color: #555;
+            font-size: 0.9rem;
             margin-bottom: 5px;
+            display: block;
         }
 
-        .value-label {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 5px;
+        .info-value {
+            color: #333;
+            font-size: 1.05rem;
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #4a6cf7;
         }
 
         .action-buttons {
-            margin-top: 20px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
+            margin-top: 25px;
+            padding: 0 25px 25px;
         }
 
-        /* Adjust card body margins */
-        .card-body p {
-            font-size: 1rem;
-            margin: 5px 0;
+        .edit-button {
+            background: linear-gradient(135deg, #4a6cf7 0%, #2b3cf7 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .edit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(43, 60, 247, 0.3);
+        }
+
+        .section-divider {
+            margin: 20px 0;
+            height: 1px;
+            background-color: #eee;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #4a6cf7;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eee;
         }
 
         /* Responsive design */
         @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
             .card-header {
-                flex-direction: column;
-                align-items: flex-start;
+                padding: 15px 20px;
             }
 
-            .card-header h2 {
-                font-size: 1.2rem;
-            }
-
-            .btn-primary-ig {
-                width: 100%;
-            }
-
-            .strong-label {
-                font-size: 14px;
-            }
-
-            .value-label {
-                font-size: 14px;
+            .info-section {
+                padding: 15px;
             }
 
             .action-buttons {
-                flex-direction: column;
+                padding: 0 15px 15px;
             }
         }
     </style>
@@ -93,46 +155,58 @@
 @section('wrapper')
     <div class="page-wrapper">
         <div class="page-content">
-            <div class="card radius-10">
-                <div class="card-header bg-transparent">
-                    <a href="{{ route('personas.index') }}" class="btn btn-sm btn-primary-ig-r">
-                        <i class="font-22 lni lni-arrow-left"></i> Regresar
-                    </a>
-                    <h2 class="mt-3">Detalles de Persona</h2>
-                    <hr>
+            <div class="persona-card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ route('personas.index') }}" class="btn btn-custom">
+                            <i class="lni lni-arrow-left"></i> Regresar
+                        </a>
+                        <div class="text-center text-white p-3">
+                            <h2 class="persona-title mt-2" style="color: white">{{ $persona->nombres }}
+                                {{ $persona->apellidos }}</h2>
+                            <p class="persona-subtitle">
+                                @if($persona->tipo_persona == 'F')
+                                    Feligrés
+                                @elseif($persona->tipo_persona == 'S')
+                                    Sacerdote
+                                @elseif($persona->tipo_persona == 'O')
+                                    Obispo
+                                @endif
+                                • DPI: {{ $persona->dpi_cui }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="strong-label">Nombres:</span>
-                            <p class="value-label">{{ $persona->nombres }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <span class="strong-label">Apellidos:</span>
-                            <p class="value-label">{{ $persona->apellidos }}</p>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="strong-label">DPI/CUI:</span>
-                            <p class="value-label">{{ $persona->dpi_cui }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <span class="strong-label">Municipio:</span>
-                            <p class="value-label">{{ $persona->municipio->municipio }}</p>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="strong-label">Fecha de Nacimiento:</span>
-                            <p class="value-label">{{ \Carbon\Carbon::parse($persona->fecha_nacimiento)->format('d/m/Y') }}</p>
+                <div class="info-section">
+                    <h3 class="section-title">Información Personal</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Nombres:</span>
+                            <div class="info-value">{{ $persona->nombres }}</div>
                         </div>
-                        <div class="col-md-6">
-                            <span class="strong-label">Sexo:</span>
-                            <p class="value-label">
+                        <div class="info-item">
+                            <span class="info-label">Apellidos:</span>
+                            <div class="info-value">{{ $persona->apellidos }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">DPI/CUI:</span>
+                            <div class="info-value">{{ $persona->dpi_cui }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Municipio:</span>
+                            <div class="info-value">{{ $persona->municipio->municipio }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Fecha de Nacimiento:</span>
+                            <div class="info-value">{{ \Carbon\Carbon::parse($persona->fecha_nacimiento)->format('d/m/Y') }}
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Sexo:</span>
+                            <div class="info-value">
                                 @if ($persona->sexo == 'M')
                                     Masculino
                                 @elseif($persona->sexo == 'F')
@@ -140,56 +214,50 @@
                                 @else
                                     No especificado
                                 @endif
-                            </p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Número de Teléfono:</span>
+                            <div class="info-value">{{ $persona->num_telefono ?? 'No disponible' }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Tipo de Persona:</span>
+                            <div class="info-value">{{ $persona->tipo_persona }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Dirección:</span>
+                            <div class="info-value">{{ $persona->direccion ?? 'No disponible' }}</div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="strong-label">Número de Teléfono:</span>
-                            <p class="value-label">{{ $persona->num_telefono ?? 'No disponible' }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <span class="strong-label">Tipo de Persona:</span>
-                            <p class="value-label">{{ $persona->tipo_persona }}</p>
-                        </div>
-                    </div>
+                    <div class="section-divider"></div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="strong-label">Dirección:</span>
-                            <p class="value-label">{{ $persona->direccion ?? 'No disponible' }}</p>
+                    <h3 class="section-title">Relaciones Familiares</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Padre:</span>
+                            <div class="info-value">{{ $persona->padre_id ?? 'No disponible' }}</div>
                         </div>
-                        <div class="col-md-6">
-                            <span class="strong-label">Padre:</span>
-                            <p class="value-label">{{ $persona->padre_id ?? 'No disponible' }}</p>
+                        <div class="info-item">
+                            <span class="info-label">Madre:</span>
+                            <div class="info-value">{{ $persona->madre_id ?? 'No disponible' }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Padrino:</span>
+                            <div class="info-value">{{ $persona->padrino_id ?? 'No disponible' }}</div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Madrina:</span>
+                            <div class="info-value">{{ $persona->madrina_id ?? 'No disponible' }}</div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="strong-label">Madre:</span>
-                            <p class="value-label">{{ $persona->madre_id ?? 'No disponible' }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <span class="strong-label">Padrino:</span>
-                            <p class="value-label">{{ $persona->padrino_id ?? 'No disponible' }}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="strong-label">Madrina:</span>
-                            <p class="value-label">{{ $persona->madrina_id ?? 'No disponible' }}</p>
-                        </div>
-                    </div>
-
-                    <!-- Botón de acción -->
-                    <div class="action-buttons">
-                        <a href="{{ route('personas.edit', $persona->persona_id) }}" class="btn btn-primary-ig">
-                            <i class="lni lni-pencil"></i> Editar
-                        </a>
-                    </div>
+                <!-- Botón de acción -->
+                <div class="action-buttons">
+                    <a href="{{ route('personas.edit', $persona->persona_id) }}" class="edit-button">
+                        <i class="lni lni-pencil"></i> Editar Información
+                    </a>
                 </div>
             </div>
         </div>
