@@ -9,6 +9,8 @@ use App\Http\Controllers\ConfirmacionController;
 use App\Http\Controllers\CasamientoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\PersonasController;
+use App\Http\Controllers\MunicipioController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +35,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Rutas para la gestión de usuarios
+    Route::resource('personas', PersonasController::class);
+
+    // Rutas para la gestión de 
+
+    Route::get('/municipios/{departamento_id}', [MunicipioController::class, 'getMunicipios']);
     // Rutas para bautizos
     Route::get('/dashboard-bautizo-create', [BautizoController::class, 'create'])->name('bautizos.create');
     Route::post('/bautizos', [BautizoController::class, 'store'])->name('bautizos.store');
@@ -47,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comuniones', [ComunionController::class, 'store'])->name('comuniones.store');
     Route::get('/dashboard-list-comunion', [ComunionController::class, 'index'])->name('comuniones.index');
     Route::get('/comuniones/{comunion_id}', [ComunionController::class, 'show'])->name('comuniones.show');
-    Route::put('/comuniones/{comunion_id}', [ComunionController::class, 'update'])->name('comuniones.update'); 
+    Route::put('/comuniones/{comunion_id}', [ComunionController::class, 'update'])->name('comuniones.update');
     Route::get('/municipios/{departamento_id}', [ComunionController::class, 'getMunicipios']);
     Route::get('/comunion/{comunion}/pdf', [ComunionController::class, 'generatePDF'])->name('comunion.pdf');
 

@@ -15,10 +15,5 @@ class DatabaseSeeder extends Seeder
         $this->call(userTest::class);
         $this->call(deptos::class);
         $this->call(municipioSeed::class);
-        $this->call(InfoIglesia::class);
-        $this->call(BautizoSeeder::class);
-        $this->call(ComunionSeeder::class);
-        $this->call(ConfirmacionSeeder::class);
-        $this->call(CasamientoSeeder::class);
     }
 }

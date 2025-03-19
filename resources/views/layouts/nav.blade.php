@@ -17,6 +17,31 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
+                            <div class="parent-icon">
+                                <img src="{{ asset('/assets/icon/person.png') }}" style="width: 40px" class="logo-icon" alt="logo icon">
+                            </div>
+                            <div class="menu-title d-flex align-items-center">Personas </div>
+                            <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('personas.create') }}">
+                                    <i class="fadeIn animated bx bx-news"></i>
+                                    Nueva persona
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('personas.index') }}">
+                                    <i class='fadeIn animated bx bx-search-alt-2'></i>
+                                    Ver personas
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
+                            data-bs-toggle="dropdown">
                             <div class="parent-icon"> <img src="{{ asset('/assets/icon/bautismo.svg') }}"
                                     class="logo-icon" alt="logo icon">
                                 </i>
@@ -92,8 +117,8 @@
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">
                             <div class="parent-icon">
-                                <img src="{{ asset('/assets/icon/casamiento.svg') }} " class="logo-icon" alt="logo icon"
-                                    style="width: 50px">
+                                <img src="{{ asset('/assets/icon/casamiento.svg') }} " class="logo-icon"
+                                    alt="logo icon" style="width: 50px">
                             </div>
                             <div class="menu-title d-flex align-items-center">Casamientos</div>
                             <div class="ms-auto dropy-icon"><i class='bx bx-chevron-down'></i></div>
