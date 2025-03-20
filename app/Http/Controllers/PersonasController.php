@@ -10,32 +10,60 @@ use App\Models\Departamento;
 
 class PersonasController extends Controller
 {
+
+    public function buscarPersonas(Request $request)
+    {
+        $search = $request->input('search');
+        $tipo = $request->input('tipo'); // Nuevo parámetro para el tipo de persona
+
+        $query = Persona::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nombres', 'like', '%' . $search . '%')
+                    ->orWhere('apellidos', 'like', '%' . $search . '%')
+                    ->orWhere('dpi_cui', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Filtrar por tipo de persona si se proporciona
+        if ($tipo) {
+            $query->where('tipo_persona', $tipo);
+        }
+
+        $personas = $query->limit(10)->get();
+
+        return response()->json([
+            'data' => $personas
+        ]);
+    }
+
     // Mostrar todos los registros de personas
     public function index(Request $request)
     {
         $query = Persona::query();
-    
+
         // Filtrar por tipo de persona si se selecciona uno
         if ($request->has('tipo_persona') && $request->tipo_persona != '') {
             $query->where('tipo_persona', $request->tipo_persona);
         }
-    
+
         // Filtro de búsqueda por nombre, apellido o DPI
         if ($request->has('search') && $request->search != '') {
-            $query->where(function($q) use ($request) {
+            $query->where(function ($q) use ($request) {
                 $q->where('nombres', 'like', '%' . $request->search . '%')
-                  ->orWhere('apellidos', 'like', '%' . $request->search . '%')
-                  ->orWhere('dpi_cui', 'like', '%' . $request->search . '%');
+                    ->orWhere('apellidos', 'like', '%' . $request->search . '%')
+                    ->orWhere('dpi_cui', 'like', '%' . $request->search . '%');
             });
         }
-    
+
         // Obtener las personas filtradas
         $personas = $query->paginate(10);
-    
+
         return view('personas.index', compact('personas'));
     }
-    
-    
+
+
 
     public function create()
     {

@@ -200,7 +200,7 @@
                     </div>
                     <h4 class="logo-text fw-bold text-dark m-0">Iglesia Sansare</h4>
                 </a>
-                
+
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -241,19 +241,20 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/dashboard-bautizo-create">
+                                <a class="dropdown-item" href="{{ route('bautizos.create') }}">
                                     <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nuevo bautizo
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/dashboard-list-bautizo">
+                                <a class="dropdown-item" href="{{ route('bautizos.index') }}">
                                     <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar bautizo
                                 </a>
                             </li>
                         </ul>
                     </li>
+
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"

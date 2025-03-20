@@ -9,9 +9,9 @@ class Bautizo extends Model
 {
     use HasFactory;
 
-    protected $table = 'bautizo'; // Nombre de la tabla
-    protected $primaryKey = 'bautizo_id'; // Si la clave primaria no es `id`, especifica el nombre
-    public $timestamps = true; // Si estás utilizando timestamps (created_at, updated_at)
+    protected $table = 'bautizo'; 
+    protected $primaryKey = 'bautizo_id';
+    public $timestamps = true; 
 
     protected $fillable = [
         'persona_bautizada_id',

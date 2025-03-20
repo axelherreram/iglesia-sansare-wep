@@ -7,27 +7,28 @@ use App\Models\Bautizo;
 use App\Models\Municipio;
 use App\Models\Departamento;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
-
+use App\Models\Persona;
 class BautizoController extends Controller
 {
     // Método para mostrar la lista de bautizos
     public function index(Request $request)
     {
-        // Obtener los valores de búsqueda
         $nombre = $request->input('nombre');
         $apellido = $request->input('apellido');
         $anio = $request->input('anio');
 
-        // Consulta inicial para los bautizos
-        $query = Bautizo::query();
+        $query = Bautizo::with(['personaBautizada', 'municipio', 'departamento', 'sacerdote', 'padre', 'madre', 'padrino', 'madrina']);
 
-        // Filtros de búsqueda
         if ($nombre) {
-            $query->where('nombre_persona_bautizada', 'like', '%' . $nombre . '%');
+            $query->whereHas('personaBautizada', function ($q) use ($nombre) {
+                $q->where('nombre', 'like', '%' . $nombre . '%');
+            });
         }
 
         if ($apellido) {
-            $query->where('apellido_persona_bautizada', 'like', '%' . $apellido . '%');
+            $query->whereHas('personaBautizada', function ($q) use ($apellido) {
+                $q->where('apellido', 'like', '%' . $apellido . '%');
+            });
         }
 
         if ($anio) {
@@ -41,8 +42,8 @@ class BautizoController extends Controller
         } else {
             session()->forget('no_results');
         }
-        // Retornar la vista 'dashboard-list-bautizo' con los bautizos
-        return view('list-bautizo', compact('bautizos'));
+
+        return view('bautizos.index', compact('bautizos'));
     }
 
     /**
@@ -59,8 +60,9 @@ class BautizoController extends Controller
             $municipios = Municipio::where('departamento_id', $departamento_id)->get();
         }
 
-        return view('bautizo-craete-update', compact('departamentos', 'municipios'));
+        return view('bautizos.create', compact('departamentos', 'municipios'));
     }
+
 
 
     /**
@@ -68,154 +70,149 @@ class BautizoController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        // Validar los datos del formulario
         $validatedData = $request->validate([
+            'persona_bautizada_id' => 'required|exists:personas,persona_id',
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
             'fecha_bautizo' => 'required|date',
-            'nombre_persona_bautizada' => 'required|string|max:255',
-            'edad' => 'nullable|string|max:4',
-            'fecha_nacimiento' => 'required|date|before_or_equal:today',
-            'aldea' => 'nullable|string|max:255',
+            'aldea' => 'required|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
-            'nombre_padre' => 'nullable|string|max:255',
-            'nombre_madre' => 'nullable|string|max:255',
-            'nombre_sacerdote' => 'nullable|string|max:255',
-            'nombre_padrino' => 'nullable|string|max:255',
-            'nombre_madrina' => 'nullable|string|max:255',
-            'margen' => 'nullable|string|max:200',
+            'sacerdote_id' => 'required|exists:personas,persona_id',
+            'padre_id' => 'nullable|exists:personas,persona_id',
+            'madre_id' => 'nullable|exists:personas,persona_id',
+            'padrino_id' => 'nullable|exists:personas,persona_id',
+            'madrina_id' => 'nullable|exists:personas,persona_id',
+            'margen' => 'required|string|max:200',
         ], [
-            // Mensajes de error personalizados
-            'NoPartida.required' => 'El número de partida es obligatorio.',
+            'persona_bautizada_id.required' => 'El campo persona bautizada es obligatorio.',
+            'persona_bautizada_id.exists' => 'El ID de la persona bautizada no existe en la base de datos.',
+            'NoPartida.required' => 'El campo número de partida es obligatorio.',
             'NoPartida.string' => 'El número de partida debe ser una cadena de texto.',
-            'NoPartida.max' => 'El número de partida no puede tener más de 20 caracteres.',
-
-            'folio.required' => 'El folio es obligatorio.',
+            'NoPartida.max' => 'El número de partida no puede exceder los 20 caracteres.',
+            'folio.required' => 'El campo folio es obligatorio.',
             'folio.string' => 'El folio debe ser una cadena de texto.',
-            'folio.max' => 'El folio no puede tener más de 50 caracteres.',
-
+            'folio.max' => 'El folio no puede exceder los 50 caracteres.',
             'fecha_bautizo.required' => 'La fecha de bautizo es obligatoria.',
             'fecha_bautizo.date' => 'La fecha de bautizo debe ser una fecha válida.',
-
-            'nombre_persona_bautizada.required' => 'El nombre de la persona bautizada es obligatorio.',
-            'nombre_persona_bautizada.string' => 'El nombre de la persona bautizada debe ser una cadena de texto.',
-            'nombre_persona_bautizada.max' => 'El nombre de la persona bautizada no puede tener más de 255 caracteres.',
-
-            'edad.string' => 'La edad debe ser una cadena de texto.',
-            'edad.max' => 'La edad no puede tener más de 4 caracteres.',
-            
-            'fecha_nacimiento.required' => 'La fecha de nacimiento es obligatoria.',
-            'fecha_nacimiento.date' => 'La fecha de nacimiento debe ser una fecha válida.',
-            'fecha_nacimiento.before_or_equal' => 'La fecha de nacimiento no puede ser mayor que la fecha actual.',
-
+            'aldea.required' => 'El campo aldea es obligatorio.',
             'aldea.string' => 'La aldea debe ser una cadena de texto.',
-            'aldea.max' => 'La aldea no puede tener más de 255 caracteres.',
-
+            'aldea.max' => 'La aldea no puede exceder los 255 caracteres.',
             'municipio_id.required' => 'El municipio es obligatorio.',
-            'municipio_id.exists' => 'El municipio seleccionado no es válido.',
-
+            'municipio_id.exists' => 'El municipio seleccionado no existe en la base de datos.',
             'departamento_id.required' => 'El departamento es obligatorio.',
-            'departamento_id.exists' => 'El departamento seleccionado no es válido.',
-
-            'nombre_padre.string' => 'El nombre del padre debe ser una cadena de texto.',
-            'nombre_padre.max' => 'El nombre del padre no puede tener más de 255 caracteres.',
-
-            'nombre_madre.string' => 'El nombre de la madre debe ser una cadena de texto.',
-            'nombre_madre.max' => 'El nombre de la madre no puede tener más de 255 caracteres.',
-
-            'nombre_sacerdote.string' => 'El nombre del sacerdote debe ser una cadena de texto.',
-            'nombre_sacerdote.max' => 'El nombre del sacerdote no puede tener más de 255 caracteres.',
-
-            'nombre_padrino.string' => 'El nombre del padrino debe ser una cadena de texto.',
-            'nombre_padrino.max' => 'El nombre del padrino no puede tener más de 255 caracteres.',
-
-            'nombre_madrina.string' => 'El nombre de la madrina debe ser una cadena de texto.',
-            'nombre_madrina.max' => 'El nombre de la madrina no puede tener más de 255 caracteres.',
-
+            'departamento_id.exists' => 'El departamento seleccionado no existe en la base de datos.',
+            'sacerdote_id.required' => 'El sacerdote es obligatorio.',
+            'sacerdote_id.exists' => 'El ID del sacerdote no existe en la base de datos.',
+            'padre_id.exists' => 'El ID del padre no existe en la base de datos.',
+            'madre_id.exists' => 'El ID de la madre no existe en la base de datos.',
+            'padrino_id.exists' => 'El ID del padrino no existe en la base de datos.',
+            'madrina_id.exists' => 'El ID de la madrina no existe en la base de datos.',
+            'margen.required' => 'El campo margen es obligatorio.',
             'margen.string' => 'El margen debe ser una cadena de texto.',
-            'margen.max' => 'El margen no puede tener más de 200 caracteres.',
+            'margen.max' => 'El margen no puede exceder los 200 caracteres.',
         ]);
 
+        // Verificar si ya existe un bautizo para la persona bautizada
+        $bautizoExistente = Bautizo::where('persona_bautizada_id', $request->persona_bautizada_id)->first();
+        if ($bautizoExistente) {
+            return redirect()->back()->withErrors([
+                'persona_bautizada_id' => 'Esta persona ya ha sido bautizada previamente.',
+            ]);
+        }
 
-        // Crear un nuevo registro en la tabla 'bautizo'
-        Bautizo::create([
-            'NoPartida' => $validatedData['NoPartida'],
-            'folio' => $validatedData['folio'],
-            'fecha_bautizo' => $validatedData['fecha_bautizo'],
-            'nombre_persona_bautizada' => $validatedData['nombre_persona_bautizada'],
-            'edad' => $validatedData['edad'],
-            'fecha_nacimiento' => $validatedData['fecha_nacimiento'],
-            'aldea' => $validatedData['aldea'],
-            'municipio_id' => $validatedData['municipio_id'],
-            'departamento_id' => $validatedData['departamento_id'],
-            'nombre_padre' => $validatedData['nombre_padre'],
-            'nombre_madre' => $validatedData['nombre_madre'],
-            'nombre_sacerdote' => $validatedData['nombre_sacerdote'],
-            'nombre_padrino' => $validatedData['nombre_padrino'],
-            'nombre_madrina' => $validatedData['nombre_madrina'],
-            'margen' => $validatedData['margen'],
-        ]);
+        // Validación personalizada para asegurarse de que el mismo persona_id no esté en varios campos
+        $personaIds = [
+            $request->persona_bautizada_id,
+            $request->sacerdote_id,
+            $request->padre_id,
+            $request->madre_id,
+            $request->padrino_id,
+            $request->madrina_id,
+        ];
 
-        // Redirigir al usuario a la página deseada, por ejemplo, el listado de bautizos
+        // Eliminar valores nulos para verificar solo los campos con persona_id
+        $personaIds = array_filter($personaIds, function ($value) {
+            return !is_null($value);
+        });
+
+        if (count($personaIds) !== count(array_unique($personaIds))) {
+            return redirect()->back()->withErrors([
+                'persona_bautizada_id' => 'El mismo persona_id no puede ser usado en varios campos.',
+            ]);
+        }
+
+        Bautizo::create($validatedData);
+
+        // Actualizar la persona bautizada con los IDs de sus familiares
+        $personaBautizada = Persona::find($request->persona_bautizada_id);
+        if ($personaBautizada) {
+            $personaBautizada->update([
+                'padre_id' => $request->padre_id,
+                'madre_id' => $request->madre_id,
+                'padrino_id' => $request->padrino_id,
+                'madrina_id' => $request->madrina_id,
+            ]);
+        }
+
+
         return redirect()->route('bautizos.index')->with('success', 'Bautizo guardado exitosamente.');
-    }
-
-    /**
-     * Obtiene los municipios basados en el departamento seleccionado.
-     */
-    public function getMunicipios($departamento_id)
-    {
-        // Obtener los municipios relacionados con el departamento
-        $municipios = Municipio::where('departamento_id', $departamento_id)->get();
-
-        // Devolver los municipios como respuesta JSON
-        return response()->json($municipios);
     }
 
     public function show($bautizo_id)
     {
-        $bautizo = Bautizo::findOrFail($bautizo_id);
-        $departamentos = Departamento::all(); // Para los selectores
+        $bautizo = Bautizo::with([
+            'personaBautizada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ])->findOrFail($bautizo_id);
+
+        $departamentos = Departamento::all();
+
         return view('bautizos.show', compact('bautizo', 'departamentos'));
     }
+
     public function update(Request $request, $bautizo_id)
     {
-        // Validación de los datos
         $validatedData = $request->validate([
+            'persona_bautizada_id' => 'required|exists:personas,persona_id',
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
             'fecha_bautizo' => 'required|date',
-            'nombre_persona_bautizada' => 'required|string|max:255',
-            'edad' => 'nullable|string|max:4',
-            'fecha_nacimiento' => 'nullable|date|before_or_equal:today',
             'aldea' => 'nullable|string|max:255',
-            'municipio_id' => 'required|exists:municipio,municipio_id',
-            'departamento_id' => 'required|exists:departamento,departamento_id',
-            'nombre_padre' => 'nullable|string|max:255',
-            'nombre_madre' => 'nullable|string|max:255',
-            'nombre_sacerdote' => 'nullable|string|max:255',
-            'nombre_padrino' => 'nullable|string|max:255',
-            'nombre_madrina' => 'nullable|string|max:255',
+            'municipio_id' => 'required|exists:municipios,municipio_id',
+            'departamento_id' => 'required|exists:departamentos,departamento_id',
+            'sacerdote_id' => 'nullable|exists:personas,persona_id',
+            'padre_id' => 'nullable|exists:personas,persona_id',
+            'madre_id' => 'nullable|exists:personas,persona_id',
+            'padrino_id' => 'nullable|exists:personas,persona_id',
+            'madrina_id' => 'nullable|exists:personas,persona_id',
             'margen' => 'nullable|string|max:200',
-        ], [
-            'fecha_nacimiento.before_or_equal' => 'La fecha de nacimiento no puede ser mayor que la fecha actual.',
         ]);
 
-        // Buscar el bautizo y actualizarlo
         $bautizo = Bautizo::findOrFail($bautizo_id);
         $bautizo->update($validatedData);
 
         return redirect()->route('bautizos.index')->with('success', 'Bautizo actualizado exitosamente.');
     }
+
+
     public function generatePDF($bautizo_id)
     {
-        $bautizo = Bautizo::findOrFail($bautizo_id);
-
-        // Cargar la vista del PDF y pasar los datos
-        $pdf = PDF::loadView('pdf.bautizo', compact('bautizo'));
-
+        $bautizo = Bautizo::with(['personaBautizada', 'municipio', 'departamento', 'sacerdote', 'padre', 'madre', 'padrino', 'madrina'])->findOrFail($bautizo_id);
+        $pdf = PDF::loadView('bautizos.pdf', compact('bautizo'));
         return $pdf->stream('constancia-bautizo.pdf');
     }
+
+    public function getMunicipios($departamento_id)
+    {
+        $municipios = Municipio::where('departamento_id', $departamento_id)->get();
+        return response()->json($municipios);
+    }
+
 }
