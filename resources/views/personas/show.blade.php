@@ -16,7 +16,7 @@
 
         .btn-custom {
             margin-left: 3px;
-            background-color: white  !important
+            background-color: white !important
         }
 
         .card-header {
@@ -163,7 +163,8 @@
                         </a>
                         <div class="text-center text-white p-3">
                             <h2 class="persona-title mt-2" style="color: white">{{ $persona->nombres }}
-                                {{ $persona->apellidos }}</h2>
+                                {{ $persona->apellidos }}
+                            </h2>
                             <p class="persona-subtitle">
                                 @if($persona->tipo_persona == 'F')
                                     Feligrés
@@ -236,20 +237,30 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">Padre:</span>
-                            <div class="info-value">{{ $persona->padre_id ?? 'No disponible' }}</div>
+                            <div class="info-value">@if ($persona->padre)
+                                {{ $persona->padre->nombres }} {{ $persona->padre->apellidos }}
+                            @else
+                                No especificado
+                            @endif
+                            </div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Madre:</span>
-                            <div class="info-value">{{ $persona->madre_id ?? 'No disponible' }}</div>
+                            <div class="info-value"> @if ($persona->madre)
+                                {{ $persona->madre->nombres }} {{ $persona->madre->apellidos }}
+                            @else
+                                No especificado
+                            @endif
+                            </div>
                         </div>
-                        <div class="info-item">
+                 {{--        <div class="info-item">
                             <span class="info-label">Padrino:</span>
                             <div class="info-value">{{ $persona->padrino_id ?? 'No disponible' }}</div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Madrina:</span>
                             <div class="info-value">{{ $persona->madrina_id ?? 'No disponible' }}</div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 

@@ -82,7 +82,7 @@ class PersonasController extends Controller
     // Mostrar una persona específica
     public function show($persona_id)
     {
-        $persona = Persona::with('municipio')->findOrFail($persona_id); // Cargar la relación municipio
+        $persona = Persona::with(['municipio', 'padre', 'madre', 'padrino', 'madrina'])->findOrFail($persona_id);
         return view('personas.show', compact('persona'));
     }
     // Almacenar una nueva persona
