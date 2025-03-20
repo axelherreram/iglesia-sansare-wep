@@ -10,6 +10,7 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             transition: all 0.3s ease;
+            
         }
 
         .btn-view,

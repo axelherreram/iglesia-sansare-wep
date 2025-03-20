@@ -8,7 +8,9 @@
             background-color: #f8f9fa;
             padding: 1.5rem;
         }
-        
+        .form-container {
+           
+        }
         /* Estilos del formulario */
         .form-section {
             background-color: white;
@@ -17,6 +19,8 @@
             overflow: hidden;
             margin-bottom: 2rem;
             transition: all 0.3s ease;
+            max-width: 900px;
+            margin: auto;
         }
         
         .form-section:hover {
