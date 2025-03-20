@@ -1,7 +1,7 @@
     <!--start header wrapper-->
     <div class="header-wrapper">
         <header>
-            <div class="topbar d-flex align-items-center m-2">
+            <div class="topbar d-flex align-items-center ">
                 <a href="{{ route('dashboard') }}" class="topbar-logo-header d-none d-lg-flex">
                     <div class="">
                         <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon">

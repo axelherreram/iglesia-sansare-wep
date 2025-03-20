@@ -22,8 +22,8 @@
             padding: 20px 25px;
             position: relative;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 20px;
         }
 
         .back-button {
@@ -51,8 +51,8 @@
             padding: 0;
         }
 
-  /* Formulario */
-  .search-section {
+        /* Formulario */
+        .search-section {
             padding: 20px 25px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #eee;
@@ -231,6 +231,7 @@
             justify-content: center;
             border-top: 1px solid #eee;
         }
+
         .filter-select {
             width: 100%;
             padding: 10px 15px;
@@ -245,6 +246,7 @@
             box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
             outline: none;
         }
+
         /* Responsive styles */
         @media (max-width: 992px) {
             .card-header {
@@ -252,7 +254,7 @@
                 align-items: flex-start;
                 gap: 15px;
             }
-            
+
             .back-button {
                 align-self: flex-start;
             }
@@ -263,14 +265,15 @@
                 display: block;
                 overflow-x: auto;
             }
-            
-            .personas-table th, 
+
+            .personas-table th,
             .personas-table td {
                 padding: 12px 10px;
                 font-size: 0.85rem;
             }
-            
-            .btn-view, .btn-edit {
+
+            .btn-view,
+            .btn-edit {
                 padding: 6px 10px;
                 font-size: 0.8rem;
             }
@@ -286,14 +289,15 @@
                     <a href="/" class="back-button">
                         <i class="lni lni-arrow-left"></i> Regresar
                     </a>
-                    <h2 class="page-title" style="color: white">Lista de Personas</h2>
+                    <h2 class="page-title" style="color: white">Listado de Personas</h2>
                     <div></div> <!-- Empty div for flex spacing -->
                 </div>
 
                 <form action="{{ route('personas.index') }}" method="GET" class="p-3">
-                        <h5>Buscar personas por CUI, nombre, apellido y filtrado por tipo de persona</h5>
+                    <h5>Buscar personas por CUI, nombre, apellido y filtrado por tipo de persona</h5>
                     <div class="search-section">
-                        <input type="text" name="search" class="search-input" placeholder="Buscar persona por nombre, apellido o DPI..." value="{{ request('search') }}">
+                        <input type="text" name="search" class="search-input"
+                            placeholder="Buscar persona por nombre, apellido o DPI..." value="{{ request('search') }}">
                         <select class="filter-select" name="tipo_persona" id="tipo_persona">
                             <option value="">Seleccionar Tipo de Persona</option>
                             <option value="F" {{ request('tipo_persona') == 'F' ? 'selected' : '' }}>Feligrés</option>
@@ -303,7 +307,7 @@
                         <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
                 </form>
-                
+
 
                 <div class="table-container">
                     @if(count($personas) > 0)
@@ -350,7 +354,7 @@
                     @endif
                 </div>
 
-                 @if(isset($personas) && method_exists($personas, 'links'))
+                @if(isset($personas) && method_exists($personas, 'links'))
                     <div class="pagination-container">
                         {{ $personas->links() }}
                     </div>
@@ -359,4 +363,3 @@
         </div>
     </div>
 @endsection
-
