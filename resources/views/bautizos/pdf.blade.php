@@ -152,7 +152,7 @@
 
         .signature-line-l p {
             margin-top: 0px;
-            margin-right: 150px;            
+            margin-right: 150px;
         }
     </style>
 </head>
@@ -173,11 +173,10 @@
         <div class="form-content">
             <div class="form-group" style="width: 20cm;">
                 <label for="parroco">El infrascrito, Párroco:</label>
-                <span>{{ $bautizo->nombre_sacerdote }}</span>
+                <span>{{ $bautizo->sacerdote->nombres }} {{ $bautizo->sacerdote->apellidos }}</span>
             </div>
 
-            <p class="text-center"
-                style=" font-weight: 500;
+            <p class="text-center" style=" font-weight: 500;
             color: #3d6aa8de;
             font-size: 1.1rem;">Certifica que en
                 el libro de Bautizos:</p>
@@ -189,40 +188,46 @@
                 <label style="margin-left: 10px;">de esta Parroquia consta que:</label>
             </div>
             <div class="form-group">
-                <span>{{ $bautizo->nombre_persona_bautizada }}</span>
+                <span>{{ $bautizo->personaBautizada->nombres }}
+                    {{$bautizo->personaBautizada->apellidos}}</span>
             </div>
             <div class="form-group">
                 <label for="nacimiento">Nacido el</label>
-                <span>{{ Date::parse($bautizo->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
+                <span>{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ Date::parse($bautizo->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
+                <span>{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
                 <label for="ano" style="margin-left: 5px;">del año</label>
-                <span>{{ Date::parse($bautizo->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
+                <span>{{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
             </div>
 
             <div class="form-group">
                 <label for="dia">Fue bautizad@ el</label>
-                <span>{{ Date::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('D') }}</span>
+                <span>{{  \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('D') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ Date::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('MMMM') }}</span>
+                <span>{{  \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('MMMM') }}</span>
                 <label for="ano" style="margin-left: 5px;">de</label>
-                <span>{{ Date::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('Y') }}</span>
+                <span>{{  \Carbon\Carbon::parse($bautizo->fecha_bautizo)->locale('es')->isoFormat('Y') }}</span>
             </div>
-         
+
 
             <div class="form-group">
                 <label>hijo de</label>
-                <span>{{ $bautizo->nombre_padre }}</span>
+                <span>{{ $bautizo->padre->nombres }} {{ $bautizo->padre->apellidos }}</span>
             </div>
             <div class="form-group">
                 <label>y de</label>
-                <span>{{ $bautizo->nombre_madre }}</span>
+                <span>{{ $bautizo->madre->nombres }} {{ $bautizo->madre->apellidos }}</span>
             </div>
 
             <div class="form-group">
-                <label>habiendo sido madrina y padrino</label>
-                <span>{{ $bautizo->nombre_padrino }} y {{ $bautizo->nombre_madrina }}</span>
+                <label>Habiendo sido madrina y padrino</label>
+                <span>
+                    {{ $bautizo->padrino->nombres }} {{ $bautizo->padrino->apellidos }} 
+                    <label style="margin: 0 5px;">y</label>
+                    {{ $bautizo->madrina->nombres }} {{ $bautizo->madrina->apellidos }}
+                </span>
             </div>
+            
             <div class="form-group">
                 <label>Margen:</label>
                 <span>{{ $bautizo->margen }}</span>

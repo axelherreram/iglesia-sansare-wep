@@ -8,6 +8,8 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             transition: all 0.3s ease;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .persona-card:hover {

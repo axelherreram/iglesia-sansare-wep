@@ -13,30 +13,38 @@ class BautizoController extends Controller
     // Método para mostrar la lista de bautizos
     public function index(Request $request)
     {
-        $nombre = $request->input('nombre');
-        $apellido = $request->input('apellido');
-        $anio = $request->input('anio');
+        $search = $request->input('search');
 
-        $query = Bautizo::with(['personaBautizada', 'municipio', 'departamento', 'sacerdote', 'padre', 'madre', 'padrino', 'madrina']);
+        // Crear la consulta base con las relaciones
+        $query = Bautizo::with([
+            'personaBautizada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ]);
 
-        if ($nombre) {
-            $query->whereHas('personaBautizada', function ($q) use ($nombre) {
-                $q->where('nombre', 'like', '%' . $nombre . '%');
-            });
+        if ($search) {
+            // Si el input es solo números, buscar por CUI
+            if (is_numeric($search)) {
+                $query->whereHas('personaBautizada', function ($q) use ($search) {
+                    $q->where('cui', $search);
+                });
+            } else {
+                // Buscar por nombre + apellido
+                $query->whereHas('personaBautizada', function ($q) use ($search) {
+                    $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                });
+            }
         }
 
-        if ($apellido) {
-            $query->whereHas('personaBautizada', function ($q) use ($apellido) {
-                $q->where('apellido', 'like', '%' . $apellido . '%');
-            });
-        }
-
-        if ($anio) {
-            $query->whereYear('fecha_bautizo', $anio);
-        }
-
+        // Paginación de los resultados
         $bautizos = $query->paginate(10);
 
+        // Mensaje en caso de no encontrar registros
         if ($bautizos->isEmpty()) {
             session()->flash('no_results', 'No se encontraron registros de bautizos con los datos especificados.');
         } else {
@@ -62,9 +70,6 @@ class BautizoController extends Controller
 
         return view('bautizos.create', compact('departamentos', 'municipios'));
     }
-
-
-
     /**
      * Almacena un nuevo registro de bautizo en la base de datos.
      */
@@ -176,7 +181,24 @@ class BautizoController extends Controller
 
         return view('bautizos.show', compact('bautizo', 'departamentos'));
     }
+    public function edit($bautizo_id)
+    {
+        $bautizo = Bautizo::with([
+            'personaBautizada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ])->findOrFail($bautizo_id);
 
+        $departamentos = Departamento::all();
+        $municipios = Municipio::where('departamento_id', $bautizo->departamento_id)->get();
+
+        return view('bautizos.edit', compact('bautizo', 'departamentos', 'municipios'));
+    }
     public function update(Request $request, $bautizo_id)
     {
         $validatedData = $request->validate([
@@ -185,8 +207,8 @@ class BautizoController extends Controller
             'folio' => 'required|string|max:50',
             'fecha_bautizo' => 'required|date',
             'aldea' => 'nullable|string|max:255',
-            'municipio_id' => 'required|exists:municipios,municipio_id',
-            'departamento_id' => 'required|exists:departamentos,departamento_id',
+            'municipio_id' => 'required|exists:municipio,municipio_id',
+            'departamento_id' => 'required|exists:departamento,departamento_id',
             'sacerdote_id' => 'nullable|exists:personas,persona_id',
             'padre_id' => 'nullable|exists:personas,persona_id',
             'madre_id' => 'nullable|exists:personas,persona_id',
@@ -197,7 +219,6 @@ class BautizoController extends Controller
 
         $bautizo = Bautizo::findOrFail($bautizo_id);
         $bautizo->update($validatedData);
-
         return redirect()->route('bautizos.index')->with('success', 'Bautizo actualizado exitosamente.');
     }
 
