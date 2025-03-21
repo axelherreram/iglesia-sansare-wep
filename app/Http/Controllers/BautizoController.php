@@ -31,7 +31,7 @@ class BautizoController extends Controller
             // Si el input es solo números, buscar por CUI
             if (is_numeric($search)) {
                 $query->whereHas('personaBautizada', function ($q) use ($search) {
-                    $q->where('cui', $search);
+                    $q->where('dpi_cui', $search);
                 });
             } else {
                 // Buscar por nombre + apellido
