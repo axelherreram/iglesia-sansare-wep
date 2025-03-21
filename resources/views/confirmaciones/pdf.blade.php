@@ -13,7 +13,7 @@
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
             padding: 0;
-            background-color: white; 
+            background-color: white;
             color: #000;
         }
 
@@ -181,8 +181,7 @@
                 <span>{{ $confirmacion->nombre_parroquia_bautizo }}</span>
             </div>
 
-            <p class="text-center"
-                style="font-weight: 500; color: #3d6aa8de; font-size: 1.1rem;">
+            <p class="text-center" style="font-weight: 500; color: #3d6aa8de; font-size: 1.1rem;">
                 Certifica que en el libro de Confirmaciones:
             </p>
 
@@ -195,27 +194,28 @@
             </div>
 
             <div class="form-group">
-                <span>{{ $confirmacion->nombre_persona_confirmada }}</span>
+                <span>{{ $confirmacion->personaConfirmada->nombres }}
+                    {{ $confirmacion->personaConfirmada->apellidos }}</span>
             </div>
 
             <div class="form-group">
                 <label for="padre">Hijo de</label>
-                <span>{{ $confirmacion->nombre_padre }}</span>
+                <span>{{ $confirmacion->padre->nombres }} {{ $confirmacion->padre->apellidos }}</span>
             </div>
             <div class="form-group">
                 <label for="">y de</label>
-                <span>{{ $confirmacion->nombre_madre }}</span>
+                <span>{{ $confirmacion->madre->nombres }} {{ $confirmacion->madre->apellidos }}</span>
             </div>
 
             <div class="form-group">
                 <label for="nacido">Nacido el</label>
-                <span>{{ \Carbon\Carbon::parse($confirmacion->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
+                <span>{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ \Carbon\Carbon::parse($confirmacion->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
+                <span>{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
                 <label for="ano" style="margin-left: 5px;">del año</label>
-                <span>{{ \Carbon\Carbon::parse($confirmacion->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
+                <span>{{ \Carbon\Carbon::parse($confirmacion->personaConfirmada->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
             </div>
-            
+
 
             <div class="form-group">
                 <label for="confirmado">Fue confirmado el</label>
@@ -226,12 +226,14 @@
 
             <div class="form-group">
                 <label for="padre">Por el Excmo. Monseñor</label>
-                <span>{{ $confirmacion->nombre_persona_confirmo }}</span>
+                <span>{{ $confirmacion->sacerdote->nombres }} {{ $confirmacion->sacerdote->apellidos }}</span>
             </div>
 
             <div class="form-group">
                 <label for="adrin">Habiendo sido padrino y madrina:</label>
-                <span>{{ $confirmacion->nombre_persona_padrino }} y {{ $confirmacion->nombre_persona_madrina }}</span>
+                <span> <span>{{ $confirmacion->padrino->nombres }} {{ $confirmacion->padrino->apellidos }}</span>
+                    y <span>{{ $confirmacion->madrina->nombres }} {{ $confirmacion->madrina->apellidos }}</span>
+                </span>
             </div>
 
             <div class="form-group date-group" style="margin-top: 50px ;">
