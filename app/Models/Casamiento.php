@@ -65,4 +65,10 @@ class Casamiento extends Model
     {
         return $this->belongsTo(Persona::class, 'madre_esposa_id');
     }
+
+    // Relación con Testigos
+    public function testigos()
+    {
+        return $this->hasMany(Testigo::class, 'casamiento_id');
+    }
 }

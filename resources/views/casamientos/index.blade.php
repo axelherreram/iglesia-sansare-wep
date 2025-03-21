@@ -259,8 +259,8 @@
                                     @foreach($casamientos as $casamiento)
                                         <tr>
                                             <td>{{ $casamiento->NoPartida }} - {{ $casamiento->folio }}</td>
-                                            <td>{{ $casamiento->nombre_esposo }}</td>
-                                            <td>{{ $casamiento->nombre_esposa }}</td>
+                                            <td>{{ $casamiento->esposo->nombres }} {{ $casamiento->esposo->apellidos }}</td>
+                                            <td>{{ $casamiento->esposa->nombres }} {{ $casamiento->esposa->apellidos }}</td>
                                             <td>{{ \Carbon\Carbon::parse($casamiento->fecha_casamiento)->format('d/m/Y') }}</td>
                                             <td>
                                                 <div class="action-buttons">

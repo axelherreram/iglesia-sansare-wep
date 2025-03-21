@@ -318,13 +318,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/dashboard-casamiento-create">
+                                <a class="dropdown-item" href="{{ route('casamientos.create') }}">
                                     <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nuevo casamiento
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/dashboard-list-casamiento">
+                                <a class="dropdown-item" href="{{ route('casamientos.index') }}">
                                     <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Casamientos
                                 </a>

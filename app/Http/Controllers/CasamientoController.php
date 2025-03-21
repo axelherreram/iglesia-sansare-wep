@@ -6,10 +6,10 @@ namespace App\Http\Controllers;
 use App\Models\Casamiento;
 use App\Models\Departamento;
 use App\Models\Municipio;
+use App\Models\Testigo;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Log;
-
 class CasamientoController extends Controller
 {
     /**
@@ -34,16 +34,16 @@ class CasamientoController extends Controller
             // Si el input es solo números, buscar por NoPartida o folio
             if (is_numeric($search)) {
                 $query->where('NoPartida', 'like', "%{$search}%")
-                      ->orWhere('folio', 'like', "%{$search}%");
+                    ->orWhere('folio', 'like', "%{$search}%");
             } else {
                 // Buscar por nombre completo del esposo o esposa
-                $query->where(function($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->whereHas('esposo', function ($q) use ($search) {
                         $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
                     })
-                    ->orWhereHas('esposa', function ($q) use ($search) {
-                        $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
-                    });
+                        ->orWhereHas('esposa', function ($q) use ($search) {
+                            $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                        });
                 });
             }
         }
@@ -98,6 +98,8 @@ class CasamientoController extends Controller
             'madre_esposo_id' => 'nullable|exists:personas,persona_id',
             'padre_esposa_id' => 'nullable|exists:personas,persona_id',
             'madre_esposa_id' => 'nullable|exists:personas,persona_id',
+            'testigos' => 'nullable|array',
+            'testigos.*' => 'exists:personas,persona_id',
         ], [
             'NoPartida.required' => 'El número de partida es obligatorio.',
             'folio.required' => 'El folio es obligatorio.',
@@ -106,10 +108,22 @@ class CasamientoController extends Controller
             'esposo_id.required' => 'El esposo es obligatorio.',
             'esposa_id.required' => 'La esposa es obligatoria.',
             'sacerdote_id.required' => 'El sacerdote es obligatorio.',
+            'testigos.*.exists' => 'Uno o más testigos no son válidos.',
         ]);
 
+
         try {
-            Casamiento::create($validatedData);
+            $casamiento = Casamiento::create($validatedData);
+
+            // Guardar los testigos si existen
+            if ($request->has('testigos') && is_array($request->testigos)) {
+                foreach ($request->testigos as $persona_id) {
+                    Testigo::create([
+                        'casamiento_id' => $casamiento->casamiento_id,
+                        'persona_id' => $persona_id
+                    ]);
+                }
+            }
             return redirect()->route('casamientos.index')->with('success', 'Casamiento guardado exitosamente.');
         } catch (\Exception $e) {
             // Registra el error en el archivo de logs y muestra un mensaje en la vista
@@ -123,9 +137,20 @@ class CasamientoController extends Controller
      */
     public function show($casamiento_id)
     {
-        $casamiento = Casamiento::findOrFail($casamiento_id);
+        $casamiento = Casamiento::with([
+            'esposo',
+            'esposa',
+            'sacerdote',
+            'padreEsposo',
+            'madreEsposo',
+            'padreEsposa',
+            'madreEsposa',
+            'testigos.persona' 
+        ])->findOrFail($casamiento_id);
+
         return view('casamientos.show', compact('casamiento'));
     }
+
 
     /**
      * Actualiza un registro de casamiento existente.
@@ -155,13 +180,32 @@ class CasamientoController extends Controller
         return redirect()->route('casamientos.index')->with('success', 'Casamiento actualizado exitosamente.');
     }
 
+    public function edit($casamiento_id)
+    {
+        $casamiento = Casamiento::with([
+            'esposo',
+            'esposa',
+            'sacerdote',
+            'padreEsposo',
+            'madreEsposo',
+            'padreEsposa',
+            'madreEsposa',
+            'testigos'
+        ])->findOrFail($casamiento_id);
+
+        $departamentos = Departamento::all();
+        $municipios = Municipio::where('departamento_id', $casamiento->esposo->departamento_id ?? null)->get();
+
+        return view('casamientos.edit', compact('casamiento', 'departamentos', 'municipios'));
+    }
+
     /**
      * Genera el PDF de un casamiento.
      */
     public function generatePDF($casamiento_id)
     {
         $casamiento = Casamiento::findOrFail($casamiento_id);
-        $pdf = PDF::loadView('pdf.casamiento', compact('casamiento'));
+        $pdf = PDF::loadView('casamientos.pdf', compact('casamiento'));
         return $pdf->stream('constancia-casamiento.pdf');
     }
 }

@@ -59,12 +59,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/confirmaciones/{confirmacion}/pdf', [ConfirmacionController::class, 'generatePDF'])->name('confirmaciones.pdf');
 
     // Rutas para casamientos
-    Route::get('/dashboard-casamiento-create', [CasamientoController::class, 'create'])->name('casamientos.create');
-    Route::post('/casamientos', [CasamientoController::class, 'store'])->name('casamientos.store');
-    Route::get('/dashboard-list-casamiento', [CasamientoController::class, 'index'])->name('casamientos.index');
-    Route::get('/casamientos/{casamiento_id}', [CasamientoController::class, 'show'])->name('casamientos.show');
-    Route::put('/casamientos/{casamiento_id}', [CasamientoController::class, 'update'])->name('casamientos.update');
-    Route::get('/casamiento/{casamiento}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamiento.pdf');
+    Route::resource('casamientos', CasamientoController::class);
+    Route::get('/casamientos/{casamiento_id}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamientos.pdf');
 
     // Rutas para el perfil de usuario
     Route::get('/user-profile', [UserProfileController::class, 'show'])->name('user.profile');
