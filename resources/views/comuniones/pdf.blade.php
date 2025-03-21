@@ -194,23 +194,23 @@
             </div>
 
             <div class="form-group">
-                <span>{{ $comunion->nombre_persona_participe }}</span>
+                <span>{{ $comunion->personaParticipe->nombres }} {{ $comunion->personaParticipe->apellidos }}</span>
             </div>
 
             <div class="form-group">
                 <label for="padre">Hijo de</label>
-                <span>{{ $comunion->nombre_padre }}</span>
+                <span>{{ $comunion->padre->nombres }} {{ $comunion->padre->apellidos }}</span>
                 <label for="">y</label>
-                <span>{{ $comunion->nombre_madre }}</span>
+                <span>{{ $comunion->madre->nombres }} {{ $comunion->madre->apellidos }}</span>
             </div>
 
             <div class="form-group">
                 <label for="nacimiento">Nacido el</label>
-                <span>{{ Date::parse($comunion->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
+                <span>{{  \Carbon\Carbon::parse($comunion->personaParticipe->fecha_nacimiento)->locale('es')->isoFormat('D') }}</span>
                 <label for="mes" style="margin-left: 5px;">de</label>
-                <span>{{ Date::parse($comunion->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
+                <span>{{  \Carbon\Carbon::parse($comunion->personaParticipe->fecha_nacimiento)->locale('es')->isoFormat('MMMM') }}</span>
                 <label for="ano" style="margin-left: 5px;">del año</label>
-                <span>{{ Date::parse($comunion->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
+                <span>{{  \Carbon\Carbon::parse($comunion->personaParticipe->fecha_nacimiento)->locale('es')->isoFormat('Y') }}</span>
             </div>
 
             <div class="form-group">

@@ -267,19 +267,20 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/dashboard-comunion-create">
+                                <a class="dropdown-item" href="{{ route('comuniones.create') }}">
                                     <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nueva comunión
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/dashboard-list-comunion">
+                                <a class="dropdown-item" href="{{ route('comuniones.index') }}">
                                     <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Comunión
                                 </a>
                             </li>
                         </ul>
                     </li>
+                    
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"

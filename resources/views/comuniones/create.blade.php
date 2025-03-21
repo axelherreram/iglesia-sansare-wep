@@ -259,12 +259,12 @@
                     <a href="{{ route('dashboard') }}" class="back-button">
                         <i class="lni lni-arrow-left"></i> Regresar
                     </a>
-                    <h3>Crear Nuevo Bautizo</h3>
-                    <p>Complete el formulario para registrar un nuevo bautizo</p>
+                    <h3>Crear Nueva Primera Comunión</h3>
+                    <p>Complete el formulario para registrar una nueva primera comunión</p>
                 </div>
 
                 <div class="form-body">
-                    <form action="{{ route('bautizos.store') }}" method="POST">
+                    <form action="{{ route('comuniones.store') }}" method="POST">
                         @csrf
 
                         <div class="section-card">
@@ -296,44 +296,43 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="fecha_bautizo" class="form-label required-field">Fecha de bautizo:</label>
+                                    <label for="fecha_comunion" class="form-label required-field">Fecha de Comunión:</label>
                                     <div class="input-icon">
                                         <i class="lni lni-calendar"></i>
-                                        <input type="date" class="form-control" id="fecha_bautizo" name="fecha_bautizo"
-                                            value="{{ old('fecha_bautizo') }}">
+                                        <input type="date" class="form-control" id="fecha_comunion" name="fecha_comunion"
+                                            value="{{ old('fecha_comunion') }}">
                                     </div>
-                                    @error('fecha_bautizo')
+                                    @error('fecha_comunion')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                         </div>
-
                         <div class="section-card">
                             <div class="section-title">
-                                <i class="lni lni-user"></i> Persona Bautizada
+                                <i class="lni lni-priest"></i> Información del Sacerdote
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-12">
-                                    <label for="persona_bautizada_search" class="form-label required-field">Buscar
-                                        Persona:</label>
+                                    <label for="sacerdote_search" class="form-label required-field">Buscar
+                                        Sacerdote:</label>
                                     <div class="search-container">
                                         <div class="input-icon">
                                             <i class="lni lni-search"></i>
-                                            <input type="text" id="persona_bautizada_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)">
+                                            <input type="text" id="sacerdote_search" class="form-control"
+                                                placeholder="Escribe el nombre, apellido o DPI">
                                         </div>
-                                        <input type="hidden" id="persona_bautizada_id" name="persona_bautizada_id"
-                                            value="{{ old('persona_bautizada_id') }}">
+                                        <input type="hidden" id="sacerdote_id" name="sacerdote_id"
+                                            value="{{ old('sacerdote_id') }}">
                                         <div class="search-results">
-                                            <select id="select_persona_bautizada" class="form-control"
-                                                style="display: none;" size="5">
+                                            <select id="select_sacerdote" class="form-control" style="display: none;"
+                                                size="5">
                                                 <!-- Opciones se llenarán con JavaScript -->
                                             </select>
                                         </div>
                                     </div>
-                                    @error('persona_bautizada_id')
+                                    @error('sacerdote_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -342,55 +341,29 @@
 
                         <div class="section-card">
                             <div class="section-title">
-                                <i class="lni lni-map-marker"></i> Ubicación
+                                <i class="lni lni-user"></i> Persona que recibe la Comunión
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-12">
-                                    <label for="aldea" class="form-label">Aldea:</label>
-                                    <div class="input-icon">
-                                        <i class="lni lni-home"></i>
-                                        <input type="text" class="form-control" id="aldea" name="aldea"
-                                            value="{{ old('aldea') }}" placeholder="Nombre de la aldea">
+                                    <label for="persona_comunion_search" class="form-label required-field">Buscar
+                                        Persona:</label>
+                                    <div class="search-container">
+                                        <div class="input-icon">
+                                            <i class="lni lni-search"></i>
+                                            <input type="text" id="persona_comunion_search" class="form-control"
+                                                placeholder="Escribe el nombre, apellido o DPI (mínimo 3 caracteres)">
+                                        </div>
+                                        <input type="hidden" id="persona_participe_id" name="persona_participe_id"
+                                            value="{{ old('persona_participe_id') }}">
+                                        <div class="search-results">
+                                            <select id="select_persona_comunion" class="form-control" style="display: none;"
+                                                size="5">
+                                                <!-- Opciones se llenarán con JavaScript -->
+                                            </select>
+                                        </div>
                                     </div>
-                                    @error('aldea')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="departamento_id" class="form-label required-field">Departamento:</label>
-                                    <div class="input-icon">
-                                        <i class="lni lni-map"></i>
-                                        <select class="form-control" id="departamento_id" name="departamento_id">
-                                            <option value="">Seleccione el departamento</option>
-                                            @foreach ($departamentos as $departamento)
-                                                <option value="{{ $departamento->departamento_id }}" {{ old('departamento_id') == $departamento->departamento_id ? 'selected' : '' }}>
-                                                    {{ $departamento->depto }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('departamento_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="municipio_id" class="form-label required-field">Municipio:</label>
-                                    <div class="input-icon">
-                                        <i class="lni lni-pin"></i>
-                                        <select class="form-control" id="municipio_id" name="municipio_id">
-                                            <option value="">Seleccione el municipio</option>
-                                            @foreach ($municipios as $municipio)
-                                                <option value="{{ $municipio->municipio_id }}" {{ old('municipio_id') == $municipio->municipio_id ? 'selected' : '' }}>
-                                                    {{ $municipio->municipio }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('municipio_id')
+                                    @error('persona_participe_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -446,96 +419,41 @@
 
                         <div class="section-card">
                             <div class="section-title">
-                                <i class="lni lni-crown"></i> Sacerdote
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="sacerdote_search" class="form-label">Sacerdote:</label>
-                                    <div class="search-container">
-                                        <div class="input-icon">
-                                            <i class="lni lni-user"></i>
-                                            <input type="text" id="sacerdote_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI">
-                                        </div>
-                                        <input type="hidden" id="sacerdote_id" name="sacerdote_id"
-                                            value="{{ old('sacerdote_id') }}">
-                                        <div class="search-results">
-                                            <select id="select_sacerdote" class="form-control" style="display: none;"
-                                                size="5">
-                                                <!-- Opciones se llenarán con JavaScript -->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    @error('sacerdote_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="section-title">
-                                <i class="lni lni-handshake"></i> Datos de los Padrinos
+                                <i class="lni lni-map-marker"></i> Ubicación
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="padrino_search" class="form-label">Padrino:</label>
-                                    <div class="search-container">
-                                        <div class="input-icon">
-                                            <i class="lni lni-user"></i>
-                                            <input type="text" id="padrino_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI">
-                                        </div>
-                                        <input type="hidden" id="padrino_id" name="padrino_id"
-                                            value="{{ old('padrino_id') }}">
-                                        <div class="search-results">
-                                            <select id="select_padrino" class="form-control" style="display: none;"
-                                                size="5">
-                                                <!-- Opciones se llenarán con JavaScript -->
-                                            </select>
-                                        </div>
+                                    <label for="departamento_id" class="form-label required-field">Departamento:</label>
+                                    <div class="input-icon">
+                                        <i class="lni lni-map"></i>
+                                        <select class="form-control" id="departamento_id" name="departamento_id">
+                                            <option value="">Seleccione el departamento</option>
+                                            @foreach ($departamentos as $departamento)
+                                                <option value="{{ $departamento->departamento_id }}" {{ old('departamento_id') == $departamento->departamento_id ? 'selected' : '' }}>
+                                                    {{ $departamento->depto }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    @error('padrino_id')
+                                    @error('departamento_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="madrina_search" class="form-label">Madrina:</label>
-                                    <div class="search-container">
-                                        <div class="input-icon">
-                                            <i class="lni lni-user"></i>
-                                            <input type="text" id="madrina_search" class="form-control"
-                                                placeholder="Escribe el nombre, apellido o DPI">
-                                        </div>
-                                        <input type="hidden" id="madrina_id" name="madrina_id"
-                                            value="{{ old('madrina_id') }}">
-                                        <div class="search-results">
-                                            <select id="select_madrina" class="form-control" style="display: none;"
-                                                size="5">
-                                                <!-- Opciones se llenarán con JavaScript -->
-                                            </select>
-                                        </div>
+                                    <label for="municipio_id" class="form-label required-field">Municipio:</label>
+                                    <div class="input-icon">
+                                        <i class="lni lni-pin"></i>
+                                        <select class="form-control" id="municipio_id" name="municipio_id">
+                                            <option value="">Seleccione el municipio</option>
+                                            @foreach ($municipios as $municipio)
+                                                <option value="{{ $municipio->municipio_id }}" {{ old('municipio_id') == $municipio->municipio_id ? 'selected' : '' }}>
+                                                    {{ $municipio->municipio }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    @error('madrina_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="section-title">
-                                <i class="lni lni-text-format"></i> Información Adicional
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="margen" class="form-label">Margen:</label>
-                                    <textarea class="form-control" id="margen" name="margen" rows="3"
-                                        placeholder="Información adicional o notas al margen">{{ old('margen') }}</textarea>
-                                    @error('margen')
+                                    @error('municipio_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -547,7 +465,7 @@
                                 <small>Los campos marcados con <span class="text-danger">*</span> son obligatorios</small>
                             </div>
                             <button type="submit" class="submit-button">
-                                <i class="lni lni-save"></i> Guardar Bautizo
+                                <i class="lni lni-save"></i> Guardar Comunión
                             </button>
                         </div>
                     </form>
@@ -615,12 +533,10 @@
             }
 
             // Configurar búsqueda para cada campo de persona
-            setupPersonSearch('persona_bautizada_search', 'persona_bautizada_id', 'select_persona_bautizada', 'F'); // Feligrés por defecto
+            setupPersonSearch('persona_comunion_search', 'persona_participe_id', 'select_persona_comunion', 'F'); // Feligrés por defecto
             setupPersonSearch('padre_search', 'padre_id', 'select_padre', 'F'); // Feligrés por defecto
             setupPersonSearch('madre_search', 'madre_id', 'select_madre', 'F'); // Feligrés por defecto
-            setupPersonSearch('sacerdote_search', 'sacerdote_id', 'select_sacerdote', 'S'); // Sacerdote
-            setupPersonSearch('padrino_search', 'padrino_id', 'select_padrino', 'F'); // Feligrés por defecto
-            setupPersonSearch('madrina_search', 'madrina_id', 'select_madrina', 'F'); // Feligrés por defecto
+            setupPersonSearch('sacerdote_search', 'sacerdote_id', 'select_sacerdote', 'S'); // 'S' para Sacerdote
 
             // Cargar datos de personas seleccionadas previamente
             cargarPersonasSeleccionadas();
@@ -628,12 +544,10 @@
             // Función para cargar personas seleccionadas previamente (cuando hay errores de validación)
             function cargarPersonasSeleccionadas() {
                 const personaIds = {
-                    'persona_bautizada_id': 'persona_bautizada_search',
+                    'persona_participe_id': 'persona_comunion_search',
                     'padre_id': 'padre_search',
                     'madre_id': 'madre_search',
-                    'sacerdote_id': 'sacerdote_search',
-                    'padrino_id': 'padrino_search',
-                    'madrina_id': 'madrina_search'
+                    'sacerdote_id': 'sacerdote_search'
                 };
 
                 // Verificar cada campo de ID y cargar los datos si existe
