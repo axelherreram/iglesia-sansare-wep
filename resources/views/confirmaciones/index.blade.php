@@ -234,55 +234,54 @@
         <div class="page-content">
             <div class="personas-card">
                 <div class="card-header p-4">
-                    <a href="dashboard" class="back-button">
+                    <a href="{{ route('dashboard') }}" class="back-button">
                         <i class="lni lni-arrow-left"></i> Regresar
                     </a>
-                    <h2 class="page-title" style="color: white">Listado de Comunión</h2>
+                    <h2 class="page-title" style="color: white">Listado de Confirmaciones</h2>
                 </div>
                 <div class="search-section">
-                    <h5>Buscar Comunión:</h5>
-                    <form action="{{ route('comuniones.index') }}" method="GET">
+                    <h5>Buscar Confirmación:</h5>
+                    <form action="{{ route('confirmaciones.index') }}" method="GET">
                         <div class="row g-3">
-                            <div class="col-md-6">
+                            <div class="col-md-9">
                                 <input type="text" class="search-input" name="search"
-                                    placeholder="Ingrese nombre, apellido o CUI" value="{{ request('search') }}">
+                                    placeholder="Nombre completo o DPI/CUI" value="{{ request('search') }}">
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <button type="submit" class="btn btn-primary w-100">Buscar</button>
                             </div>
                         </div>
                     </form>
                 </div>
-
+                
 
                 <div class="table-container">
-                    @if(count($comuniones) > 0)
+                    @if(count($confirmaciones) > 0)
                         <div class="table-responsive">
                             <table class="personas-table">
                                 <thead>
                                     <tr>
                                         <th>Correlativo</th>
-                                        <th>Persona Primera Comunión</th>
+                                        <th>Persona Confirmada</th>
                                         <th>Sacerdote</th>
                                         <th>Fecha</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($comuniones as $comunion)
+                                    @foreach($confirmaciones as $confirmacion)
                                         <tr>
-                                            <td>{{ $comunion->NoPartida }} - {{ $comunion->folio }}</td>
-                                            <td>{{ $comunion->personaParticipe->nombres }}
-                                                {{ $comunion->personaParticipe->apellidos }}</td>
-                                            <td>{{ $comunion->sacerdote->nombres }} {{ $comunion->sacerdote->apellidos }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($comunion->fecha_comunion)->format('Y-m-d') }}</td>
+                                            <td>{{ $confirmacion->NoPartida }} - {{ $confirmacion->folio }}</td>
+                                            <td>{{ $confirmacion->personaConfirmada->nombres }} {{ $confirmacion->personaConfirmada->apellidos }}</td>
+                                            <td>{{ $confirmacion->sacerdote->nombres }} {{ $confirmacion->sacerdote->apellidos }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($confirmacion->fecha_confirmacion)->format('Y-m-d') }}</td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <a href="{{ route('comuniones.show', $comunion->comunion_id) }}"
+                                                    <a href="{{ route('confirmaciones.show', $confirmacion->confirmacion_id) }}"
                                                         class="btn-view">
                                                         <i class="lni lni-eye"></i> Ver
                                                     </a>
-                                                    <a href="{{ route('comuniones.edit', $comunion->comunion_id) }}"
+                                                    <a href="{{ route('confirmaciones.edit', $confirmacion->confirmacion_id) }}"
                                                         class="btn-edit">
                                                         <i class="lni lni-pencil"></i> Editar
                                                     </a>
@@ -298,14 +297,14 @@
                             <div class="empty-state-icon">
                                 <i class="lni lni-users"></i>
                             </div>
-                            <p class="empty-state-text">No se encontraron registros de comuniones.</p>
+                            <p class="empty-state-text">No se encontraron registros de confirmaciones con los datos especificados.</p>
                         </div>
                     @endif
                 </div>
 
                 <div class="pagination-container">
                     <div class="d-flex justify-content-center mt-4">
-                        {{ $comuniones->onEachSide(1)->links() }}
+                        {{ $confirmaciones->onEachSide(1)->links() }}
                     </div>
                 </div>
             </div>

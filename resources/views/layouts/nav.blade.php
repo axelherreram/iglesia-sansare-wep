@@ -280,7 +280,6 @@
                             </li>
                         </ul>
                     </li>
-                    
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
@@ -294,13 +293,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/dashboard-confirmacion-create">
+                                <a class="dropdown-item" href="{{ route('confirmaciones.create') }}">
                                     <i class="fadeIn animated bx bx-plus-circle"></i>
                                     Nueva Confirmación
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/dashboard-list-confirmacion">
+                                <a class="dropdown-item" href="{{ route('confirmaciones.index') }}">
                                     <i class='fadeIn animated bx bx-list-ul'></i>
                                     Buscar Confirmación
                                 </a>
