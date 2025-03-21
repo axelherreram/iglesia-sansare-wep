@@ -78,11 +78,6 @@
             transition: all 0.3s ease;
         }
 
-        .section-card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
-        }
-
         /* Botón de regresar */
         .back-button {
             background-color: rgba(255, 255, 255, 0.2);
@@ -462,7 +457,6 @@
 
                         <div class="d-flex justify-content-between mt-4">
                             <div class="text-muted">
-                                <small>Los campos marcados con <span class="text-danger">*</span> son obligatorios</small>
                             </div>
                             <button type="submit" class="submit-button">
                                 <i class="lni lni-save"></i> Guardar Comunión

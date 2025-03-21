@@ -193,7 +193,7 @@
 
                     <h3 class="section-title">Sacerdote</h3>
                     <div class="info-grid">
-                        <div class="info-item">
+                        <div class="info-item" style="grid-column: span 2;">
                             <span class="info-label">Nombre del Sacerdote:</span>
                             <div class="info-value">{{ $comunion->sacerdote->nombres}} {{ $comunion->sacerdote->apellidos}} </div>
                         </div>

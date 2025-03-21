@@ -579,7 +579,6 @@
 
                         <div class="d-flex justify-content-between mt-4">
                             <div class="text-muted">
-                                <small>Los campos marcados con <span class="text-danger">*</span> son obligatorios</small>
                             </div>
                             <button type="submit" class="submit-button">
                                 <i class="lni lni-save"></i> Guardar Casamiento

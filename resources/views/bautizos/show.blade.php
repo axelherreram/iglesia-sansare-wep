@@ -93,7 +93,7 @@
 
         .action-buttons {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             margin-top: 25px;
             padding: 0 25px 25px;
         }
@@ -113,6 +113,25 @@
             max-width: 300px;
             justify-content: center;
         }
+
+        .btn-edit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            margin-right: 5px;
+            width: 100%;
+            gap: 5px;
+            max-width: 300px;
+            background-color: #f1c40f;
+            color: #fff;
+        }
+        
 
         .print-button:hover {
             transform: translateY(-2px);
@@ -200,12 +219,14 @@
                         <div class="info-item">
                             <span class="info-label">Nombre Completo:</span>
                             <div class="info-value">{{ $bautizo->personaBautizada->nombres }}
-                                {{ $bautizo->personaBautizada->apellidos }}</div>
+                                {{ $bautizo->personaBautizada->apellidos }}
+                            </div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Edad:</span>
                             <div class="info-value">
-                                {{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->age }} años</div>
+                                {{ \Carbon\Carbon::parse($bautizo->personaBautizada->fecha_nacimiento)->age }} años
+                            </div>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Fecha de Nacimiento:</span>
@@ -263,7 +284,7 @@
 
                     <h3 class="section-title">Sacerdote</h3>
                     <div class="info-grid">
-                        <div class="info-item">
+                        <div class="info-item" style="grid-column: span 2;">
                             <span class="info-label">Nombre del Sacerdote:</span>
                             <div class="info-value">{{ $bautizo->sacerdote->nombres }} {{ $bautizo->sacerdote->apellidos }}
                             </div>
@@ -285,6 +306,9 @@
 
                 <!-- Botón de acción -->
                 <div class="action-buttons">
+                    <a href="{{ route('bautizos.edit', $bautizo->bautizo_id) }}" class="btn-edit">
+                        <i class="lni lni-pencil"></i> Editar
+                    </a>
                     <a href="{{ route('bautizo.pdf', $bautizo->bautizo_id) }}" target="_blank" class="print-button">
                         <i class="lni lni-printer"></i> Imprimir a PDF
                     </a>

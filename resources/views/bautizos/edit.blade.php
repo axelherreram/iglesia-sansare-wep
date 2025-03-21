@@ -78,11 +78,6 @@
             transition: all 0.3s ease;
         }
         
-        .section-card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
-        }
-        
         /* Botón de regresar */
         .back-button {
             background-color: rgba(255, 255, 255, 0.2);
@@ -123,10 +118,7 @@
             gap: 10px;
         }
         
-        .submit-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(43, 60, 247, 0.25);
-        }
+ 
         
         .submit-button:active {
             transform: translateY(-1px);
@@ -542,7 +534,6 @@
 
                         <div class="d-flex justify-content-between mt-4">
                             <div class="text-muted">
-                                <small>Los campos marcados con <span class="text-danger">*</span> son obligatorios</small>
                             </div>
                             <button type="button" id="submit-btn" class="submit-button">
                                 <i class="lni lni-save"></i> Actualizar Bautizo
