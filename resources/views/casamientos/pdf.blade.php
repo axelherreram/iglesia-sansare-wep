@@ -170,16 +170,15 @@
         </div>
 
         <div class="form-content">
-            <div class="form-group"  style="width: 20cm;">
+            <div class="form-group" style="width: 20cm;">
                 <label for="parroco">El infrascrito, Párroco:</label>
-                <span>{{ $casamiento->nombre_parroco }}</span>
+                <span>{{ $casamiento->sacerdote->nombres }} {{ $casamiento->sacerdote->apellidos }}</span>
             </div>
             <div class="form-group">
                 <label for="parroquia">de la Parroquia:</label>
                 <span>Parroquia Nuestra Señora de Las Mercedes</span>
             </div>
-            <p class="text-center"
-                style=" font-weight: 500;
+            <p class="text-center" style=" font-weight: 500;
             color: #3d6aa8de;
             font-size: 1.1rem;">Certifica que en
                 el libro de Matrimonios:</p>
@@ -191,35 +190,39 @@
                 <label style="margin-left: 10px;">de esta Parroquia consta que:</label>
             </div>
             <div class="form-group">
-                <span>{{ $casamiento->nombre_esposo }}</span>
+                <span>{{ $casamiento->esposo->nombres }} {{ $casamiento->esposo->apellidos }}</span>
             </div>
             <div class="form-group">
                 <label for="edad1">de</label>
-                <span>{{ $casamiento->edad_esposo }}</span>
+                <span> {{ $casamiento->edad ?? \Carbon\Carbon::parse($casamiento->esposa->fecha_nacimiento)->age }}
+                </span>
                 <label for="originario1" style="margin-left: 10px;">años, originario:</label>
                 <span>{{ $casamiento->origen_esposo }}</span>
             </div>
             <div class="form-group">
                 <label for="padres1">feligrés de esta Parroquia, hijo legítimo de:</label>
-                <span>{{ $casamiento->nombre_padre_esposo }} <label for="">  y   </label> {{ $casamiento->nombre_madre_esposo }}</span>
+                <span> {{ $casamiento->padreEsposo->nombres }} {{ $casamiento->padreEsposo->apellidos }}<label for=""> y
+                    </label> {{ $casamiento->madreEsposo->nombres }} {{ $casamiento->madreEsposo->apellidos }} </span>
             </div>
             <div class="form-group">
                 <label for="nombre2">contrajo matrimonio con:</label>
-                <span>{{ $casamiento->nombre_esposa }}</span>
+                <span>{{ $casamiento->esposa->nombres }} {{ $casamiento->esposa->apellidos }}</span>
             </div>
             <div class="form-group">
                 <label for="edad2">de</label>
-                <span>{{ $casamiento->edad_esposa }}</span>
+                <span> {{ $casamiento->edad ?? \Carbon\Carbon::parse($casamiento->esposa->fecha_nacimiento)->age }}
+                </span>
                 <label for="originaria2" style="margin-left: 10px;">años, originaria de:</label>
                 <span>{{ $casamiento->origen_esposa }}</span>
             </div>
             <div class="form-group">
                 <label for="padres2">feligrés de esta Parroquia, hija legítima de:</label>
-                <span>{{ $casamiento->nombre_padre_esposa }} <label for="" >  y   </label>  {{ $casamiento->nombre_madre_esposa }}</span>
+                <span>{{ $casamiento->padreEsposa->nombres }} {{ $casamiento->padreEsposa->apellidos }} <label for=""> y
+                    </label> {{ $casamiento->madreEsposa->nombres }} {{ $casamiento->madreEsposa->apellidos }}</span>
             </div>
             <div class="form-group">
                 <label for="padre">Presenció y bendijo el Matrimonio el Padre:</label>
-                <span>{{ $casamiento->nombre_parroco }}</span>
+                <span>{{ $casamiento->sacerdote->nombres }} {{ $casamiento->sacerdote->apellidos }} </span>
             </div>
 
             <div class="form-group">
@@ -231,12 +234,20 @@
                 <span>{{ Date::parse($casamiento->fecha_casamiento)->locale('es')->isoFormat('Y') }}</span>
             </div>
 
-          
+
             <div class="form-group">
                 <label for="testigos">Habiendo sido testigos:</label>
-                <span>{{ $casamiento->nombres_testigos }}</span>
+                @if($casamiento->testigos->isEmpty())
+                    <p class="text-center text-muted">No hay testigos registrados para este casamiento.</p>
+                @else
+                    @foreach ($casamiento->testigos as $testigo)
+                        <div class="list-group-item">
+                            <span>{{ $testigo->persona->nombres }} {{ $testigo->persona->apellidos }}</span>
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            <div class="form-group date-group" style="width: 16.59cm !important; margin-top:45px;">
+            <div class="form-group date-group" style="width: 16.59cm !important; margin-top:35px;">
                 <span class="day">{{ now()->format('d') }}</span>
                 <label>. de </label>
                 <span class="month">{{ now()->locale('es')->isoFormat('MMMM') }}</span>

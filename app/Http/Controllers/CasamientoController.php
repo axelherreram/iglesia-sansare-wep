@@ -190,7 +190,7 @@ class CasamientoController extends Controller
             'madreEsposo',
             'padreEsposa',
             'madreEsposa',
-            'testigos'
+            'testigos.persona'
         ])->findOrFail($casamiento_id);
 
         $departamentos = Departamento::all();
