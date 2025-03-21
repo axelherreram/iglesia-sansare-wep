@@ -189,7 +189,7 @@
                 <div class="row stats-row">
                     <div class="col-12 col-md-6 col-lg-3 mb-4">
                         <div class="card stat-card border-info-custom">
-                            <a class="card-body" href="dashboard-list-bautizo">
+                            <a class="card-body" href="{{route('bautizos.index')}}">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 class="card-title">BAUTIZOS</h5>
@@ -206,7 +206,7 @@
                     
                     <div class="col-12 col-md-6 col-lg-3 mb-4">
                         <div class="card stat-card border-danger-custom">
-                            <a class="card-body" href="dashboard-list-comunion">
+                            <a class="card-body" href="{{route( 'comuniones.index')}}">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 class="card-title">COMUNIONES</h5>
@@ -223,7 +223,7 @@
                     
                     <div class="col-12 col-md-6 col-lg-3 mb-4">
                         <div class="card stat-card border-success-custom">
-                            <a class="card-body" href="/dashboard-list-confirmacion">
+                            <a class="card-body" href="{{route( 'confirmaciones.index')}}">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 class="card-title">CONFIRMACIONES</h5>
@@ -240,7 +240,7 @@
                     
                     <div class="col-12 col-md-6 col-lg-3 mb-1">
                         <div class="card stat-card border-warning-custom">
-                            <a class="card-body" href="dashboard-list-casamiento">
+                            <a class="card-body" href="{{route( 'casamientos.index')}}">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 class="card-title">CASAMIENTOS</h5>
