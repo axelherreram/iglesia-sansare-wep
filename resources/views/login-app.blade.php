@@ -46,12 +46,22 @@
                                 @csrf
                                 <div class="col-12">
                                     <label for="inputEmailAddress" class="form-label">Correo Electrónico</label>
-                                    <input type="email" name="email" class="form-control" id="inputEmailAddress"
-                                        placeholder="Ingrese su correo electrónico" required>
+                                    <div class="input-group " id="show_hide_password">
+                                        <span class="input-group-text bg-transparent border-end-0">
+                                            <i class="bx bx-envelope text-muted"></i>
+                                        </span>
+
+                                        <input type="email" name="email" class="form-control" id="inputEmailAddress"
+                                            placeholder="Ingrese su correo electrónico" required>
+                                    </div>
+
                                 </div>
                                 <div class="col-12">
                                     <label for="inputChoosePassword" class="form-label">Contraseña</label>
                                     <div class="input-group " id="show_hide_password">
+                                        <span class="input-group-text bg-transparent border-end-0">
+                                            <i class="bx bx-lock-alt text-muted"></i>
+                                        </span>
                                         <input type="password" name="password" class="form-control"
                                             id="inputChoosePassword" placeholder="Ingrese su contraseña" required>
                                         <a href="javascript:;" class="input-group-text bg-transparent ">
@@ -92,8 +102,8 @@
     <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
     <!--Password show & hide js -->
     <script>
-        $(document).ready(function() {
-            $("#show_hide_password a").on('click', function(event) {
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
                 event.preventDefault();
                 if ($('#show_hide_password input').attr("type") == "text") {
                     $('#show_hide_password input').attr('type', 'password');

@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
     <link rel="shortcut icon" href="{{ asset('assets/icon/icon.ico') }}" type="image/x-icon">
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    
     <title>Iglesia Sansare</title>
     <style>
         footer {

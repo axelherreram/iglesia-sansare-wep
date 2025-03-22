@@ -92,11 +92,7 @@ a {
 
 
 .logo-icon {
-
-
 	width: 50px;
-
-
 }
 
 .logo-icon-2 {
@@ -1430,10 +1426,10 @@ ul.scroll-menu {
 
 .input-icon .form-control {
     padding-left: 2.5rem;
-	border-color: #008cff !important;
+	border-color: #7f5539 !important;
 }
 .form-control {
-    padding-left: 2.5rem;
+    padding-left: 2.5rem ;
 	border-color: #7f5539 !important;
 }
 .error {

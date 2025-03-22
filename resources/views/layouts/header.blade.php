@@ -2,11 +2,10 @@
     <div class="header-wrapper">
         <header>
             <div class="topbar d-flex align-items-center ">
-                <a href="{{ route('dashboard') }}" class="topbar-logo-header d-none d-lg-flex align-items-center text-decoration-none gap-2">
-                    <div class="d-flex align-items-center justify-content-center bg-light rounded-circle p-2 shadow-sm">
-                        <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon" width="40">
+                <a href="{{ route('dashboard') }}" class="topbar-logo-header d-none d-lg-flex align-items-center text-decoration-none p-2">
+                    <div class="d-flex align-items-center justify-content-center bg-light ">
+                        <img src="{{ asset('/assets/icon/icono.png') }}"  width="200" alt="logo icon" >
                     </div>
-                    <h4 class="logo-text fw-bold text-dark m-0">Iglesia Sansare</h4>
                 </a>
                 <div class="mobile-toggle-menu d-block d-lg-none" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasNavbar"><i class='bx bx-menu'></i></div>

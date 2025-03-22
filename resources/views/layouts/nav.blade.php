@@ -195,10 +195,9 @@
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header border-bottom">
                 <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none gap-2 p-2">
-                    <div class="d-flex align-items-center justify-content-center bg-light rounded-circle p-2 shadow-sm">
-                        <img src="{{ asset('/assets/icon/iglesia.png') }}" class="logo-icon" alt="logo icon" width="40">
+                    <div class="d-flex align-items-center justify-content-center bg-light p-2 shadow-sm">
+                        <img src="{{ asset('/assets/icon/icono-iglesia.svg') }}" width="250" alt="logo icon" >
                     </div>
-                    <h4 class="logo-text fw-bold text-dark m-0">Iglesia Sansare</h4>
                 </a>
 
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
