@@ -164,7 +164,6 @@
                                             <option value="">Seleccione el sexo</option>
                                             <option value="M" {{ old('sexo') == 'M' ? 'selected' : '' }}>Masculino</option>
                                             <option value="F" {{ old('sexo') == 'F' ? 'selected' : '' }}>Femenino</option>
-                                            <option value="O" {{ old('sexo') == 'O' ? 'selected' : '' }}>Otro</option>
                                         </select>
                                         @error('sexo')
                                             <div class="text-danger">{{ $message }}</div>
