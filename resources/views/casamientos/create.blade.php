@@ -348,12 +348,14 @@
             const testigosContainer = document.getElementById("testigos-container");
             const testigoSearchInput = document.getElementById("testigo_search");
             const selectTestigo = document.getElementById("select_testigo");
+
             if (!testigoSearchInput || !selectTestigo) {
                 console.error("Elementos no encontrados: testigo_search o select_testigo");
             } else {
                 // Configurar búsqueda de testigos
                 setupPersonSearch('testigo_search', null, 'select_testigo');
             }
+
             // Configurar búsqueda para cada campo de persona
             setupPersonSearch('esposo_search', 'esposo_id', 'select_esposo', 'F', 'M');
             setupPersonSearch('esposa_search', 'esposa_id', 'select_esposa', 'F', 'F');
@@ -362,7 +364,6 @@
             setupPersonSearch('padre_esposa_search', 'padre_esposa_id', 'select_padre_esposa', 'F', 'M');
             setupPersonSearch('madre_esposa_search', 'madre_esposa_id', 'select_madre_esposa', 'F', 'F');
             setupPersonSearch('sacerdote_search', 'sacerdote_id', 'select_sacerdote', 'S');
-
 
             // Cargar datos de personas seleccionadas previamente
             cargarPersonasSeleccionadas();
@@ -378,14 +379,14 @@
                     const newTestigo = document.createElement("div");
                     newTestigo.classList.add("row", "mb-3", "testigo-item");
                     newTestigo.innerHTML = `
-                                                <div class="col-md-10">
-                                                    <input type="text" class="form-control" name="testigos_seleccionados[]" value="${personaText}" readonly>
-                                                    <input type="hidden" name="testigos[]" value="${personaId}">
-                                                </div>
-                                                <div class="col-md-2 d-flex align-items-end">
-                                                    <button type="button" class="btn btn-danger remove-testigo">X</button>
-                                                </div>
-                                            `;
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="testigos_seleccionados[]" value="${personaText}" readonly>
+                            <input type="hidden" name="testigos[]" value="${personaId}">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-danger remove-testigo">X</button>
+                        </div>
+                    `;
                     testigosContainer.appendChild(newTestigo);
 
                     // Limpiar el campo de búsqueda y ocultar el selector
@@ -394,29 +395,16 @@
                 }
             });
 
-            // Función para agregar testigos manualmente
-            const addTestigoBtn = document.getElementById("add-testigo");
-            addTestigoBtn.addEventListener("click", function () {
-                const newTestigo = document.createElement("div");
-                newTestigo.classList.add("row", "mb-3", "testigo-item");
-                newTestigo.innerHTML = `
-                                            <div class="col-md-10">
-                                                <input type="text" class="form-control" name="nombres_testigos[]" placeholder="Ingrese el nombre del testigo">
-                                            </div>
-                                            <div class="col-md-2 d-flex align-items-end">
-                                                <button type="button" class="btn btn-danger remove-testigo">X</button>
-                                            </div>
-                                        `;
-                testigosContainer.appendChild(newTestigo);
-            });
-
-            // Función para eliminar testigos
+            // Delegación de eventos para eliminar testigos
             testigosContainer.addEventListener("click", function (e) {
-                if (e.target.classList.contains("remove-testigo")) {
-                    e.target.closest(".testigo-item").remove();
+                if (e.target && e.target.classList.contains("remove-testigo")) {
+                    const testigoItem = e.target.closest(".testigo-item");
+                    if (testigoItem) {
+                        testigoItem.remove();
+                        console.log("Testigo eliminado");
+                    }
                 }
             });
-
 
             // Función para cargar personas seleccionadas previamente (cuando hay errores de validación)
             function cargarPersonasSeleccionadas() {
@@ -458,7 +446,119 @@
                 }
             }
 
+            function setupPersonSearch(searchInputId, hiddenInputId, selectId, tipo = null, sexo = null) {
+                const searchInput = document.getElementById(searchInputId);
+                const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null; // Solo busca hiddenInput si se proporciona un ID
+                const selectElement = document.getElementById(selectId);
 
+                // Verificar solo los elementos que son obligatorios
+                if (!searchInput || !selectElement) {
+                    console.error(`Elementos no encontrados para: ${searchInputId}`);
+                    return;
+                }
+
+                // Función para mostrar un mensaje de carga
+                function showLoading() {
+                    selectElement.innerHTML = '<option>Buscando...</option>';
+                    selectElement.style.display = 'block';
+                }
+
+                // Función para ocultar el selector
+                function hideSelect() {
+                    selectElement.style.display = 'none';
+                }
+
+                // Variable para controlar el tiempo de espera
+                let typingTimer;
+                const doneTypingInterval = 500; // Tiempo en ms
+
+                // Evento cuando se escribe en el campo de búsqueda
+                searchInput.addEventListener('input', function () {
+                    const searchValue = this.value;
+
+                    // Limpiar el temporizador anterior
+                    clearTimeout(typingTimer);
+
+                    if (searchValue.length > 2) {
+                        // Mostrar indicador de carga
+                        showLoading();
+
+                        // Configurar un nuevo temporizador
+                        typingTimer = setTimeout(() => {
+                            let url = `/api/personas/buscar?search=${searchValue}`;
+
+                            // Agregar el tipo de persona si está definido
+                            if (tipo) {
+                                url += `&tipo=${tipo}`;
+                            }
+
+                            if (sexo) {
+                                url += `&sexo=${sexo}`;
+                            }
+
+                            fetch(url)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Error en la respuesta del servidor');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    selectElement.innerHTML = ''; // Limpiar opciones previas
+
+                                    if (data.data && data.data.length > 0) {
+                                        data.data.forEach(person => {
+                                            const option = document.createElement('option');
+                                            option.value = person.persona_id;
+                                            option.textContent = `${person.nombres} ${person.apellidos} - ${person.dpi_cui || 'Sin DPI'}`;
+                                            selectElement.appendChild(option);
+                                        });
+                                        selectElement.style.display = 'block';
+                                    } else {
+                                        selectElement.innerHTML = '<option>No se encontraron resultados</option>';
+                                        setTimeout(hideSelect, 2000); // Ocultar después de 2 segundos
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error en la búsqueda:', error);
+                                    selectElement.innerHTML = '<option>Error en la búsqueda</option>';
+                                    setTimeout(hideSelect, 2000); // Ocultar después de 2 segundos
+                                });
+                        }, doneTypingInterval);
+                    } else {
+                        hideSelect();
+                    }
+                });
+
+                // Evento cuando se selecciona una persona
+                selectElement.addEventListener('change', function () {
+                    if (this.selectedIndex >= 0) {
+                        const selectedOption = this.options[this.selectedIndex];
+                        const personaId = selectedOption.value;
+                        const personaText = selectedOption.textContent;
+
+                        // Si hay un campo oculto, establecer su valor
+                        if (hiddenInput) {
+                            hiddenInput.value = personaId;
+                        }
+
+                        // Establecer el valor en el campo de búsqueda
+                        searchInput.value = personaText;
+
+                        // Añadir una clase para indicar que se ha seleccionado
+                        searchInput.classList.add('is-valid');
+
+                        hideSelect();
+                    }
+                });
+
+                // Evento para manejar clics fuera del selector
+                document.addEventListener('click', function (event) {
+                    if (event.target !== searchInput && event.target !== selectElement) {
+                        hideSelect();
+                    }
+                });
+            }
         });
     </script>
 @endsection
