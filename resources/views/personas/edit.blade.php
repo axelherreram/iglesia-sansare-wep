@@ -1,202 +1,20 @@
 @extends('layouts.app')
 
-@section('style')
-    <style>
-        /* Estilos generales */
-        .form-container {
-            max-width: 900px;
-            margin: auto;
-        }
 
-        .persona-card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .persona-card:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-
-        /* Estilos del encabezado */
-        .card-header {
-            background: linear-gradient(135deg, #4a6cf7 0%, #2b3cf7 100%);
-            color: white;
-            padding: 20px 25px;
-            position: relative;
-        }
-
-        .back-button {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .back-button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            text-decoration: none;
-            color: white;
-        }
-
-        .page-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 15px;
-            margin-bottom: 0;
-            color: white;
-        }
-
-        /* Estilos del formulario */
-        .form-section {
-            padding: 30px;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #4a6cf7;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .form-control {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 12px 15px;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            background-color: #f9f9f9;
-        }
-
-        .form-control:focus {
-            border-color: #4a6cf7;
-            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
-            background-color: #fff;
-            outline: none;
-        }
-
-        .form-control::placeholder {
-            color: #aaa;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .text-danger {
-            color: #e74c3c !important;
-            font-size: 0.85rem;
-            margin-top: 5px;
-            display: block;
-        }
-
-        /* Estilos para los selectores */
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            padding-right: 40px;
-        }
-
-        /* Estilos para el botón de guardar */
-        .submit-button {
-            background: linear-gradient(135deg, #4a6cf7 0%, #2b3cf7 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 30px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            min-width: 180px;
-        }
-
-        .submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(43, 60, 247, 0.3);
-        }
-
-        .submit-button:active {
-            transform: translateY(0);
-        }
-
-        /* Estilos para los iconos */
-        .input-icon {
-            position: relative;
-        }
-
-        .input-icon i {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 15px;
-            color: #aaa;
-        }
-
-        .input-icon .form-control {
-            padding-left: 40px;
-        }
-
-        /* Estilos para las tarjetas de sección */
-        .section-card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 4px solid #4a6cf7;
-        }
-
-        /* Estilos responsivos */
-        @media (max-width: 768px) {
-            .form-section {
-                padding: 20px;
-            }
-
-            .submit-button {
-                width: 100%;
-            }
-        }
-    </style>
-@endsection
 
 @section('wrapper')
     <div class="page-wrapper">
         <div class="page-content">
             <div class="form-container">
                 <div class="persona-card">
-                    <div class="card-header p-4">
+                    <div class="form-header p-4">
                         <a href="{{ route('personas.index') }}" class="back-button">
                             <i class="lni lni-arrow-left"></i> Regresar
                         </a>
                         <h3 class="page-title">Editar Persona</h3>
                     </div>
 
-                    <form id="update-persona-form" action="{{ route('personas.update', $persona->persona_id) }}" method="POST" class="form-section">
+                    <form id="update-persona-form" action="{{ route('personas.update', $persona->persona_id) }}" method="POST" class="form-section p-4">
                         @csrf
                         @method('PUT')
 

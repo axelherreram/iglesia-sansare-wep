@@ -239,7 +239,7 @@
   <div class="page-wrapper">
       <div class="page-content">
           <div class="persona-card">
-              <div class="card-header p-4" style="color: white">
+              <div class="form-header p-4" style="color: white">
                   <div class="header-content">
                       <a href="{{ route('comuniones.index') }}" class="back-button">
                           <i class="lni lni-arrow-left"></i> Regresar
