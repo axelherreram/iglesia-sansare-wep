@@ -44,10 +44,10 @@
                         <div class="form-body">
                             <form method="POST" class="row g-3" action="{{ route('login.post') }}">
                                 @csrf
-                                <div class="col-12">
+                                <div class="col-12"  >
                                     <label for="inputEmailAddress" class="form-label">Correo Electrónico</label>
                                     <div class="input-group " id="show_hide_password">
-                                        <span class="input-group-text bg-transparent border-end-0">
+                                        <span class="input-group-text bg-transparent border-end-0" style="border-color: #7f5539 !important">
                                             <i class="bx bx-envelope text-muted"></i>
                                         </span>
 
@@ -58,17 +58,19 @@
                                 </div>
                                 <div class="col-12">
                                     <label for="inputChoosePassword" class="form-label">Contraseña</label>
-                                    <div class="input-group " id="show_hide_password">
-                                        <span class="input-group-text bg-transparent border-end-0">
+                                    <div class="input-group" id="show_hide_password_container">
+                                        <span class="input-group-text bg-transparent" style="border-color: #7f5539 !important">
                                             <i class="bx bx-lock-alt text-muted"></i>
                                         </span>
                                         <input type="password" name="password" class="form-control"
                                             id="inputChoosePassword" placeholder="Ingrese su contraseña" required>
-                                        <a href="javascript:;" class="input-group-text bg-transparent ">
+                                        <button type="button" class="input-group-text bg-transparent toggle-password"  
+                                            style="border-color: #7f5539 !important">
                                             <i class="bx bx-hide"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-6">
 
                                 </div>
@@ -103,20 +105,21 @@
     <!--Password show & hide js -->
     <script>
         $(document).ready(function () {
-            $("#show_hide_password a").on('click', function (event) {
-                event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("bx-hide");
-                    $('#show_hide_password i').removeClass("bx-show");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("bx-hide");
-                    $('#show_hide_password i').addClass("bx-show");
+            $(".toggle-password").on('click', function () {
+                let passwordInput = $(this).siblings("input");
+                let icon = $(this).find("i");
+    
+                if (passwordInput.attr("type") === "password") {
+                    passwordInput.attr("type", "text");
+                    icon.removeClass("bx-hide").addClass("bx-show");
+                } else {
+                    passwordInput.attr("type", "password");
+                    icon.removeClass("bx-show").addClass("bx-hide");
                 }
             });
         });
     </script>
+    
     <!--app JS-->
     <script src="assets/js/app.js"></script>
 </body>

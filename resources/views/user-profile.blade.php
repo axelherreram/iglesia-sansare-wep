@@ -53,7 +53,7 @@
                                         <label class="form-label">
                                             <i class="lni lni-envelope"></i> Email
                                         </label>
-                                        <input type="email" class="form-control" name="email"
+                                        <input type="email" class="form-control" name="email" disabled
                                             value="{{ old('email', $user->email) }}" />
                                     </div>
                                     
