@@ -286,9 +286,9 @@
             }
 
             // Configurar búsqueda para cada campo de persona
-            setupPersonSearch('persona_comunion_search', 'persona_participe_id', 'select_persona_comunion', 'F'); // Feligrés por defecto
-            setupPersonSearch('padre_search', 'padre_id', 'select_padre', 'F'); // Feligrés por defecto
-            setupPersonSearch('madre_search', 'madre_id', 'select_madre', 'F'); // Feligrés por defecto
+            setupPersonSearch('persona_comunion_search', 'persona_participe_id', 'select_persona_comunion', 'F');
+            setupPersonSearch('padre_search', 'padre_id', 'select_padre', 'F', 'M');
+            setupPersonSearch('madre_search', 'madre_id', 'select_madre', 'F', 'F');
             setupPersonSearch('sacerdote_search', 'sacerdote_id', 'select_sacerdote', 'S'); // 'S' para Sacerdote
 
             // Cargar datos de personas seleccionadas previamente
@@ -331,110 +331,6 @@
                 }
             }
 
-            // Función para configurar la búsqueda de personas
-            function setupPersonSearch(searchInputId, hiddenInputId, selectId, tipo = null) {
-                const searchInput = document.getElementById(searchInputId);
-                const hiddenInput = document.getElementById(hiddenInputId);
-                const selectElement = document.getElementById(selectId);
-
-                if (!searchInput || !hiddenInput || !selectElement) {
-                    console.error(`Elementos no encontrados para: ${searchInputId}`);
-                    return;
-                }
-
-                // Función para mostrar un mensaje de carga
-                function showLoading() {
-                    selectElement.innerHTML = '<option>Buscando...</option>';
-                    selectElement.style.display = 'block';
-                }
-
-                // Función para ocultar el selector
-                function hideSelect() {
-                    selectElement.style.display = 'none';
-                }
-
-                // Variable para controlar el tiempo de espera
-                let typingTimer;
-                const doneTypingInterval = 500; // Tiempo en ms
-
-                // Evento cuando se escribe en el campo de búsqueda
-                searchInput.addEventListener('input', function () {
-                    const searchValue = this.value;
-
-                    // Limpiar el temporizador anterior
-                    clearTimeout(typingTimer);
-
-                    if (searchValue.length > 2) {
-                        // Mostrar indicador de carga
-                        showLoading();
-
-                        // Configurar un nuevo temporizador
-                        typingTimer = setTimeout(() => {
-                            let url = `/api/personas/buscar?search=${searchValue}`;
-
-                            // Agregar el tipo de persona si está definido
-                            if (tipo) {
-                                url += `&tipo=${tipo}`;
-                            }
-
-                            fetch(url)
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Error en la respuesta del servidor');
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    selectElement.innerHTML = ''; // Limpiar opciones previas
-
-                                    if (data.data && data.data.length > 0) {
-                                        data.data.forEach(person => {
-                                            const option = document.createElement('option');
-                                            option.value = person.persona_id;
-                                            option.textContent = `${person.nombres} ${person.apellidos} - ${person.dpi_cui || 'Sin DPI'}`;
-                                            selectElement.appendChild(option);
-                                        });
-                                        selectElement.style.display = 'block';
-                                    } else {
-                                        selectElement.innerHTML = '<option>No se encontraron resultados</option>';
-                                        setTimeout(hideSelect, 2000); // Ocultar después de 2 segundos
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error en la búsqueda:', error);
-                                    selectElement.innerHTML = '<option>Error en la búsqueda</option>';
-                                    setTimeout(hideSelect, 2000); // Ocultar después de 2 segundos
-                                });
-                        }, doneTypingInterval);
-                    } else {
-                        hideSelect();
-                    }
-                });
-
-                // Evento cuando se selecciona una persona
-                selectElement.addEventListener('change', function () {
-                    if (this.selectedIndex >= 0) {
-                        const selectedOption = this.options[this.selectedIndex];
-                        const personaId = selectedOption.value;
-                        const personaText = selectedOption.textContent;
-
-                        hiddenInput.value = personaId;
-                        searchInput.value = personaText;
-
-                        // Añadir una clase para indicar que se ha seleccionado
-                        searchInput.classList.add('is-valid');
-
-                        hideSelect();
-                    }
-                });
-
-                // Evento para manejar clics fuera del selector
-                document.addEventListener('click', function (event) {
-                    if (event.target !== searchInput && event.target !== selectElement) {
-                        hideSelect();
-                    }
-                });
-            }
         });
     </script>
 @endsection

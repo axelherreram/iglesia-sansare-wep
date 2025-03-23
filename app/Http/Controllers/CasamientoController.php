@@ -22,31 +22,29 @@ class CasamientoController extends Controller
         // Crear la consulta base con las relaciones
         $query = Casamiento::with([
             'esposo',
-            'esposa',
-            'sacerdote',
-            'padreEsposo',
-            'madreEsposo',
-            'padreEsposa',
-            'madreEsposa'
+            'esposa'
         ]);
 
         if ($search) {
-            // Si el input es solo números, buscar por NoPartida o folio
-            if (is_numeric($search)) {
-                $query->where('NoPartida', 'like', "%{$search}%")
-                    ->orWhere('folio', 'like', "%{$search}%");
-            } else {
-                // Buscar por nombre completo del esposo o esposa
-                $query->where(function ($q) use ($search) {
+            $query->where(function ($q) use ($search) {
+                if (is_numeric($search)) {
+                    $q->whereHas('esposo', function ($q) use ($search) {
+                        $q->where('dpi_cui', 'LIKE', '%' . $search . '%');
+                    })
+                    ->orWhereHas('esposa', function ($q) use ($search) {
+                        $q->where('dpi_cui', 'LIKE', '%' . $search . '%');
+                    });
+                } else {
                     $q->whereHas('esposo', function ($q) use ($search) {
                         $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
                     })
-                        ->orWhereHas('esposa', function ($q) use ($search) {
-                            $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
-                        });
-                });
-            }
+                    ->orWhereHas('esposa', function ($q) use ($search) {
+                        $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                    });
+                }
+            });
         }
+        
 
         // Paginación de los resultados
         $casamientos = $query->paginate(10);
@@ -60,6 +58,8 @@ class CasamientoController extends Controller
 
         return view('casamientos.index', compact('casamientos'));
     }
+
+
 
     /**
      * Muestra el formulario para crear un nuevo casamiento.

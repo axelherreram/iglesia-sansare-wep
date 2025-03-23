@@ -30,7 +30,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-    
+
     <title>Iglesia Sansare</title>
     <style>
         footer {
@@ -62,9 +62,9 @@
         <!-- End Search Model -->
         <!--start overlay-->
     </div>
-    {{--     <footer class="sticky-bottom ">
+    {{-- <footer class="sticky-bottom ">
         <a href="dashboard" class="btn border">
-            <img src="{{ asset('/assets/icon/Vector.svg') }}"  alt="" >
+            <img src="{{ asset('/assets/icon/Vector.svg') }}" alt="">
         </a>
     </footer> --}}
     <!--end wrapper-->
@@ -79,6 +79,7 @@
     <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
     <!--app JS-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
     @yield('script')
 </body>
 

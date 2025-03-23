@@ -15,7 +15,7 @@ class PersonasController extends Controller
     {
         $search = $request->input('search');
         $tipo = $request->input('tipo'); // Nuevo parámetro para el tipo de persona
-
+        $sexo = $request->input('sexo');
         $query = Persona::query();
 
         if ($search) {
@@ -29,6 +29,10 @@ class PersonasController extends Controller
         // Filtrar por tipo de persona si se proporciona
         if ($tipo) {
             $query->where('tipo_persona', $tipo);
+        }
+        // Filtrar por sexo
+        if ($sexo) {
+            $query->where('sexo', $sexo);
         }
 
         $personas = $query->limit(10)->get();

@@ -16,18 +16,14 @@
                     <h2 class="page-title" style="color: white">Listado de Casamientos</h2>
                 </div>
                 <div class="search-section">
-                    <h5>Buscar Casamiento:</h5>
+                    <h5>Buscar casamineto:</h5>
                     <form action="{{ route('casamientos.index') }}" method="GET">
                         <div class="row g-3">
-                            <div class="col-md-6">
-                                <input type="text" class="search-input" name="search"
-                                    placeholder="Nombre de esposo o esposa" value="{{ request('search') }}">
+                            <div class="col-md-4">
+                                <input type="text" class="search-input" name="search" placeholder="Nombre completo o CUI"
+                                    value="{{ request('search') }}">
                             </div>
-                            <div class="col-md-3">
-                                <input type="number" class="search-input" name="year"
-                                    placeholder="Año (ej: 2024)" min="1900" max="2200" value="{{ request('year') }}">
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary w-100">Buscar</button>
                             </div>
                         </div>
