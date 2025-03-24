@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
     // Rutas para el perfil de usuario
     Route::get('/user-profile', [UserProfileController::class, 'show'])->name('user.profile');
     Route::put('/user-profile', [UserProfileController::class, 'update'])->name('user.update');
+    Route::put('/user-profile/change-password', [UserProfileController::class, 'changePassword'])->name('user.changePassword');
 });
 
 // Rutas para errores y autenticación adicional
