@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('personas', PersonasController::class)->except(['destroy']);
     Route::get('/personas/buscar', [PersonasController::class, 'buscarPersonas'])->name('personas.buscar');
 
+    // routes/web.php
     // Rutas para la gestión de 
 
     Route::get('/municipios/{departamento_id}', [MunicipioController::class, 'getMunicipios']);
@@ -61,6 +62,9 @@ Route::middleware(['auth'])->group(function () {
     // Rutas para casamientos
     Route::resource('casamientos', CasamientoController::class);
     Route::get('/casamientos/{casamiento_id}/pdf', [CasamientoController::class, 'generatePDF'])->name('casamientos.pdf');
+    // Ruta para eliminar un testigo
+    Route::delete('/casamientos/testigos/{testigo_id}', [CasamientoController::class, 'destroy'])
+        ->name('casamientos.testigos.destroy');
 
     // Rutas para el perfil de usuario
     Route::get('/user-profile', [UserProfileController::class, 'show'])->name('user.profile');

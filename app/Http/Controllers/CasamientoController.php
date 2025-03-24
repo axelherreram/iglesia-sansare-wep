@@ -31,20 +31,20 @@ class CasamientoController extends Controller
                     $q->whereHas('esposo', function ($q) use ($search) {
                         $q->where('dpi_cui', 'LIKE', '%' . $search . '%');
                     })
-                    ->orWhereHas('esposa', function ($q) use ($search) {
-                        $q->where('dpi_cui', 'LIKE', '%' . $search . '%');
-                    });
+                        ->orWhereHas('esposa', function ($q) use ($search) {
+                            $q->where('dpi_cui', 'LIKE', '%' . $search . '%');
+                        });
                 } else {
                     $q->whereHas('esposo', function ($q) use ($search) {
                         $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
                     })
-                    ->orWhereHas('esposa', function ($q) use ($search) {
-                        $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
-                    });
+                        ->orWhereHas('esposa', function ($q) use ($search) {
+                            $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                        });
                 }
             });
         }
-        
+
 
         // Paginación de los resultados
         $casamientos = $query->paginate(10);
@@ -145,26 +145,43 @@ class CasamientoController extends Controller
             'madreEsposo',
             'padreEsposa',
             'madreEsposa',
-            'testigos.persona' 
+            'testigos.persona'
         ])->findOrFail($casamiento_id);
 
         return view('casamientos.show', compact('casamiento'));
     }
 
 
+    public function destroy($testigo_id)
+    {
+        try {
+            // Busca el testigo por su testigo_id
+            $testigo = Testigo::findOrFail($testigo_id);
+
+            // Elimina el testigo
+            $testigo->delete();
+
+            // Retorna una respuesta JSON de éxito
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            // Retorna una respuesta JSON de error
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
     /**
      * Actualiza un registro de casamiento existente.
      */
     public function update(Request $request, $casamiento_id)
     {
+        // Validar los datos del casamiento
         $validatedData = $request->validate([
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
             'fecha_casamiento' => 'required|date',
             'origen_esposo' => 'required|string|max:255',
-            'feligresesposo' => 'nullable|string|max:255',
+            'feligresia_esposo' => 'nullable|string|max:255',
             'origen_esposa' => 'required|string|max:255',
-            'feligresesposa' => 'nullable|string|max:255',
+            'feligresia_esposa' => 'nullable|string|max:255',
             'esposo_id' => 'required|exists:personas,persona_id',
             'esposa_id' => 'required|exists:personas,persona_id',
             'sacerdote_id' => 'required|exists:personas,persona_id',
@@ -172,10 +189,29 @@ class CasamientoController extends Controller
             'madre_esposo_id' => 'nullable|exists:personas,persona_id',
             'padre_esposa_id' => 'nullable|exists:personas,persona_id',
             'madre_esposa_id' => 'nullable|exists:personas,persona_id',
+            'testigos' => 'nullable|array', // Array de IDs de testigos
+            'testigos.*' => 'exists:personas,persona_id', // Cada testigo debe existir en la tabla personas
         ]);
 
+        // Buscar el casamiento
         $casamiento = Casamiento::findOrFail($casamiento_id);
+
+        // Actualizar los datos del casamiento
         $casamiento->update($validatedData);
+
+        // Sincronizar los testigos
+        if ($request->has('testigos') && is_array($request->testigos)) {
+            foreach ($request->testigos as $persona_id) {
+                // Verifica si ya existe la relación para evitar duplicados
+                if (!Testigo::where('casamiento_id', $casamiento->casamiento_id)->where('persona_id', $persona_id)->exists()) {
+                    Testigo::create([
+                        'casamiento_id' => $casamiento->casamiento_id,
+                        'persona_id' => $persona_id
+                    ]);
+                }
+            }
+        }
+
 
         return redirect()->route('casamientos.index')->with('success', 'Casamiento actualizado exitosamente.');
     }
