@@ -31,6 +31,11 @@
             <div class="col-12 col-xl-7 col-xxl-5 d-flex align-items-center  justify-content-center ">
                 <div class="card forgot-box rounded-2 m-3 shadow-none  mb-0" style="border: none !important">
                     <div class="card-body p-sm-5">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                         <div class="text-center mb-4">
                             <h5 class="">Iniciar Sesión</h5>
                             <p class="mb-0">Por favor inicia sesión en tu cuenta</p>
@@ -44,10 +49,11 @@
                         <div class="form-body">
                             <form method="POST" class="row g-3" action="{{ route('login.post') }}">
                                 @csrf
-                                <div class="col-12"  >
+                                <div class="col-12">
                                     <label for="inputEmailAddress" class="form-label">Correo Electrónico</label>
                                     <div class="input-group " id="show_hide_password">
-                                        <span class="input-group-text bg-transparent border-end-0" style="border-color: #7f5539 !important">
+                                        <span class="input-group-text bg-transparent border-end-0"
+                                            style="border-color: #7f5539 !important">
                                             <i class="bx bx-envelope text-muted"></i>
                                         </span>
 
@@ -59,23 +65,24 @@
                                 <div class="col-12">
                                     <label for="inputChoosePassword" class="form-label">Contraseña</label>
                                     <div class="input-group" id="show_hide_password_container">
-                                        <span class="input-group-text bg-transparent" style="border-color: #7f5539 !important">
+                                        <span class="input-group-text bg-transparent"
+                                            style="border-color: #7f5539 !important">
                                             <i class="bx bx-lock-alt text-muted"></i>
                                         </span>
                                         <input type="password" name="password" class="form-control"
                                             id="inputChoosePassword" placeholder="Ingrese su contraseña" required>
-                                        <button type="button" class="input-group-text bg-transparent toggle-password"  
+                                        <button type="button" class="input-group-text bg-transparent toggle-password"
                                             style="border-color: #7f5539 !important">
                                             <i class="bx bx-hide"></i>
                                         </button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
 
                                 </div>
                                 <div class="col-md-6 text-end">
-                                    <a href="#">¿Olvidó la contraseña?</a>
+                                    <a href="{{ route('password.request') }}">¿Olvidó la contraseña?</a>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary-ig col-12 col-md-6">INICIAR
@@ -108,7 +115,7 @@
             $(".toggle-password").on('click', function () {
                 let passwordInput = $(this).siblings("input");
                 let icon = $(this).find("i");
-    
+
                 if (passwordInput.attr("type") === "password") {
                     passwordInput.attr("type", "text");
                     icon.removeClass("bx-hide").addClass("bx-show");
@@ -119,7 +126,7 @@
             });
         });
     </script>
-    
+
     <!--app JS-->
     <script src="assets/js/app.js"></script>
 </body>

@@ -10,7 +10,17 @@
     background-color: rgb(255, 255, 255, .9);
     max-width: 500px;
 }
+.btn-primary-ig {
 
+	color: #fff;
+	background-color: #6f1d1b;
+	border-color: #fff
+}
+.btn-primary-ig:hover {
+	color: #fff;
+	background-color: #6f1c1bdb;
+	border-color: #6f1d1b
+}
 .text-biblico {
     position: absolute;
     bottom: 20px;
@@ -51,3 +61,4 @@
         /* Aún más pequeño para teléfonos más pequeños */
     }
 }
+

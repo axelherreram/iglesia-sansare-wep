@@ -11,6 +11,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\PersonasController;
 use App\Http\Controllers\MunicipioController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,10 +74,12 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user-profile/change-password', [UserProfileController::class, 'changePassword'])->name('user.changePassword');
 });
 
-// Rutas para errores y autenticación adicional
-Route::get('/auth-basic-forgot-password', function () {
-    return view('auth-basic-forgot-password');
-});
+
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 Route::get('/errors-404-error', function () {
     return view('errors-404-error');
