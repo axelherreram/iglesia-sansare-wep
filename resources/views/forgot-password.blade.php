@@ -33,6 +33,7 @@
             padding: 6px 20px;
             border-radius: 8px
         }
+
         .back-button:hover {
             background-color: #7f5539 !important;
             color: white !important;
@@ -67,19 +68,26 @@
                                             style="border-color: #7f5539 !important">
                                             <i class="bx bx-envelope text-muted"></i>
                                         </span>
-                                        <input type="email" name="email" class="form-control" id="email"
-                                            placeholder="ejemplo@correo.com" value="{{ old('email') }}" required>
+                                        <input type="email" name="email" class="form-control " id="email"
+                                            style="border-color: #7f5539 !important" placeholder="ejemplo@correo.com"
+                                            value="{{ old('email') }}" required>
                                     </div>
                                 </div>
-
+                                @if ($errors->has('email'))
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
                                 <div class="col-12 d-flex justify-content-between align-items-center mt-4">
-                                    <a href="{{ route('login') }}" class="back-button d-flex align-items-center text-decoration-none">
+                                    <a href="{{ route('login') }}"
+                                        class="back-button d-flex align-items-center text-decoration-none">
                                         <i class="lni lni-arrow-left me-2"></i>
                                         <span class="text-muted">Cancelar</span>
                                     </a>
-                                    <button type="submit" class="btn btn-primary-ig col-12 col-md-6 mt-2 mt-md-0">Enviar Enlace</button>
+                                    <button type="submit" class="btn btn-primary-ig col-12 col-md-6 mt-2 mt-md-0">Enviar
+                                        Enlace</button>
                                 </div>
-                                
+
                             </form>
                         </div>
                     </div>
