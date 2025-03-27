@@ -71,15 +71,15 @@ class BautizoController extends Controller
         return view('bautizos.create', compact('departamentos', 'municipios'));
     }
     /**
-     * Almacena un nuevo registro de bautizo en la base de datos.
+     * Almacena un nuevo registro de bautizo
      */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'persona_bautizada_id' => 'required|exists:personas,persona_id',
-            'NoPartida' => 'required|string|max:20',
-            'folio' => 'required|string|max:50',
-            'fecha_bautizo' => 'required|date',
+            'NoPartida' => 'required|string|min:3|max:20|unique:bautizos,NoPartida',
+            'folio' => 'required|string|min:3|max:50|unique:bautizos,folio',
+            'fecha_bautizo' => 'required|date|before_or_equal:today',
             'aldea' => 'required|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
@@ -91,32 +91,44 @@ class BautizoController extends Controller
             'margen' => 'required|string|max:200',
         ], [
             'persona_bautizada_id.required' => 'El campo persona bautizada es obligatorio.',
-            'persona_bautizada_id.exists' => 'El ID de la persona bautizada no existe en la base de datos.',
-            'NoPartida.required' => 'El campo número de partida es obligatorio.',
+            'persona_bautizada_id.exists' => 'La persona bautizada no existe.',
+            'NoPartida.required' => 'El número de partida es obligatorio.',
             'NoPartida.string' => 'El número de partida debe ser una cadena de texto.',
+            'NoPartida.min' => 'El número de partida debe tener al menos 3 caracteres.',
             'NoPartida.max' => 'El número de partida no puede exceder los 20 caracteres.',
-            'folio.required' => 'El campo folio es obligatorio.',
+            'NoPartida.unique' => 'El número de partida ya está registrado.',
+            'folio.required' => 'El folio es obligatorio.',
             'folio.string' => 'El folio debe ser una cadena de texto.',
+            'folio.min' => 'El folio debe tener al menos 3 caracteres.',
             'folio.max' => 'El folio no puede exceder los 50 caracteres.',
+            'folio.unique' => 'El folio ya está registrado.',
             'fecha_bautizo.required' => 'La fecha de bautizo es obligatoria.',
             'fecha_bautizo.date' => 'La fecha de bautizo debe ser una fecha válida.',
+            'fecha_bautizo.before_or_equal' => 'La fecha de bautizo no puede ser futura.',
             'aldea.required' => 'El campo aldea es obligatorio.',
             'aldea.string' => 'La aldea debe ser una cadena de texto.',
             'aldea.max' => 'La aldea no puede exceder los 255 caracteres.',
             'municipio_id.required' => 'El municipio es obligatorio.',
-            'municipio_id.exists' => 'El municipio seleccionado no existe en la base de datos.',
+            'municipio_id.exists' => 'El municipio seleccionado no existe.',
             'departamento_id.required' => 'El departamento es obligatorio.',
-            'departamento_id.exists' => 'El departamento seleccionado no existe en la base de datos.',
+            'departamento_id.exists' => 'El departamento seleccionado no existe.',
             'sacerdote_id.required' => 'El sacerdote es obligatorio.',
-            'sacerdote_id.exists' => 'El ID del sacerdote no existe en la base de datos.',
-            'padre_id.exists' => 'El ID del padre no existe en la base de datos.',
-            'madre_id.exists' => 'El ID de la madre no existe en la base de datos.',
-            'padrino_id.exists' => 'El ID del padrino no existe en la base de datos.',
-            'madrina_id.exists' => 'El ID de la madrina no existe en la base de datos.',
+            'sacerdote_id.exists' => 'El sacerdote no existe.',
+            'padre_id.exists' => 'El padre no existe.',
+            'madre_id.exists' => 'La madre no existe.',
+            'padrino_id.exists' => 'El padrino no existe.',
+            'madrina_id.exists' => 'La madrina no existe.',
             'margen.required' => 'El campo margen es obligatorio.',
             'margen.string' => 'El margen debe ser una cadena de texto.',
             'margen.max' => 'El margen no puede exceder los 200 caracteres.',
         ]);
+
+        if (!$request->padre_id && !$request->madre_id) {
+            return redirect()->back()->withErrors([
+                'padre_id' => 'Debe registrar al menos un padre o una madre.',
+                'madre_id' => 'Debe registrar al menos un padre o una madre.',
+            ]);
+        }
 
         // Verificar si ya existe un bautizo para la persona bautizada
         $bautizoExistente = Bautizo::where('persona_bautizada_id', $request->persona_bautizada_id)->first();

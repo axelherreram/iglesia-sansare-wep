@@ -106,7 +106,7 @@ class PersonasController extends Controller
             'dpi_cui.required' => 'El DPI es obligatorio.',
             'dpi_cui.digits' => 'El DPI debe tener exactamente 13 dígitos.',
             'dpi_cui.numeric' => 'El DPI solo debe contener números.',
-            'dpi_cui.unique' => 'Este DPI ya está registrado.',
+            'dpi_cui.unique' => 'Este DPI/CUI ya está registrado.',
             'nombres.required' => 'El nombre es obligatorio.',
             'nombres.regex' => 'El nombre solo debe contener letras y espacios.',
             'nombres.max' => 'El nombre no debe superar los 50 caracteres.',

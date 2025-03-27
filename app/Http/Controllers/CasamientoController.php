@@ -86,7 +86,7 @@ class CasamientoController extends Controller
         $validatedData = $request->validate([
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
-            'fecha_casamiento' => 'required|date',
+            'fecha_casamiento' => 'required|date|before_or_equal:today',
             'origen_esposo' => 'required|string|max:255',
             'feligresesposo' => 'nullable|string|max:255',
             'origen_esposa' => 'required|string|max:255',
@@ -98,23 +98,53 @@ class CasamientoController extends Controller
             'madre_esposo_id' => 'nullable|exists:personas,persona_id',
             'padre_esposa_id' => 'nullable|exists:personas,persona_id',
             'madre_esposa_id' => 'nullable|exists:personas,persona_id',
-            'testigos' => 'nullable|array',
+            'testigos' => 'nullable|array|distinct',
             'testigos.*' => 'exists:personas,persona_id',
+    
         ], [
             'NoPartida.required' => 'El número de partida es obligatorio.',
             'folio.required' => 'El folio es obligatorio.',
             'fecha_casamiento.required' => 'La fecha del casamiento es obligatoria.',
+            'fecha_casamiento.before_or_equal' => 'La fecha del casamiento no puede ser mayor a la fecha actual.',
             'origen_esposo.required' => 'El origen del esposo es obligatorio.',
             'esposo_id.required' => 'El esposo es obligatorio.',
             'esposa_id.required' => 'La esposa es obligatoria.',
             'sacerdote_id.required' => 'El sacerdote es obligatorio.',
             'testigos.*.exists' => 'Uno o más testigos no son válidos.',
+            'testigos.distinct' => 'Los testigos no pueden repetirse.',
+    
         ]);
-
-
+    
+        // Validación para asegurar que al menos un familiar esté ingresado
+        if (!$request->padre_esposo_id && !$request->madre_esposo_id && !$request->padre_esposa_id && !$request->madre_esposa_id) {
+            return redirect()->back()->withErrors([
+                'familiares' => 'Debe ingresar al menos un familiar (padre o madre del esposo o de la esposa).',
+            ]);
+        }
+    
         try {
             $casamiento = Casamiento::create($validatedData);
-
+    
+            // Obtener los datos del esposo y esposa
+            $esposo = Persona::find($request->esposo_id);
+            $esposa = Persona::find($request->esposa_id);
+    
+            // Si el esposo no tiene padres registrados, actualizarlos
+            if (!$esposo->padre_id && $request->padre_esposo_id) {
+                $esposo->update(['padre_id' => $request->padre_esposo_id]);
+            }
+            if (!$esposo->madre_id && $request->madre_esposo_id) {
+                $esposo->update(['madre_id' => $request->madre_esposo_id]);
+            }
+    
+            // Si la esposa no tiene padres registrados, actualizarlos
+            if (!$esposa->padre_id && $request->padre_esposa_id) {
+                $esposa->update(['padre_id' => $request->padre_esposa_id]);
+            }
+            if (!$esposa->madre_id && $request->madre_esposa_id) {
+                $esposa->update(['madre_id' => $request->madre_esposa_id]);
+            }
+    
             // Guardar los testigos si existen
             if ($request->has('testigos') && is_array($request->testigos)) {
                 foreach ($request->testigos as $persona_id) {
@@ -131,6 +161,8 @@ class CasamientoController extends Controller
             return redirect()->back()->with('error', 'Error al guardar el casamiento: ' . $e->getMessage());
         }
     }
+    
+
 
     /**
      * Muestra los detalles de un casamiento.

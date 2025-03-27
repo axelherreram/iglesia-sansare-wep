@@ -15,7 +15,7 @@ class ComunionController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-    
+
         // Consulta base con relaciones
         $query = Comunion::with([
             'personaParticipe',
@@ -25,7 +25,7 @@ class ComunionController extends Controller
             'padre',
             'madre'
         ]);
-    
+
         if ($search) {
             $query->whereHas('personaParticipe', function ($q) use ($search) {
                 if (ctype_digit($search)) { // Verifica si el input es solo dígitos
@@ -35,19 +35,19 @@ class ComunionController extends Controller
                 }
             });
         }
-    
+
         $comuniones = $query->paginate(10);
-    
+
         // Mensaje si no hay resultados
         if ($comuniones->isEmpty()) {
             session()->flash('no_results', 'No se encontraron registros de comuniones con los datos especificados.');
         } else {
             session()->forget('no_results');
         }
-    
+
         return view('comuniones.index', compact('comuniones'));
     }
-    
+
 
     /**
      * Muestra el formulario para crear una comunión.
@@ -75,7 +75,7 @@ class ComunionController extends Controller
             'persona_participe_id' => 'required|exists:personas,persona_id',
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
-            'fecha_comunion' => 'required|date',
+            'fecha_comunion' => 'required|date|before_or_equal:today',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
             'sacerdote_id' => 'required|exists:personas,persona_id',
@@ -83,7 +83,7 @@ class ComunionController extends Controller
             'madre_id' => 'nullable|exists:personas,persona_id',
         ], [
             'persona_participe_id.required' => 'El campo persona participe es obligatorio.',
-            'persona_participe_id.exists' => 'El ID de la persona participe no existe en la base de datos.',
+            'persona_participe_id.exists' => 'La persona participante no está registrada en el sistema.',
             'NoPartida.required' => 'El campo número de partida es obligatorio.',
             'NoPartida.string' => 'El número de partida debe ser una cadena de texto.',
             'NoPartida.max' => 'El número de partida no puede exceder los 20 caracteres.',
@@ -92,15 +92,24 @@ class ComunionController extends Controller
             'folio.max' => 'El folio no puede exceder los 50 caracteres.',
             'fecha_comunion.required' => 'La fecha de comunión es obligatoria.',
             'fecha_comunion.date' => 'La fecha de comunión debe ser una fecha válida.',
+            'fecha_comunion.before_or_equal' => 'La fecha de comunión no puede ser mayor a la fecha actual.',
             'municipio_id.required' => 'El municipio es obligatorio.',
-            'municipio_id.exists' => 'El municipio seleccionado no existe en la base de datos.',
+            'municipio_id.exists' => 'El municipio seleccionado no está registrado en el sistema.',
             'departamento_id.required' => 'El departamento es obligatorio.',
-            'departamento_id.exists' => 'El departamento seleccionado no existe en la base de datos.',
+            'departamento_id.exists' => 'El departamento seleccionado no está registrado en el sistema.',
             'sacerdote_id.required' => 'El sacerdote es obligatorio.',
-            'sacerdote_id.exists' => 'El ID del sacerdote no existe en la base de datos.',
-            'padre_id.exists' => 'El ID del padre no existe en la base de datos.',
-            'madre_id.exists' => 'El ID de la madre no existe en la base de datos.',
+            'sacerdote_id.exists' => 'El sacerdote seleccionado no está registrado en el sistema.',
+            'padre_id.exists' => 'El padre no está registrado en el sistema.',
+            'madre_id.exists' => 'La madre no está registrada en el sistema.',
         ]);
+
+        // Validación personalizada: debe haber al menos un padre o una madre
+        if (!$request->padre_id && !$request->madre_id) {
+            return redirect()->back()->withErrors([
+                'padre_id' => 'Debe registrar al menos un padre o una madre.',
+                'madre_id' => 'Debe registrar al menos un padre o una madre.',
+            ]);
+        }
 
         // Verificar si ya existe una comunión para la persona participe
         $comunionExistente = Comunion::where('persona_participe_id', $request->persona_participe_id)->first();
@@ -125,23 +134,27 @@ class ComunionController extends Controller
 
         if (count($personaIds) !== count(array_unique($personaIds))) {
             return redirect()->back()->withErrors([
-                'persona_participe_id' => 'El mismo persona_id no puede ser usado en varios campos.',
+                'persona_participe_id' => 'La misma persona no puede ser usada en varios campos.',
             ]);
         }
 
+        // Crear la comunión
         Comunion::create($validatedData);
 
-        // Actualizar la persona participe con los IDs de sus familiares
+        // Actualizar la persona participe con los IDs de sus familiares solo si no tiene padres registrados
         $personaParticipe = Persona::find($request->persona_participe_id);
         if ($personaParticipe) {
-            $personaParticipe->update([
-                'padre_id' => $request->padre_id,
-                'madre_id' => $request->madre_id,
-            ]);
+            if (!$personaParticipe->padre_id && !$personaParticipe->madre_id) {
+                $personaParticipe->update([
+                    'padre_id' => $request->padre_id,
+                    'madre_id' => $request->madre_id,
+                ]);
+            }
         }
 
         return redirect()->route('comuniones.index')->with('success', 'Comunión guardada exitosamente.');
     }
+
 
     public function show($comunion_id)
     {

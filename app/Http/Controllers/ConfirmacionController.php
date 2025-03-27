@@ -12,48 +12,49 @@ class ConfirmacionController extends Controller
 {
     /**
      * Muestra una lista de confirmaciones con paginación.
-     */public function index(Request $request)
-{
-    $search = $request->input('search');
+     */
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
 
-    // Crear la consulta base con las relaciones
-    $query = Confirmacion::with([
-        'personaConfirmada',
-        'municipio',
-        'departamento',
-        'sacerdote',
-        'padre',
-        'madre',
-        'padrino',
-        'madrina'
-    ]);
+        // Crear la consulta base con las relaciones
+        $query = Confirmacion::with([
+            'personaConfirmada',
+            'municipio',
+            'departamento',
+            'sacerdote',
+            'padre',
+            'madre',
+            'padrino',
+            'madrina'
+        ]);
 
-    if ($search) {
-        // Si el input es solo números, buscar por DPI/CUI
-        if (is_numeric($search)) {
-            $query->whereHas('personaConfirmada', function ($q) use ($search) {
-                $q->where('dpi_cui', 'like', "%{$search}%");
-            });
-        } else {
-            // Buscar por nombre completo (nombre + apellido)
-            $query->whereHas('personaConfirmada', function ($q) use ($search) {
-                $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
-            });
+        if ($search) {
+            // Si el input es solo números, buscar por DPI/CUI
+            if (is_numeric($search)) {
+                $query->whereHas('personaConfirmada', function ($q) use ($search) {
+                    $q->where('dpi_cui', 'like', "%{$search}%");
+                });
+            } else {
+                // Buscar por nombre completo (nombre + apellido)
+                $query->whereHas('personaConfirmada', function ($q) use ($search) {
+                    $q->whereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ['%' . $search . '%']);
+                });
+            }
         }
+
+        // Paginación de los resultados
+        $confirmaciones = $query->paginate(10);
+
+        // Mensaje en caso de no encontrar registros
+        if ($confirmaciones->isEmpty()) {
+            session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos especificados.');
+        } else {
+            session()->forget('no_results');
+        }
+
+        return view('confirmaciones.index', compact('confirmaciones'));
     }
-
-    // Paginación de los resultados
-    $confirmaciones = $query->paginate(10);
-
-    // Mensaje en caso de no encontrar registros
-    if ($confirmaciones->isEmpty()) {
-        session()->flash('no_results', 'No se encontraron registros de confirmaciones con los datos especificados.');
-    } else {
-        session()->forget('no_results');
-    }
-
-    return view('confirmaciones.index', compact('confirmaciones'));
-}
 
 
     /**
@@ -83,7 +84,7 @@ class ConfirmacionController extends Controller
             'persona_confirmada_id' => 'required|exists:personas,persona_id',
             'NoPartida' => 'required|string|max:20',
             'folio' => 'required|string|max:50',
-            'fecha_confirmacion' => 'required|date',
+            'fecha_confirmacion' => 'required|date|before_or_equal:today',
             'nombre_parroquia_bautizo' => 'required|string|max:255',
             'municipio_id' => 'required|exists:municipio,municipio_id',
             'departamento_id' => 'required|exists:departamento,departamento_id',
@@ -94,7 +95,7 @@ class ConfirmacionController extends Controller
             'madrina_id' => 'nullable|exists:personas,persona_id',
         ], [
             'persona_confirmada_id.required' => 'El campo persona confirmada es obligatorio.',
-            'persona_confirmada_id.exists' => 'El ID de la persona confirmada no existe en la base de datos.',
+            'persona_confirmada_id.exists' => 'La persona confirmada no existe.',
             'NoPartida.required' => 'El campo número de partida es obligatorio.',
             'NoPartida.string' => 'El número de partida debe ser una cadena de texto.',
             'NoPartida.max' => 'El número de partida no puede exceder los 20 caracteres.',
@@ -103,19 +104,20 @@ class ConfirmacionController extends Controller
             'folio.max' => 'El folio no puede exceder los 50 caracteres.',
             'fecha_confirmacion.required' => 'La fecha de confirmación es obligatoria.',
             'fecha_confirmacion.date' => 'La fecha de confirmación debe ser una fecha válida.',
+            'fecha_confirmacion.before_or_equal' => 'La fecha de confirmación no puede ser mayor a la fecha actual.',
             'nombre_parroquia_bautizo.required' => 'El campo nombre de la parroquia de bautizo es obligatorio.',
             'nombre_parroquia_bautizo.string' => 'El nombre de la parroquia de bautizo debe ser una cadena de texto.',
             'nombre_parroquia_bautizo.max' => 'El nombre de la parroquia de bautizo no puede exceder los 255 caracteres.',
             'municipio_id.required' => 'El municipio es obligatorio.',
-            'municipio_id.exists' => 'El municipio seleccionado no existe en la base de datos.',
+            'municipio_id.exists' => 'El municipio seleccionado no existe.',
             'departamento_id.required' => 'El departamento es obligatorio.',
-            'departamento_id.exists' => 'El departamento seleccionado no existe en la base de datos.',
+            'departamento_id.exists' => 'El departamento seleccionado no existe.',
             'sacerdote_id.required' => 'El sacerdote es obligatorio.',
-            'sacerdote_id.exists' => 'El ID del sacerdote no existe en la base de datos.',
-            'padre_id.exists' => 'El ID del padre no existe en la base de datos.',
-            'madre_id.exists' => 'El ID de la madre no existe en la base de datos.',
-            'padrino_id.exists' => 'El ID del padrino no existe en la base de datos.',
-            'madrina_id.exists' => 'El ID de la madrina no existe en la base de datos.',
+            'sacerdote_id.exists' => 'El sacerdote no existe.',
+            'padre_id.exists' => 'El padre no existe.',
+            'madre_id.exists' => 'La madre no existe.',
+            'padrino_id.exists' => 'El padrino no existe.',
+            'madrina_id.exists' => 'La madrina no existe.',
         ]);
 
         // Verificar si ya existe una confirmación para la persona confirmada
@@ -126,7 +128,7 @@ class ConfirmacionController extends Controller
             ]);
         }
 
-        // Validación personalizada para asegurarse de que el mismo persona_id no esté en varios campos
+        // Validación personalizada para evitar que una misma persona ocupe varios roles
         $personaIds = [
             $request->persona_confirmada_id,
             $request->sacerdote_id,
@@ -136,14 +138,13 @@ class ConfirmacionController extends Controller
             $request->madrina_id,
         ];
 
-        // Eliminar valores nulos para verificar solo los campos con persona_id
         $personaIds = array_filter($personaIds, function ($value) {
             return !is_null($value);
         });
 
         if (count($personaIds) !== count(array_unique($personaIds))) {
             return redirect()->back()->withErrors([
-                'persona_confirmada_id' => 'El mismo persona_id no puede ser usado en varios campos.',
+                'persona_confirmada_id' => 'La misma persona no puede ocupar varios roles en la confirmación.',
             ]);
         }
 
@@ -151,6 +152,7 @@ class ConfirmacionController extends Controller
 
         return redirect()->route('confirmaciones.index')->with('success', 'Confirmación guardada exitosamente.');
     }
+
 
     /**
      * Obtiene los municipios basados en el departamento seleccionado.
